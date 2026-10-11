@@ -1,0 +1,43 @@
+name: EchoLedger CI
+
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test on macOS 26
+    runs-on: macos-26
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify runner architecture and Xcode SDK
+        run: |
+          test "$(uname -m)" = "arm64"
+          xcodebuild -version
+          sdk_version="$(xcrun --sdk macosx --show-sdk-version)"
+          printf 'macOS SDK: %s\n' "$sdk_version"
+          sdk_major="${sdk_version%%.*}"
+          test "$sdk_major" -ge 26
+      - name: Run tests
+        run: swift test
+      - name: Build, package, and verify native app
+        run: bash Scripts/package-app.sh
+      - name: Launch packaged app from a clean location without .build
+        run: bash Scripts/smoke-test.sh
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: EchoLedger-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            dist/EchoLedger.zip
+            dist/EchoLedger.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
