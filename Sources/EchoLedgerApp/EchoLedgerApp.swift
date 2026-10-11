@@ -46,28 +46,33 @@ struct RootView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: sectionSelection) {
-                ForEach(AppSection.allCases) { section in
-                    sidebarRow(section)
-                        .tag(section)
+            VStack(spacing: 0) {
+                List(selection: sectionSelection) {
+                    ForEach(AppSection.allCases) { section in
+                        sidebarRow(section)
+                            .tag(section)
+                    }
                 }
-            }
-            .navigationSplitViewColumnWidth(min: 190, ideal: 210, max: 260)
-            .safeAreaInset(edge: .bottom) {
                 IntelligenceStatusBadge()
                     .padding(10)
             }
+            .navigationSplitViewColumnWidth(min: 190, ideal: 210, max: 260)
         } detail: {
-            VStack(spacing: 0) {
-                if let message = runtime.errorMessage {
-                    MessageBar(text: message, isError: true) { runtime.errorMessage = nil }
+            // Messages float over the page so showing or hiding one never resizes the screen.
+            detail
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(alignment: .top) {
+                    VStack(spacing: 8) {
+                        if let message = runtime.errorMessage {
+                            MessageBar(text: message, isError: true) { runtime.errorMessage = nil }
+                        }
+                        if let message = runtime.statusMessage {
+                            MessageBar(text: message, isError: false) { runtime.statusMessage = nil }
+                        }
+                    }
+                    .padding(12)
+                    .frame(maxWidth: 720)
                 }
-                if let message = runtime.statusMessage {
-                    MessageBar(text: message, isError: false) { runtime.statusMessage = nil }
-                }
-                detail
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
         }
         .navigationTitle(runtime.section.title)
         .task(id: runtime.statusMessage) {
@@ -125,6 +130,8 @@ struct MessageBar: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(isError ? Color.red.opacity(0.10) : Theme.income.opacity(0.10))
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+        .background(isError ? Color.red.opacity(0.18) : Theme.income.opacity(0.18), in: RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.15), radius: 8, y: 2)
     }
 }

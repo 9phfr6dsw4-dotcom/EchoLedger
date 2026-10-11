@@ -217,9 +217,17 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
     /// Set when this bank prints money in and out the other way around from its layout.
     public var flipSigns: Bool
     public var isArchived: Bool
+    /// Used only now and then: reports don't warn when it has gaps or no recent transactions.
+    public var rarelyUsed: Bool
+    /// You said this account's files are complete through this date, even if its last
+    /// transaction is earlier.
+    public var upToDateThrough: LocalDate?
+    /// You said this account's history starts here, so a report starting earlier isn't flagged.
+    public var historyStartsOn: LocalDate?
 
     public init(id: UUID = UUID(), name: String, personID: UUID?, type: AccountType, currency: String = "USD",
-                last4: String? = nil, profileID: String? = nil, flipSigns: Bool = false, isArchived: Bool = false) {
+                last4: String? = nil, profileID: String? = nil, flipSigns: Bool = false, isArchived: Bool = false,
+                rarelyUsed: Bool = false, upToDateThrough: LocalDate? = nil, historyStartsOn: LocalDate? = nil) {
         self.id = id
         self.name = name
         self.personID = personID
@@ -229,6 +237,26 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
         self.profileID = profileID
         self.flipSigns = flipSigns
         self.isArchived = isArchived
+        self.rarelyUsed = rarelyUsed
+        self.upToDateThrough = upToDateThrough
+        self.historyStartsOn = historyStartsOn
+    }
+
+    /// Reads accounts saved by any earlier version (fields added later get their defaults).
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        personID = try container.decodeIfPresent(UUID.self, forKey: .personID)
+        type = try container.decode(AccountType.self, forKey: .type)
+        currency = try container.decodeIfPresent(String.self, forKey: .currency) ?? "USD"
+        last4 = try container.decodeIfPresent(String.self, forKey: .last4)
+        profileID = try container.decodeIfPresent(String.self, forKey: .profileID)
+        flipSigns = try container.decodeIfPresent(Bool.self, forKey: .flipSigns) ?? false
+        isArchived = try container.decodeIfPresent(Bool.self, forKey: .isArchived) ?? false
+        rarelyUsed = try container.decodeIfPresent(Bool.self, forKey: .rarelyUsed) ?? false
+        upToDateThrough = try container.decodeIfPresent(LocalDate.self, forKey: .upToDateThrough)
+        historyStartsOn = try container.decodeIfPresent(LocalDate.self, forKey: .historyStartsOn)
     }
 }
 
@@ -519,6 +547,8 @@ public struct LedgerSettings: Codable, Sendable, Hashable {
     public var reportCurrency: String = "USD"
     /// The order of your rules, top to bottom.
     public var ruleOrder: [UUID] = []
+    /// Report notes you marked as seen (for example "This period isn't over yet" for one month).
+    public var dismissedNotes: [String] = []
 
     public init() {}
 
@@ -533,5 +563,6 @@ public struct LedgerSettings: Codable, Sendable, Hashable {
         disabledBuiltInRules = try container.decodeIfPresent([String].self, forKey: .disabledBuiltInRules) ?? []
         reportCurrency = try container.decodeIfPresent(String.self, forKey: .reportCurrency) ?? "USD"
         ruleOrder = try container.decodeIfPresent([UUID].self, forKey: .ruleOrder) ?? []
+        dismissedNotes = try container.decodeIfPresent([String].self, forKey: .dismissedNotes) ?? []
     }
 }

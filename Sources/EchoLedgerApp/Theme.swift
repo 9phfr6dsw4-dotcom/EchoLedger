@@ -176,24 +176,90 @@ struct CategoryDot: View {
 }
 
 /// Notes about what a report does and doesn't include. Always shown with results.
+/// The notes under a report. Notes about your files can be marked as fine, one by one or all
+/// at once, and then stop showing; Settings brings them back.
 struct DataNotesView: View {
+    @Environment(LedgerRuntime.self) private var runtime
     let notes: [DataNote]
+
+    private var acknowledgeable: [DataNote] { notes.filter { $0.acknowledgement != nil } }
 
     var body: some View {
         if !notes.isEmpty {
-            GroupBox("About these numbers") {
-                VStack(alignment: .leading, spacing: 8) {
+            GroupBox {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("About these numbers")
+                            .font(.headline)
+                        Spacer()
+                        if acknowledgeable.count > 1 {
+                            Button("Mark All as Fine") { acknowledge(acknowledgeable.compactMap(\.acknowledgement)) }
+                                .help("Each file note is marked as fine and stops showing. Settings brings them back.")
+                        }
+                    }
                     ForEach(notes) { note in
-                        Label(note.text, systemImage: note.severity == .warning ? "exclamationmark.circle" : "info.circle")
-                            .foregroundStyle(note.severity == .warning ? Color.orange : Color.secondary)
-                            .font(.callout)
-                            .fixedSize(horizontal: false, vertical: true)
+                        row(note)
+                    }
+                    if !acknowledgeable.isEmpty {
+                        Caption("Notes about your files are EchoLedger's guesses. If a card is just used now and then, mark it as fine and the note goes away.")
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 4)
             }
         }
+    }
+
+    private func row(_ note: DataNote) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Label(note.text, systemImage: note.severity == .warning ? "exclamationmark.circle" : "info.circle")
+                .foregroundStyle(note.severity == .warning ? Color.orange : Color.secondary)
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 8)
+            actions(note)
+                .controlSize(.small)
+        }
+    }
+
+    @ViewBuilder
+    private func actions(_ note: DataNote) -> some View {
+        switch note.acknowledgement {
+        case .upToDate(let accountID, let through):
+            Menu("It's Fine") {
+                Button("The file is complete through \(DateText.medium(through))") {
+                    acknowledge([.upToDate(accountID: accountID, through: through)])
+                }
+                Button("This account is rarely used; don't warn about it again") {
+                    acknowledge([.rarelyUsed(accountID: accountID)])
+                }
+            }
+            .fixedSize()
+        case .historyStart(let accountID, let date):
+            Menu("It's Fine") {
+                Button("That's when this account's history starts") {
+                    acknowledge([.historyStart(accountID: accountID, on: date)])
+                }
+                Button("This account is rarely used; don't warn about it again") {
+                    acknowledge([.rarelyUsed(accountID: accountID)])
+                }
+            }
+            .fixedSize()
+        case .rarelyUsed(let accountID):
+            Button("It's Fine") { acknowledge([.rarelyUsed(accountID: accountID)]) }
+                .help("This account is rarely used; don't warn about it again")
+        case .dismiss(let key):
+            Button("Got It") { acknowledge([.dismiss(key: key)]) }
+        case .none:
+            if note.id == "unknown" || note.id == "ai-filed" {
+                Button("Review") { runtime.section = .review }
+            }
+        }
+    }
+
+    private func acknowledge(_ items: [DataNote.Acknowledgement]) {
+        runtime.commit { $0.acknowledge(items) }
+        runtime.statusMessage = "Marked as fine. To bring these notes back, use Settings → Report notes."
     }
 }
 
