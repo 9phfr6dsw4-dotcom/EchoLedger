@@ -1,0 +1,14 @@
+.build/
+.swiftpm/
+DerivedData/
+dist/
+.DS_Store
+*.xcuserstate
+*.xcuserdatad/
+__pycache__/
+# Never commit financial data.
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+/data/
+/exports/
