@@ -257,7 +257,7 @@ public enum SuggestionCheck {
         return lines.joined(separator: "\n")
     }
 
-    static func redactDigits(_ text: String) -> String {
+    public static func redactDigits(_ text: String) -> String {
         var result = ""
         var run = ""
         for character in text + " " {
