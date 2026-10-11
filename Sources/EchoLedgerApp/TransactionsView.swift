@@ -50,71 +50,22 @@ struct TransactionsView: View {
     @State private var filter: TransactionFilter = .all
     @State private var selection: Set<UUID> = []
     @State private var sortOrder = [KeyPathComparator(\TransactionRow.date, order: .reverse)]
-    @State private var showInspector = true
+    @State private var showDetails = true
 
+    // The details panel is part of this screen's own layout rather than a window inspector or
+    // toolbar item, so the window's toolbar and safe area stay the same on every screen.
+    // (Adding and removing an inspector, toolbar button and toolbar search field while
+    // switching screens made AppKit's layout loop until it crashed.)
     var body: some View {
         let rows = filteredRows()
-        VStack(spacing: 0) {
-            filterBar
-            if let focus = runtime.transactionsFocus {
-                focusBanner(focus)
-            }
-            Table(rows, selection: $selection, sortOrder: $sortOrder) {
-                TableColumn("Date", value: \.date) { row in
-                    Text(DateText.medium(row.date))
-                        .monospacedDigit()
-                        .foregroundStyle(row.isVoided ? Color.secondary : Color.primary)
-                }
-                .width(min: 90, ideal: 100, max: 120)
-                TableColumn("Merchant", value: \.merchant) { row in
-                    MerchantCell(row: row)
-                }
-                .width(min: 200, ideal: 300)
-                TableColumn("Category", value: \.categoryName) { row in
-                    HStack(spacing: 6) {
-                        if row.kind == .expense || row.kind == .income {
-                            CategoryDot(colorIndex: row.colorIndex)
-                        }
-                        Text(row.categoryName)
-                            .foregroundStyle(row.needsReview ? Color.orange : Color.primary)
-                    }
-                }
-                .width(min: 120, ideal: 160)
-                TableColumn("Account", value: \.accountName) { row in
-                    Text(row.accountName)
-                        .foregroundStyle(.secondary)
-                }
-                .width(min: 110, ideal: 170)
-                TableColumn("Amount", value: \.amount) { row in
-                    MoneyText(cents: row.amount)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .strikethrough(row.isVoided)
-                }
-                .width(min: 90, ideal: 110)
-            }
-            .contextMenu(forSelectionType: UUID.self) { ids in
-                TransactionActions(ids: Array(ids))
-            } primaryAction: { ids in
-                selection = ids
-                showInspector = true
-            }
-            footer(rows)
-        }
-        .inspector(isPresented: $showInspector) {
-            TransactionInspector(ids: Array(selection))
-                .inspectorColumnWidth(min: 290, ideal: 340, max: 460)
-        }
-        .toolbar {
-            ToolbarItem {
-                Button {
-                    showInspector.toggle()
-                } label: {
-                    Label("Details", systemImage: "sidebar.trailing")
-                }
-                .help("Show or hide transaction details")
+        HStack(spacing: 0) {
+            transactionList(rows)
+            if showDetails {
+                Divider()
+                TransactionInspector(ids: Array(selection))
+                    .frame(width: 330)
             }
         }
-        .searchable(text: $search, placement: .toolbar, prompt: "Search merchants, bank text, notes")
         .onAppear {
             if runtime.transactionsFocus != nil { period = .allTime }
         }
@@ -126,7 +77,96 @@ struct TransactionsView: View {
         }
     }
 
+    private func transactionList(_ rows: [TransactionRow]) -> some View {
+        VStack(spacing: 0) {
+            filterBar
+            if let focus = runtime.transactionsFocus {
+                focusBanner(focus)
+            }
+            Table(rows, selection: $selection, sortOrder: $sortOrder) {
+                TableColumn("Date", value: \.date) { row in
+                    Text(DateText.medium(row.date))
+                        .monospacedDigit()
+                        .foregroundStyle(row.isVoided ? Color.secondary : Color.primary)
+                }
+                .width(min: 84, ideal: 100, max: 120)
+                TableColumn("Merchant", value: \.merchant) { row in
+                    MerchantCell(row: row)
+                }
+                .width(min: 150, ideal: 280)
+                TableColumn("Category", value: \.categoryName) { row in
+                    HStack(spacing: 6) {
+                        if row.kind == .expense || row.kind == .income {
+                            CategoryDot(colorIndex: row.colorIndex)
+                        }
+                        Text(row.categoryName)
+                            .foregroundStyle(row.needsReview ? Color.orange : Color.primary)
+                    }
+                }
+                .width(min: 100, ideal: 160)
+                TableColumn("Account", value: \.accountName) { row in
+                    Text(row.accountName)
+                        .foregroundStyle(.secondary)
+                }
+                .width(min: 80, ideal: 160)
+                TableColumn("Amount", value: \.amount) { row in
+                    MoneyText(cents: row.amount)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .strikethrough(row.isVoided)
+                }
+                .width(min: 84, ideal: 110)
+            }
+            .contextMenu(forSelectionType: UUID.self) { ids in
+                TransactionActions(ids: Array(ids))
+            } primaryAction: { ids in
+                selection = ids
+                showDetails = true
+            }
+            footer(rows)
+        }
+    }
+
     private var filterBar: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 10) {
+                HStack(spacing: 6) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+                    TextField("Search merchants, bank text, notes", text: $search)
+                        .textFieldStyle(.plain)
+                    if !search.isEmpty {
+                        Button {
+                            search = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                        }
+                        .buttonStyle(.borderless)
+                        .foregroundStyle(.secondary)
+                        .help("Clear search")
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 5)
+                .background(Color.secondary.opacity(0.12), in: RoundedRectangle(cornerRadius: 7))
+                .frame(minWidth: 160, maxWidth: 360)
+                Spacer(minLength: 0)
+                Button {
+                    showDetails.toggle()
+                } label: {
+                    Label(showDetails ? "Hide Details" : "Show Details", systemImage: "sidebar.trailing")
+                }
+                .help("Show or hide transaction details")
+            }
+            // Scrolls sideways instead of forcing the window wider when space is tight.
+            ScrollView(.horizontal, showsIndicators: false) {
+                filterPickers
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+    }
+
+    private var filterPickers: some View {
         HStack(spacing: 10) {
             PeriodPicker(choice: $period, customStart: $customStart, customEnd: $customEnd)
             PersonPicker(personID: $personID)
@@ -152,10 +192,7 @@ struct TransactionsView: View {
                 }
             }
             .frame(width: 210)
-            Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
     }
 
     private func focusBanner(_ focus: TransactionsFocus) -> some View {

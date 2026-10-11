@@ -897,6 +897,56 @@ public struct Ledger: Sendable {
         return delta
     }
 
+    /// Records that report notes aren't problems: an account is up to date, its history starts
+    /// on a date, it's rarely used, or a note was seen. Undo with `showAllReportNotes()` or the
+    /// account's settings.
+    public mutating func acknowledge(_ acknowledgements: [DataNote.Acknowledgement]) -> LedgerDelta {
+        var delta = LedgerDelta()
+        for acknowledgement in acknowledgements {
+            switch acknowledgement {
+            case .upToDate(let id, let through):
+                guard let index = accounts.firstIndex(where: { $0.id == id }) else { continue }
+                accounts[index].upToDateThrough = max(through, accounts[index].upToDateThrough ?? through)
+                delta.change(.account, id)
+            case .historyStart(let id, let date):
+                guard let index = accounts.firstIndex(where: { $0.id == id }) else { continue }
+                accounts[index].historyStartsOn = date
+                delta.change(.account, id)
+            case .rarelyUsed(let id):
+                guard let index = accounts.firstIndex(where: { $0.id == id }) else { continue }
+                accounts[index].rarelyUsed = true
+                delta.change(.account, id)
+            case .dismiss(let key):
+                guard !settings.dismissedNotes.contains(key) else { continue }
+                settings.dismissedNotes.append(key)
+                delta.change(.settings, "settings")
+            }
+        }
+        return delta
+    }
+
+    /// Brings back every report note you marked as not a problem.
+    public mutating func showAllReportNotes() -> LedgerDelta {
+        var delta = LedgerDelta()
+        for index in accounts.indices
+        where accounts[index].rarelyUsed || accounts[index].upToDateThrough != nil || accounts[index].historyStartsOn != nil {
+            accounts[index].rarelyUsed = false
+            accounts[index].upToDateThrough = nil
+            accounts[index].historyStartsOn = nil
+            delta.change(.account, accounts[index].id)
+        }
+        if !settings.dismissedNotes.isEmpty {
+            settings.dismissedNotes = []
+            delta.change(.settings, "settings")
+        }
+        return delta
+    }
+
+    /// The number of report notes currently marked as not a problem.
+    public var acknowledgedNoteCount: Int {
+        accounts.filter { $0.rarelyUsed || $0.upToDateThrough != nil || $0.historyStartsOn != nil }.count + settings.dismissedNotes.count
+    }
+
     /// Deletes an account only when it has no transactions; otherwise archive it.
     public mutating func deleteAccount(_ id: UUID) -> LedgerDelta? {
         guard !transactions.values.contains(where: { $0.accountID == id }) else { return nil }

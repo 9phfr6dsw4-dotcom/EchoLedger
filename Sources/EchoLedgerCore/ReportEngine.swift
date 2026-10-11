@@ -65,9 +65,39 @@ public struct MonthLine: Identifiable, Hashable, Sendable {
 
 public struct DataNote: Identifiable, Hashable, Sendable {
     public enum Severity: String, Sendable { case info, warning }
+
+    /// How you can tell EchoLedger a note isn't a problem, so it stops showing.
+    public enum Acknowledgement: Hashable, Sendable {
+        /// The account's files are complete through this date; it just had no newer transactions.
+        case upToDate(accountID: UUID, through: LocalDate)
+        /// The account's history starts on this date.
+        case historyStart(accountID: UUID, on: LocalDate)
+        /// The account is used only now and then; don't warn about it at all.
+        case rarelyUsed(accountID: UUID)
+        /// Hide this note.
+        case dismiss(key: String)
+    }
+
     public var id: String
     public var severity: Severity
     public var text: String
+    /// nil for notes that are fixed elsewhere (in Review, for example) rather than acknowledged.
+    public var acknowledgement: Acknowledgement?
+
+    public init(id: String, severity: Severity, text: String, acknowledgement: Acknowledgement? = nil) {
+        self.id = id
+        self.severity = severity
+        self.text = text
+        self.acknowledgement = acknowledgement
+    }
+
+    /// The account a note is about, if any.
+    public var accountID: UUID? {
+        switch acknowledgement {
+        case .upToDate(let id, _), .historyStart(let id, _), .rarelyUsed(let id): return id
+        case .dismiss, .none: return nil
+        }
+    }
 }
 
 public struct Report: Sendable {
@@ -263,23 +293,32 @@ public enum ReportEngine {
                                   text: "\(pendingCount) \(noun) (\(Money.format(pendingTotal))) will count once they post."))
         }
         let effectiveEnd = min(filter.span.end, today)
-        for account in accounts.sorted(by: { $0.name < $1.name }) {
+        for account in accounts.sorted(by: { $0.name < $1.name }) where !account.rarelyUsed {
             let dates = ledger.transactions.values.filter { $0.accountID == account.id && $0.isActive }.map(\.date)
             guard let latest = dates.max(), let earliest = dates.min() else { continue }
             if latest < filter.span.start || earliest > filter.span.end {
                 if latest >= filter.span.start.adding(days: -62) || earliest <= filter.span.end.adding(days: 62) {
                     notes.append(DataNote(id: "nodata-\(account.id)", severity: .warning,
-                                          text: "\(account.name) has no transactions in this period. Import its file if it should be included."))
+                                          text: "\(account.name) has no transactions in this period. Import its file if it should be included.",
+                                          acknowledgement: .rarelyUsed(accountID: account.id)))
                 }
                 continue
             }
-            if latest < effectiveEnd.adding(days: -6) {
-                notes.append(DataNote(id: "late-\(account.id)", severity: .warning,
-                                      text: "\(account.name) has nothing after \(DateText.medium(latest)). Import a newer file if this report should run to \(DateText.medium(effectiveEnd))."))
+            let knownThrough = max(latest, account.upToDateThrough ?? latest)
+            if knownThrough < effectiveEnd.adding(days: -6) {
+                let missingDays = latest.days(until: effectiveEnd)
+                let quiet = usuallyQuiet(dates, missingDays: missingDays)
+                let text = quiet
+                    ? "\(account.name) has nothing after \(DateText.medium(latest)). It's only used now and then, so that's probably right."
+                    : "\(account.name) has nothing after \(DateText.medium(latest)). Import a newer file if this report should run to \(DateText.medium(effectiveEnd))."
+                notes.append(DataNote(id: "late-\(account.id)", severity: quiet ? .info : .warning, text: text,
+                                      acknowledgement: .upToDate(accountID: account.id, through: effectiveEnd)))
             }
-            if earliest > filter.span.start.adding(days: 6) {
+            let startKnown = account.historyStartsOn.map { $0 <= earliest } ?? false
+            if earliest > filter.span.start.adding(days: 6), !startKnown {
                 notes.append(DataNote(id: "early-\(account.id)", severity: .info,
-                                      text: "\(account.name) starts on \(DateText.medium(earliest)), after this period begins."))
+                                      text: "\(account.name) starts on \(DateText.medium(earliest)), after this period begins.",
+                                      acknowledgement: .historyStart(accountID: account.id, on: earliest)))
             }
         }
         let otherCurrency = ledger.accounts.filter { $0.currency != filter.currency && !$0.isArchived }
@@ -290,10 +329,21 @@ public enum ReportEngine {
         if !filter.personIDs.isEmpty, accounts.contains(where: { $0.personID == nil }) {
             notes.append(DataNote(id: "shared", severity: .info, text: "Shared accounts (no owner) are included."))
         }
-        if filter.span.end > today {
-            notes.append(DataNote(id: "partial", severity: .info, text: "This period isn't over yet (it runs to \(DateText.medium(filter.span.end)))."))
+        let partialKey = "partial|\(filter.span.end.iso)"
+        if filter.span.end > today, !ledger.settings.dismissedNotes.contains(partialKey) {
+            notes.append(DataNote(id: "partial", severity: .info, text: "This period isn't over yet (it runs to \(DateText.medium(filter.span.end))).",
+                                  acknowledgement: .dismiss(key: partialKey)))
         }
         return notes
+    }
+
+    /// True when the account usually goes this long without a transaction: the missing stretch
+    /// is no more than twice its average gap between transaction days.
+    static func usuallyQuiet(_ dates: [LocalDate], missingDays: Int) -> Bool {
+        let days = Set(dates).sorted()
+        guard days.count >= 2, let first = days.first, let last = days.last else { return false }
+        let averageGap = Double(first.days(until: last)) / Double(days.count - 1)
+        return Double(missingDays) <= averageGap * 2
     }
 }
 

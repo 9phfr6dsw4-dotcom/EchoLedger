@@ -20,6 +20,7 @@ struct SettingsView: View {
             CategoriesSection(categoryToDelete: $categoryToDelete)
             timeZoneSection
             intelligenceSection
+            reportNotesSection
             dataSection
         }
         .confirmationDialog("Restore this backup?", isPresented: restoreBinding, presenting: backupToRestore) { backup in
@@ -82,6 +83,25 @@ struct SettingsView: View {
                         .foregroundStyle(Theme.accent)
                 }
                 Caption("EchoLedger never sends your data to Apple's cloud models or any other service, even as a backup. Every answer is checked before it's used: categories must be yours, new bank layouts must read the whole file, summaries must match EchoLedger's own numbers. Anything Apple Intelligence files is marked, counted in a note on your reports until you check it, and undoable. When you correct one, it stops filing that bank text. Everything works with this turned off.")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 4)
+        }
+    }
+
+    private var reportNotesSection: some View {
+        let count = runtime.ledger.acknowledgedNoteCount
+        return GroupBox("Report notes") {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(count == 0 ? "Every report note is showing." : "\(count) report note\(count == 1 ? " is" : "s are") marked as fine.")
+                    Caption("Notes such as \"has nothing after Sep 24\" are hidden once you mark them as fine on a report. Accounts marked \"Rarely used\" below never get them.")
+                }
+                Spacer()
+                Button("Show All Notes Again") {
+                    runtime.commit { $0.showAllReportNotes() }
+                }
+                .disabled(count == 0)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, 4)
@@ -281,6 +301,9 @@ struct AccountRow: View {
                     .controlSize(.small)
                 Toggle("Archived", isOn: Binding(get: { account.isArchived }, set: { value in update { $0.isArchived = value } }))
                     .controlSize(.small)
+                Toggle("Rarely used", isOn: Binding(get: { account.rarelyUsed }, set: { value in update { $0.rarelyUsed = value } }))
+                    .controlSize(.small)
+                    .help("Reports don't warn when this account has gaps or no recent transactions.")
                 Spacer()
                 Button("Delete") {
                     let id = account.id
