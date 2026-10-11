@@ -47,8 +47,13 @@ final class PerformanceTests: XCTestCase {
             _ = Insights.recurring(ledger, filter: ReportFilter(span: span), asOf: day("2026-10-11"))
         }
         let result = try XCTUnwrap(report)
+        // 16 rows a day for 375 days runs to October 10, 2026; the report covers only the 365 days
+        // in its span (5,840 rows), so compare with those.
+        let inSpan = ledger.transactions.values.filter { span.contains($0.date) }
+        XCTAssertEqual(inSpan.count, 5_840)
+        XCTAssertEqual(inSpan.reduce(Cents(0)) { $0 - $1.amount }, 45_506_720)
         XCTAssertEqual(result.categories.reduce(Cents(0)) { $0 + $1.amount } + result.unknownOut * -1,
-                       ledger.transactions.values.reduce(Cents(0)) { $0 - $1.amount })
+                       inSpan.reduce(Cents(0)) { $0 - $1.amount })
         print("EchoLedger timing for 6,000 rows: analyze \(analyzeTime), plan \(planTime), import+match \(commitTime), report \(reportTime), recurring \(recurringTime)")
         XCTAssertLessThan(analyzeTime, .seconds(30))
         XCTAssertLessThan(commitTime, .seconds(60))
