@@ -18,6 +18,9 @@ test -s "$PACKAGED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/Merch
 mkdir -p "$SMOKE_PARENT"
 SMOKE_DIR="$(mktemp -d "$SMOKE_PARENT/echoledger-smoke.XXXXXX")"
 SMOKE_APP="$SMOKE_DIR/EchoLedger.app"
+CHECK_OUTPUT="$ROOT_DIR/dist/packaged-app-check"
+rm -rf "$CHECK_OUTPUT"
+mkdir -p "$CHECK_OUTPUT"
 
 echo 'Copying the extracted release app to a clean temporary location.'
 ditto "$PACKAGED_APP" "$SMOKE_APP"
@@ -48,21 +51,29 @@ if [[ -e "$BUILD_DIR" ]]; then
 fi
 
 printf 'Build directory is unavailable; launching extracted app from %s\n' "$SMOKE_APP"
-open -n -g "$SMOKE_APP" --args --demo
+open -n -g "$SMOKE_APP" --args --demo --check-package --check-output "$CHECK_OUTPUT"
 
-for _ in {1..15}; do
-    if pgrep -x EchoLedger >/dev/null 2>&1; then
-        sleep 4
-        if pgrep -x EchoLedger >/dev/null 2>&1; then
-            printf 'Clean-location launch smoke test passed; EchoLedger remained running.\n'
-            if [[ -f "$HOME/Library/Application Support/EchoLedger/EchoLedger.sqlite" ]]; then
-                printf 'Data file created in Application Support.\n'
-            fi
-            exit 0
-        fi
+for _ in {1..60}; do
+    if [[ -s "$CHECK_OUTPUT/failed.txt" ]]; then
+        cat "$CHECK_OUTPUT/failed.txt" >&2
+        exit 1
+    fi
+    if [[ -s "$CHECK_OUTPUT/completed.json" ]]; then
+        pgrep -x EchoLedger >/dev/null
+        python3 - "$CHECK_OUTPUT" <<'PY'
+import json, pathlib, sys
+folder = pathlib.Path(sys.argv[1])
+result = json.loads((folder / 'completed.json').read_text())
+assert result['status'] == 'passed' and result['brands'] > 3000
+assert result['section'] == 'transactions' and result['pdfStyles'] == 3
+for name in ['transactions.png', 'signature.pdf', 'everyday.pdf', 'precision.pdf']:
+    assert (folder / name).stat().st_size > 0, name
+print('Installed app rendered Transactions, loaded merchant icons, and exported all three PDF styles without .build.')
+PY
+        exit 0
     fi
     sleep 1
 done
 
-printf 'EchoLedger did not remain running after launch without its SwiftPM build directory.\n' >&2
+printf 'EchoLedger did not complete its installed-app merchant and PDF checks without the build directory.\n' >&2
 exit 1

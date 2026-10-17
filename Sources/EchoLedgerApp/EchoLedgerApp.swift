@@ -5,7 +5,15 @@ import SwiftUI
 @main
 @MainActor
 struct EchoLedgerApp: App {
-    @State private var runtime = LedgerRuntime()
+    @State private var runtime: LedgerRuntime
+
+    init() {
+        let arguments = ProcessInfo.processInfo.arguments
+        let checkingPackage = arguments.contains("--check-package")
+        let runtime = LedgerRuntime(demo: checkingPackage || arguments.contains("--demo"))
+        if checkingPackage { runtime.section = .transactions }
+        _runtime = State(initialValue: runtime)
+    }
 
     var body: some Scene {
         WindowGroup("EchoLedger") {
@@ -113,6 +121,13 @@ struct RootView: View {
         .navigationTitle("EchoLedger")
         .background(Theme.canvas)
         .preferredColorScheme(appearance == "system" ? nil : (appearance == "dark" ? .dark : .light))
+        .task {
+            if ProcessInfo.processInfo.arguments.contains("--check-package") {
+                // Let the demo Transactions table render before checking and recording it.
+                try? await Task.sleep(for: .seconds(1))
+                PackagedAppCheck.run(runtime: runtime)
+            }
+        }
         .task(id: runtime.statusMessage) {
             guard runtime.statusMessage != nil else { return }
             try? await Task.sleep(for: .seconds(5))

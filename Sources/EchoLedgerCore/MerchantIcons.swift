@@ -12,17 +12,45 @@ public struct MerchantIconDescriptor: Hashable, Sendable {
 
 /// Exact matches against resolved merchant names, with no network access or fuzzy brand guesses.
 public enum MerchantIconCatalog {
+    private static let resourceBundleName = "EchoLedger_EchoLedgerCore.bundle"
+    private final class BundleMarker: NSObject {}
+
+    /// Installed apps keep SwiftPM resources in Contents/Resources. The generated
+    /// Bundle.module accessor can trap before our optional fallback gets a chance to run.
+    /// Resolve existing bundles explicitly instead, including SwiftPM's test layout.
+    private static let resources: Bundle? = {
+        if let installed = resourceBundle(in: Bundle.main.bundleURL) { return installed }
+        if Bundle.main.bundleURL.pathExtension == "app" { return nil }
+        let moduleHost = Bundle(for: BundleMarker.self).bundleURL
+        let developmentHosts = [moduleHost, moduleHost.deletingLastPathComponent(),
+                                Bundle.main.bundleURL.deletingLastPathComponent(),
+                                Bundle.main.executableURL?.deletingLastPathComponent()]
+        for host in developmentHosts.compactMap({ $0 }) {
+            if let bundle = resourceBundle(in: host) { return bundle }
+        }
+        return nil
+    }()
+
+    static func resourceBundle(in host: URL) -> Bundle? {
+        let candidates = [host.appendingPathComponent("Contents/Resources/" + resourceBundleName),
+                          host.appendingPathComponent("Resources/" + resourceBundleName),
+                          host.appendingPathComponent(resourceBundleName)]
+        return candidates.lazy.compactMap { Bundle(url: $0) }.first
+    }
+
     public struct Brand: Decodable, Sendable {
         public let asset: String
         public let names: [String]
     }
 
-    public static let brands: [Brand] = {
-        guard let url = Bundle.module.url(forResource: "catalog", withExtension: "json", subdirectory: "MerchantIcons"),
+    public static let brands: [Brand] = loadBrands(from: resources)
+
+    static func loadBrands(from bundle: Bundle?) -> [Brand] {
+        guard let url = bundle?.url(forResource: "catalog", withExtension: "json", subdirectory: "MerchantIcons"),
               let data = try? Data(contentsOf: url),
               let brands = try? JSONDecoder().decode([Brand].self, from: data) else { return [] }
         return brands
-    }()
+    }
 
     private static let byName: [String: String] = {
         var result: [String: String] = [:]
@@ -58,7 +86,7 @@ public enum MerchantIconCatalog {
     public static func logoURL(for asset: String) -> URL? {
         // Only names from our catalog can select a bundled file.
         guard assets.contains(asset) else { return nil }
-        return Bundle.module.url(forResource: asset, withExtension: "png", subdirectory: "MerchantIcons")
+        return resources?.url(forResource: asset, withExtension: "png", subdirectory: "MerchantIcons")
     }
 
     public static func descriptor(name: String, categoryName: String? = nil,
