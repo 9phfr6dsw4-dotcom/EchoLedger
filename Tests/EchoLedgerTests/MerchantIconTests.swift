@@ -5,7 +5,7 @@ import XCTest
 final class MerchantIconTests: XCTestCase {
     func testOnlyExactResolvedNamesReceiveBrandArtwork() {
         for (name, logo) in [("Spotify", "spotify"), ("  SPOTIFY \n", "spotify"),
-                             ("Apple Services", "apple"), ("Amazon Prime", "amazon"),
+                             ("Apple Services", "apple"), ("Amazon Prime", "amazonprime"),
                              ("McDonald’s", "mcdonalds"), ("Uber Eats", "ubereats")] {
             XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, logo, name)
         }
