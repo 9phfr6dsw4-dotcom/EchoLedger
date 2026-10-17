@@ -206,7 +206,8 @@ struct OverviewTab: View {
             if !report.filter.wholeHousehold { householdContext(report) }
             if !report.filter.wholeHousehold, !bundle.zelle.household.isEmpty { householdMoneyCard(report) }
             if !bundle.zelle.lines.isEmpty {
-                ZelleCard(summary: bundle.zelle, currency: report.filter.currency, drillDown: $drillDown)
+                ZelleCard(summary: bundle.zelle, currency: report.filter.currency,
+                          scopeLabel: report.scopeLabel, drillDown: $drillDown)
             }
             SummaryCard(bundle: bundle, drillDown: $drillDown)
         }
@@ -344,6 +345,7 @@ struct ZelleCard: View {
     @Environment(LedgerRuntime.self) private var runtime
     let summary: ZelleSummary
     let currency: String
+    let scopeLabel: String
     @Binding var drillDown: DrillDown?
 
     private static let visibleLines = 12
@@ -351,9 +353,10 @@ struct ZelleCard: View {
     var body: some View {
         GroupBox("Zelle") {
             VStack(alignment: .leading, spacing: 10) {
+                Caption("Account activity · \(scopeLabel)")
                 HStack(alignment: .bottom, spacing: 24) {
-                    figure("Received", summary.received)
                     figure("Sent", summary.sent)
+                    figure("Received", summary.received)
                     figure("Net", summary.net)
                     Spacer()
                     Button("Show in Transactions") {
@@ -362,9 +365,10 @@ struct ZelleCard: View {
                 }
                 Divider()
                 HStack(spacing: 12) {
+                    Text("Person or business").font(.caption).foregroundStyle(.secondary)
                     Spacer()
-                    columnTitle("In")
-                    columnTitle("Out")
+                    columnTitle("Sent to")
+                    columnTitle("Received from")
                     columnTitle("Net")
                 }
                 ForEach(summary.lines.prefix(Self.visibleLines)) { line in
@@ -373,7 +377,8 @@ struct ZelleCard: View {
                 if summary.lines.count > Self.visibleLines {
                     Caption("\(summary.lines.count - Self.visibleLines) more names. Use Show in Transactions to see them all.")
                 }
-                Caption("This only shows your Zelles. Each one is counted the way you filed it in Review; nothing here changes your totals.")
+                Caption("Each row names the other side of a payment. Sent and received follow the bank account on each transaction. Net = received − sent; it is not that person's income.")
+                Caption("Household transfers move existing money and do not add income or spending. Other Zelles follow how you filed them in Review.")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -387,13 +392,13 @@ struct ZelleCard: View {
     }
 
     private func columnTitle(_ title: String) -> some View {
-        Text(title).font(.caption).foregroundStyle(.secondary).frame(width: 84, alignment: .trailing)
+        Text(title).font(.caption).foregroundStyle(.secondary).frame(width: 100, alignment: .trailing)
     }
 
     private func amountColumn(_ value: Cents) -> some View {
         Text(value == 0 ? "—" : Money.format(value, currency: currency))
             .monospacedDigit()
-            .frame(width: 84, alignment: .trailing)
+            .frame(width: 100, alignment: .trailing)
     }
 
     private func row(_ line: ZelleLine) -> some View {
@@ -409,8 +414,8 @@ struct ZelleCard: View {
                         .lineLimit(2)
                 }
                 Spacer(minLength: 8)
-                amountColumn(line.received)
                 amountColumn(line.sent)
+                amountColumn(line.received)
                 amountColumn(line.net)
             }
             .contentShape(Rectangle())

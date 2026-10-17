@@ -236,7 +236,10 @@ struct TransactionsView: View {
         let counted = rows.filter { !$0.isVoided && !$0.isPending }
         let moneyIn = counted.filter { $0.amount > 0 }.reduce(Cents(0)) { $0 + $1.amount }
         let moneyOut = counted.filter { $0.amount < 0 }.reduce(Cents(0)) { $0 + $1.amount }
-        let summary = "\(rows.count) transactions · money in \(Money.format(moneyIn)) · money out \(Money.format(moneyOut))"
+        let zelleOnly = filter == .zelle || (!counted.isEmpty && counted.allSatisfy { ZelleActivity.isZelle($0.detail) })
+        let summary = zelleOnly
+            ? "\(rows.count) transactions · sent \(Money.format(-moneyOut)) · received \(Money.format(moneyIn)) · net \(Money.format(moneyIn + moneyOut))"
+            : "\(rows.count) transactions · money in \(Money.format(moneyIn)) · money out \(Money.format(moneyOut))"
         return HStack {
             Text(summary)
                 .font(.callout)
