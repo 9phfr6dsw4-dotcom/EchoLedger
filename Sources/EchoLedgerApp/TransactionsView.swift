@@ -8,6 +8,7 @@ struct TransactionRow: Identifiable, Hashable {
     let id: UUID
     let date: LocalDate
     let merchant: String
+    let icon: MerchantIconDescriptor
     let detail: String
     let categoryName: String
     let colorIndex: Int
@@ -311,6 +312,7 @@ struct TransactionsView: View {
             default: categoryName = category?.name ?? "Uncategorized"
             }
             rows.append(TransactionRow(id: transaction.id, date: transaction.date, merchant: merchant,
+                                       icon: MerchantIconCatalog.descriptor(for: transaction, ledger: runtime.ledger),
                                        detail: transaction.rawDescription, categoryName: categoryName,
                                        colorIndex: category?.colorIndex ?? -1, kind: transaction.kind,
                                        accountName: account?.name ?? "", amount: transaction.amount,
@@ -326,7 +328,7 @@ struct MerchantCell: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            MerchantIconView(name: row.merchant, categoryName: row.categoryName, kind: row.kind)
+            MerchantIconView(descriptor: row.icon)
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 6) {
                     Text(row.merchant)

@@ -43,10 +43,16 @@ public enum MerchantIconCatalog {
         public let names: [String]
     }
 
-    public static let brands: [Brand] = loadBrands(from: resources)
+    static let prepared: [Brand] = loadBrands(from: resources, subdirectory: "PreparedMerchantIcons")
+    public static let brands: [Brand] = {
+        let preparedNames = Set(prepared.flatMap(\.names).map(key))
+        return loadBrands(from: resources).map {
+            Brand(asset: $0.asset, names: $0.names.filter { !preparedNames.contains(key($0)) })
+        } + prepared
+    }()
 
-    static func loadBrands(from bundle: Bundle?) -> [Brand] {
-        guard let url = bundle?.url(forResource: "catalog", withExtension: "json", subdirectory: "MerchantIcons"),
+    static func loadBrands(from bundle: Bundle?, subdirectory: String = "MerchantIcons") -> [Brand] {
+        guard let url = bundle?.url(forResource: "catalog", withExtension: "json", subdirectory: subdirectory),
               let data = try? Data(contentsOf: url),
               let brands = try? JSONDecoder().decode([Brand].self, from: data) else { return [] }
         return brands
@@ -61,6 +67,13 @@ public enum MerchantIconCatalog {
     }()
 
     private static let assets = Set(brands.map(\.asset))
+    private static let purposeAssets = Set([
+        "atm", "capital-one-transfer", "car-payments", "cash-back-redemption-ref", "college-transcript",
+        "daily-cash-adjustment", "donation", "interest-charge", "interest-charge-on-cash-advances",
+        "interest-charge-on-purchases", "purchase-interest-charge", "late-fee", "political-donation",
+        "pre-service-teacher", "rent", "teacher-background-check", "diploma", "person-payment",
+        "family-payment", "university"
+    ].map { "prepared-" + $0 })
 
     private static let defaultCategories: [String: String] = {
         var result: [String: String] = [:]
@@ -86,7 +99,8 @@ public enum MerchantIconCatalog {
     public static func logoURL(for asset: String) -> URL? {
         // Only names from our catalog can select a bundled file.
         guard assets.contains(asset) else { return nil }
-        return resources?.url(forResource: asset, withExtension: "png", subdirectory: "MerchantIcons")
+        let directory = asset.hasPrefix("prepared-") ? "PreparedMerchantIcons" : "MerchantIcons"
+        return resources?.url(forResource: asset, withExtension: "png", subdirectory: directory)
     }
 
     public static func descriptor(name: String, categoryName: String? = nil,
@@ -118,8 +132,31 @@ public enum MerchantIconCatalog {
             default: fallback = (nil, kind == .income ? .forest : .neutral)
             }
         }
-        return MerchantIconDescriptor(logo: kind == .transfer ? nil : brandAsset(for: nameKey),
+        let logo: String?
+        if identifiesZelle(name) {
+            logo = "zelle"
+        } else if kind == .transfer {
+            logo = purposeAsset(for: nameKey) ?? "prepared-person-payment"
+        } else {
+            logo = brandAsset(for: nameKey) ?? purposeAsset(for: nameKey)
+        }
+        return MerchantIconDescriptor(logo: logo,
                                       symbol: fallback.0, initials: letters, tone: fallback.1)
+    }
+
+    /// Generic artwork describes a payment purpose; it does not infer a company identity.
+    private static func purposeAsset(for name: String) -> String? {
+        if let exact = byName[name], purposeAssets.contains(exact) { return exact }
+        if name.range(of: #"\bbackground\s+check\b"#, options: .regularExpression) != nil { return "prepared-teacher-background-check" }
+        if name.range(of: #"\btranscript\b"#, options: .regularExpression) != nil { return "prepared-diploma" }
+        if name.range(of: #"\bdonation\b"#, options: .regularExpression) != nil { return "prepared-donation" }
+        if name.range(of: #"\buniversity(?:a)?\b"#, options: .regularExpression) != nil { return "prepared-university" }
+        return nil
+    }
+
+    /// Presentation-only matching, deliberately independent of filing and reporting rules.
+    static func identifiesZelle(_ text: String) -> Bool {
+        key(text).range(of: #"\bzelle(?:pay)?\b"#, options: .regularExpression) != nil
     }
 
     private static func brandAsset(for name: String) -> String? {
@@ -132,8 +169,11 @@ public enum MerchantIconCatalog {
     }
 
     public static func descriptor(for transaction: LedgerTransaction, ledger: Ledger) -> MerchantIconDescriptor {
-        descriptor(name: ReportEngine.merchantIdentity(transaction, ledger: ledger).name,
-                   categoryName: ledger.category(transaction.categoryID)?.name, kind: transaction.kind)
+        let identity = ReportEngine.merchantIdentity(transaction, ledger: ledger).name
+        let savedName = transaction.merchantID.flatMap { ledger.merchants[$0]?.name } ?? ""
+        let name = [identity, transaction.rawDescription, savedName, transaction.bankMerchant ?? ""].contains(where: identifiesZelle)
+            ? "Zelle" : identity
+        return descriptor(name: name, categoryName: ledger.category(transaction.categoryID)?.name, kind: transaction.kind)
     }
 
     /// Case, accents, and typographic apostrophes may vary; words and numbers stay intact.
