@@ -25,7 +25,8 @@ final class PDFReportTests: XCTestCase {
             for index in 1...document.numberOfPages {
                 let page = try XCTUnwrap(document.page(at: index))
                 var resources: CGPDFDictionaryRef?
-                if CGPDFDictionaryGetDictionary(page.dictionary, "Resources", &resources), let resources {
+                if let dictionary = page.dictionary,
+                   CGPDFDictionaryGetDictionary(dictionary, "Resources", &resources), let resources {
                     count += embeddedImages(in: resources)
                 }
             }
@@ -216,7 +217,7 @@ private func embeddedImages(in resources: CGPDFDictionaryRef) -> Int {
         guard let info else { return }
         var stream: CGPDFStreamRef?
         guard CGPDFObjectGetValue(object, .stream, &stream), let stream else { return }
-        let dictionary = CGPDFStreamGetDictionary(stream)
+        guard let dictionary = CGPDFStreamGetDictionary(stream) else { return }
         var subtype: UnsafePointer<CChar>?
         if CGPDFDictionaryGetName(dictionary, "Subtype", &subtype), let subtype, String(cString: subtype) == "Image" {
             info.assumingMemoryBound(to: Int.self).pointee += 1
