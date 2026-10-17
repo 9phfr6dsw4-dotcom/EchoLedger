@@ -405,7 +405,8 @@ struct ZelleCard: View {
         Button {
             drillDown = DrillDown(title: "Zelle: \(line.name)", ids: line.transactionIDs)
         } label: {
-            HStack(alignment: .firstTextBaseline, spacing: 12) {
+            HStack(alignment: .center, spacing: 12) {
+                MerchantReportIcon(name: "Zelle", transactionIDs: line.transactionIDs)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(line.name).lineLimit(1)
                     Text(line.howCounted.joined(separator: " · "))
