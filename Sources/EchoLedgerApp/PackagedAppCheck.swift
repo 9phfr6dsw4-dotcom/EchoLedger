@@ -27,8 +27,17 @@ enum PackagedAppCheck {
                   logo.standardizedFileURL.path.hasPrefix(resources.standardizedFileURL.path + "/") else {
                 throw CheckFailed("The installed app did not load its bundled merchant catalog from Contents/Resources.")
             }
-            for name in ["Spotify", "Example Cafe", "Sample Market", "Local Artisan"] {
-                let image = MerchantIconArtwork.image(for: MerchantIconCatalog.descriptor(name: name))
+            let consumerNames = ["Costco", "In-N-Out", "Trader Joe's", "Panera Bread",
+                                 "Marshalls", "Ulta Beauty", "Xfinity", "Mister Car Wash"]
+            for name in consumerNames + ["Spotify", "Example Cafe", "Sample Market", "Local Artisan"] {
+                let descriptor = MerchantIconCatalog.descriptor(name: name)
+                if consumerNames.contains(name) {
+                    guard let asset = descriptor.logo, asset.hasPrefix("consumer-"),
+                          MerchantIconCatalog.logoURL(for: asset) != nil else {
+                        throw CheckFailed("The installed app is missing consumer artwork.")
+                    }
+                }
+                let image = MerchantIconArtwork.image(for: descriptor)
                 guard image.tiffRepresentation != nil else { throw CheckFailed("Merchant artwork did not render.") }
             }
             guard let view = NSApp.windows.first(where: { $0.isVisible })?.contentView,

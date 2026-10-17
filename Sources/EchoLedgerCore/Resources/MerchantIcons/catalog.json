@@ -34385,5 +34385,2481 @@
     "hex": "B02CCE",
     "svgSHA256": "66cb87af2bb1aa4fbd8297ca124cffd69e2d34de64b38899610605ccbdb32244",
     "pngSHA256": "546fa61fed1e1c51e2db1aa8c37800e1db8db60c3fba8d3947a16c0be7eaeeb4"
+  },
+  {
+    "asset": "consumer-7-brew",
+    "names": [
+      "7 Brew"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/7-brew.png",
+    "sourceSHA256": "5459934448048c4f2f03932818fb16b82b3df5c078f04aa571efadbf2ac1fc01",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "82735db28b1ff4bb664ee1d798fd50c04b4cf762db24d55bdf891bcdfde755ae"
+  },
+  {
+    "asset": "consumer-7-eleven",
+    "names": [
+      "7-Eleven",
+      "7 Eleven"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/7-eleven.png",
+    "sourceSHA256": "509d8b1925b4b34280e8eb0b38a30fb72c0cdc78032bb06bc9593f101f073c94",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f535d77a95e8e1ed4a58a911a78c52f0883a2a1f97173563875cefd6784bb790"
+  },
+  {
+    "asset": "consumer-76",
+    "names": [
+      "Union 76"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/76.png",
+    "sourceSHA256": "4381dae2a651c0f7ada2e9f058a95c53d2eb760761ec4641360b64b819be3cc6",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "08479a2381def0e0a364cfd6e359c597034acc6e98f9ac4f3abec6c8f0434ed5"
+  },
+  {
+    "asset": "consumer-99-ranch-market",
+    "names": [
+      "99 Ranch",
+      "99 Ranch Market"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/99-ranch-market.png",
+    "sourceSHA256": "b76deb5b3cd633e3d6fe9e7034139d9417f2b20198b030c1dfaf3bd9a2a32d8c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "901aa169f58206732c26a506107b4b6e645382f143b79a887581cd48de6064e1"
+  },
+  {
+    "asset": "consumer-a-w",
+    "names": [
+      "A&W Canada",
+      "A and W Canada"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/a-w.png",
+    "sourceSHA256": "3956eaf0133680a547c5002f411638408ea4f49f8c6c451e057806cfe248ab5c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c269b72ddad4d86ee7f02804de2d2c0646342ea7e85166495befd25bb3da03ad"
+  },
+  {
+    "asset": "consumer-abercrombie-fitch",
+    "names": [
+      "Abercrombie & Fitch",
+      "Abercrombie and Fitch"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/abercrombie-fitch.png",
+    "sourceSHA256": "9e7ceee2dfe33ddd2530532ccbc76e7ce3ff354ee0c193820e1fab2408ed7471",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "14625ba3f7cba3c8955914f1dd913be5adbdd3077059e7fe752427e090093edf"
+  },
+  {
+    "asset": "consumer-academy-sports-outdoors",
+    "names": [
+      "Academy Sports + Outdoors"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/academy-sports-outdoors.png",
+    "sourceSHA256": "b5aeb41565c091ab5aba4990f2bcadc61d0e91fa7b889d7e2fe75f4fdbe2c30f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c8264b097fd64cffc656c1bb8377fe8613fa7899eca6f8f1449b27f702fa19a2"
+  },
+  {
+    "asset": "consumer-ace-hardware",
+    "names": [
+      "Ace Hardware"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ace-hardware.png",
+    "sourceSHA256": "85cd275b5aad059d6fbf4430c89f98485827fa1216c33c1595667d52ff771fd4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "026bac3f4c6a56dbf4552a86d9bdac3bd81859ad5409f4294beec6e639173806"
+  },
+  {
+    "asset": "consumer-aerie",
+    "names": [
+      "Aerie"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/aerie.svg",
+    "sourceSHA256": "94a7ae165227893d98b548b23e4170dc147f9eb26431d1c017474541c6d5e43b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "64a656092f01c9453ebbef22f05a1dba6cf1cde4f188c9d300b8ab6c4bd0ee8e"
+  },
+  {
+    "asset": "consumer-albertsons",
+    "names": [
+      "Albertsons"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/albertsons.png",
+    "sourceSHA256": "7d26b19a23e93fb5d00844f65dacef99c95bda61d19c809a0f1aa0c3b9dfafe4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c32f9d5aee0fca9d9b8d1a6820ce811388fda1cd267c1b365fac7c9f89d079ea"
+  },
+  {
+    "asset": "consumer-aldi",
+    "names": [
+      "Aldi"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/aldi-sud-2017.svg",
+    "sourceSHA256": "57c12f95265d7ea62060164b217cc69084712d16f104c91cc2d2a5a7127cf0f8",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "353a6f95e282ba6c54713704b7962dc517f20a6d237b33893248c186ebee38a2"
+  },
+  {
+    "asset": "consumer-am-pm",
+    "names": [
+      "ampm"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/am-pm.png",
+    "sourceSHA256": "f8e49539ac5f41bc99f641bd3fe150173c7abb9feb2a7a3b0e60d650f5a11d9f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "96803f6c4428c0eda419fafde1ffb5189801dc0cfdfa715107c906837f953dd9"
+  },
+  {
+    "asset": "consumer-amoco",
+    "names": [
+      "Amoco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/amoco.png",
+    "sourceSHA256": "91346d60c72d6b1e5a2170bdcee50615482b454182b4da498a0708fc23acaced",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d7524d4a7d66ed3258e36d05ff81194f8b7bd1b412a9cff127ec5e8a1ebe417e"
+  },
+  {
+    "asset": "consumer-anthropologie",
+    "names": [
+      "Anthropologie"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/anthropologie.png",
+    "sourceSHA256": "327c85b05e6b50978a8d3e63703bf87983aed89f7c7ef58a3f1898a9d72633dd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "986059a09b694e1d6c32acde7f199e69ee654c55ded5eecd4b6536b987ec69e5"
+  },
+  {
+    "asset": "consumer-applebees-neighborhood-grill-bar",
+    "names": [
+      "Applebee's",
+      "Applebees"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/applebees-neighborhood-grill-bar.png",
+    "sourceSHA256": "725f3a8326566f23ef3323ac9cbddd5b76f034925025b4d225e5bf108f3fa883",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f0342b850d7fe52167e6cdec7e0ed477b7465c25e77ab932e7bba106fbc08db3"
+  },
+  {
+    "asset": "consumer-arbys",
+    "names": [
+      "Arby's",
+      "Arbys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/arbys.svg",
+    "sourceSHA256": "1b727c671899d17712e3b0e9a64bb082d8f5ebc48ca9ed69e64972050b29b8a9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b123f83d354a2b7a8ddc133001705685fac194d09e385fd1da778fe505bcad27"
+  },
+  {
+    "asset": "consumer-at-home",
+    "names": [
+      "At Home"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/at-home.png",
+    "sourceSHA256": "2388436a65cfe16138f4ef812dfe721335b0601c1f9d2170ca2f12a73d729a46",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "df76c7a3d43e2257f521484fd19e963f4b1c09f84a01647768031d03084ec5b7"
+  },
+  {
+    "asset": "consumer-athleta",
+    "names": [
+      "Athleta"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/athleta.png",
+    "sourceSHA256": "f2c1eb110b034a1a386f2694e718b951d770c5e4aa4d1815dc4ac6791f929982",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0bc5e7d95b078db28d71b060e1ad02793c16c486704ac1b3e4f825c1260b9d96"
+  },
+  {
+    "asset": "consumer-auntie-annes",
+    "names": [
+      "Auntie Anne's",
+      "Auntie Annes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/auntie-annes.png",
+    "sourceSHA256": "59b3b67aaa43a617a3b7c8aab13de66df0c8b17f9277139b2ae81e0f26016488",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "67bd1e9a7ee69c4c4886f91458807516d9c8fc9e1e84c2394a7ed2d82f0982a4"
+  },
+  {
+    "asset": "consumer-banana-republic",
+    "names": [
+      "Banana Republic"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/banana-republic.png",
+    "sourceSHA256": "d9c860b30b4d66cac8c3b66d8f0377c42c69ff0f9d6a3e7166dbf48d2dcb12b0",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2c5d4b1c952f21295850e5b5146dfd48fde34b85e79bd15b1abb28e3d59dd8eb"
+  },
+  {
+    "asset": "consumer-baskin-robbins",
+    "names": [
+      "Baskin-Robbins"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/baskin-robbins.png",
+    "sourceSHA256": "1abe0a7b44762f0ee6717de436d68060b89c8ab1fd3f2fb01d07037c8b66b181",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "25e12045aa872c5d8de71f9f1207e5c5ae6992e1788ec1ca63b9958207eecf39"
+  },
+  {
+    "asset": "consumer-bass-pro-shops",
+    "names": [
+      "Bass Pro Shops"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bass-pro-shops.png",
+    "sourceSHA256": "777bf92462aa025f73a5d1680b9f580046b2b4e6f0a28d05d7e7916f34d56335",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "058593ace75efd957d09d839e8d52f45133068235d7b2398efbf487119cdc20a"
+  },
+  {
+    "asset": "consumer-bath-body-works",
+    "names": [
+      "Bath & Body Works",
+      "Bath and Body Works"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bath-body-works.png",
+    "sourceSHA256": "d51eb4663dd763e4ec8e35406cce7aa14847600b0a292654b439ea1f7d3514d8",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "18bdca3b11f49f17efa6a3a1c31d0ce1b98b415f06a8b712ee2e97c258f0fb5a"
+  },
+  {
+    "asset": "consumer-bed-bath-beyond",
+    "names": [
+      "Bed Bath & Beyond",
+      "Bed Bath and Beyond"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bed-bath-beyond.png",
+    "sourceSHA256": "97936a3dfc6071655a321ba66491cd96b368ceeb595453b755b1dc249e7385af",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2ff52a62fcc64a778dcd96b4c2b2c5d8a35d4ecf3dc4bfeadd66f7ecdfa73fb7"
+  },
+  {
+    "asset": "consumer-big-5-sporting-goods",
+    "names": [
+      "Big 5",
+      "Big 5 Sporting Goods"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/big-5-sporting-goods.png",
+    "sourceSHA256": "9dd71bf18a543b56a8bbc5e2e7deb0c5a9a886fb60f257d23738fd12d8aec42a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "72befd40b782aee741b11439cf891604887175d3f2011b23821c4779aaf8a457"
+  },
+  {
+    "asset": "consumer-bjs-wholesale-club",
+    "names": [
+      "BJ's Wholesale Club",
+      "BJs Wholesale Club"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bjs-wholesale-club.svg",
+    "sourceSHA256": "ac0fc957036c8b1ed02672623536c8135a86aa0403e271e155b30e3ac0c13def",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "1fcf9d3c44ea604a2af66615cda2a69856e366d5d54284a2b0c11dcda28b402a"
+  },
+  {
+    "asset": "consumer-black-bear-diner",
+    "names": [
+      "Black Bear Diner"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/black-bear-diner.png",
+    "sourceSHA256": "96faa9324564d6ca0a08ad1fe5d959f74d33282b0c5ba471c863950b762659c2",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "edc40d2258abf9b8ff6380b53903a15c1b9bc3a62af52086ce209b63661a0a77"
+  },
+  {
+    "asset": "consumer-blain-s-farm-fleet",
+    "names": [
+      "Blain's Farm & Fleet",
+      "Blains Farm and Fleet"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/blain-s-farm-fleet.svg",
+    "sourceSHA256": "0515bda26837fdbe30aed7abe4573547c2ffc96ece0e71675e1429a15f3a9f93",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7a534004de17271fd40e5ce789af3c27d3ebb533cfae01a34c7c0cba71e05097"
+  },
+  {
+    "asset": "consumer-blaze-pizza",
+    "names": [
+      "Blaze Pizza"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/blaze-pizza.png",
+    "sourceSHA256": "8fde11962ec26ebdb0f23800447396e9cfa952497454845b11dfe680aad6ea41",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "966023cabe1e2c75417e921060c64315edcc8b44793b7eed021a9f19eff9b515"
+  },
+  {
+    "asset": "consumer-bob-evans",
+    "names": [
+      "Bob Evans"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bob-evans.png",
+    "sourceSHA256": "a62372d4db40bb60fea767eca1993775c75bff413bc4e8a087f8560ad1909511",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3dbc6c4c29ecb9448d24fd6afbc2527be165b44868749c14252303d677efae7d"
+  },
+  {
+    "asset": "consumer-bojangles",
+    "names": [
+      "Bojangles"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bojangles.png",
+    "sourceSHA256": "370392f591d4023e71a9bea696bcf7883f687686c8129d155873bd6f3d4e8fe6",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7b9ec76560ae248c9b4de9aa6156fc18769d48681468279972f56a1f4a4dd666"
+  },
+  {
+    "asset": "consumer-bonefish-grill",
+    "names": [
+      "Bonefish Grill"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bonefish-grill.png",
+    "sourceSHA256": "a675db19cd5668daf34476a1e54205d76eccd881ff3f3291c3c90408cf92bf93",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "83d6287874e2985ba9ce728b0279b308ab6094031424250c173a8ce15ab51ef9"
+  },
+  {
+    "asset": "consumer-bp",
+    "names": [
+      "BP"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/bp.png",
+    "sourceSHA256": "3c70a87f01536342206aaa248069d2ccd2aba8da79b49c58aeefe51e218ab5b5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "72b1ea3e436eec406f027d5370c025b2c4b7d09e626853a7d5ef93ab9f5010e2"
+  },
+  {
+    "asset": "consumer-buc-ees",
+    "names": [
+      "Buc-ee's",
+      "Buc-ees"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/buc-ees.png",
+    "sourceSHA256": "1893268693af311bec70c65f1d7c14c1990b6f9db5b6fd3f9d322c6d891600c1",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "4b253b642bcd418e60f76b0b697df6fd0edc7f564fe2bd91725f739320ad89c0"
+  },
+  {
+    "asset": "consumer-buffalo-wild-wings",
+    "names": [
+      "Buffalo Wild Wings"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/buffalo-wild-wings.png",
+    "sourceSHA256": "da0e1ad50f9f6e4ec22942377dc01893d9f37a6099759c263412f01d7eec3bbc",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "1baa00775f07d9df7cd12670e3bc9060d39688b1e0bca3c970b13cfd7b697eeb"
+  },
+  {
+    "asset": "consumer-cabelas",
+    "names": [
+      "Cabela's",
+      "Cabelas"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cabelas.png",
+    "sourceSHA256": "cfd9b0c2059b64244c317b3ae4fa132916deb657127d9443d92e230470282b32",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e9bdf586cf8210164bb0b3f964a811bf639ac3e57b2c1cf369e0877e7a1789cf"
+  },
+  {
+    "asset": "consumer-captain-ds",
+    "names": [
+      "Captain D's",
+      "Captain Ds"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/captain-ds.png",
+    "sourceSHA256": "72831027e5715c40e7172a5e7722e6f3dc77e985f51de2c4bb800ecb3c2aa787",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e9231ba68c03233da77fa5110281fae0e530de1a79185a4d8b57960f8d5bbd05"
+  },
+  {
+    "asset": "consumer-caribou-coffee",
+    "names": [
+      "Caribou Coffee"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/caribou-coffee.png",
+    "sourceSHA256": "4a5ac73b06fe0bbbebd615a5f42e8ded420e96d7a310847be7312361bf4ca732",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b1a910679920b9818f194629cc03cfd07f4bf5415c5e2928dcb11b793ed1c50b"
+  },
+  {
+    "asset": "consumer-carls-jr",
+    "names": [
+      "Carl's Jr.",
+      "Carl's Jr",
+      "Carls Jr",
+      "Carls Jr."
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/carls-jr.png",
+    "sourceSHA256": "b8e39a3865295e29e90dd7b7d7296fd9ed09d60ace208965565caca9317153b3",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c337e86f7b7ed59ebd0b25566f95f09969a04de68afdc4b4f787c1663d384a35"
+  },
+  {
+    "asset": "consumer-carrabbas-italian-grill",
+    "names": [
+      "Carrabba's Italian Grill",
+      "Carrabbas Italian Grill"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/carrabbas-italian-grill.png",
+    "sourceSHA256": "859b8495453c6f9d56fdd5f9010e0e66b9de6798b8e340d1c03c0e01cc350c25",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "6b50e1b136cde98c3fb1cce656e5a1826c95627e2974474e4ad60a3e952653df"
+  },
+  {
+    "asset": "consumer-champs-sports",
+    "names": [
+      "Champs Sports"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/champs-sports.png",
+    "sourceSHA256": "175729bf500ddb3279abc7e6fd53518c8e1be1b6c9ec31c440015fa47668105d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0ff92ede582d1ac7c20701579c36e3c68f4549af141027aed174e841aedccc50"
+  },
+  {
+    "asset": "consumer-checkers",
+    "names": [
+      "Checkers"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/checkers.png",
+    "sourceSHA256": "96d91b250a85609f8d587a79b4331de934a4cf3713109d23b73caa04b657f95e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7a1d69ab279713a21b3fa63c583fd6d5c2ca07db8199dbcb271372b002e7ffce"
+  },
+  {
+    "asset": "consumer-chevron",
+    "names": [
+      "Chevron"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/chevron.png",
+    "sourceSHA256": "0f583c6eb98c7d58371fba85c3553f8d8903eb17ec752fc118b185a6541f19e2",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a7ac89578cf13187b0a9decd87ad9cc2cb4f7d46b55f9fe3319786892a43dbef"
+  },
+  {
+    "asset": "consumer-chick-fil-a",
+    "names": [
+      "Chick-fil-A"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/chick-fil-a.png",
+    "sourceSHA256": "7acdbe14ef97a8ac2072e8f793f7225f2dabc903eda8e6a594fe27748a2e0ca1",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "1674024826f5100a53bce7bfa09a160d21a1f5c9e2cff46a2dc8976924d76db2"
+  },
+  {
+    "asset": "consumer-chilis",
+    "names": [
+      "Chili's",
+      "Chilis"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/chilis.png",
+    "sourceSHA256": "6fce433d9d9bdecce8e812a9882e507e1a96e2a7530c6b002cf47da1827b64fb",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "48979985e7b4cb215bd9621b4559c99624fd6bbe875afe3ec86e9ff865f6f988"
+  },
+  {
+    "asset": "consumer-chipotle",
+    "names": [
+      "Chipotle"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/chipotle.png",
+    "sourceSHA256": "7086e1445047c4a1a4ef3d04be6f85ee933dd2cec82156fe532bcb07aa04bf72",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "cd8e83911ecf8a47ae2f2cdaff333e991ba1a7c6c3aa49bfe260e6176fc9de12"
+  },
+  {
+    "asset": "consumer-churchs-chicken",
+    "names": [
+      "Church's Chicken",
+      "Churchs Chicken"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/churchs-chicken.png",
+    "sourceSHA256": "b6ce0fa3cd6ac1dfc86a3140566c61ce33a115737696cf6048eb60ddba8dd0bd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b8f77021079f03cc1f1694b0697a2c096f18b987a27f6f44ce79da8b341ab699"
+  },
+  {
+    "asset": "consumer-cinemark",
+    "names": [
+      "Cinemark"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cinemark.png",
+    "sourceSHA256": "4b96d299f75f18ece37bdb32f439de4d24a2ccb335d5a2166c2ebe2e4bab30aa",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "048d2d9a755ac1a2019b6a56b10610b4ed814500fe68b7bd20b1aa7e18ae1612"
+  },
+  {
+    "asset": "consumer-cinnabon",
+    "names": [
+      "Cinnabon"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cinnabon.png",
+    "sourceSHA256": "03c9dff646f15980e50dc95ca6fab82e88154d0c86fd60ca64b4285290c32ecd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "dc4e6708518a929ad44d0bc6e9fb559c6ebe73b4311f358186067504e964d34f"
+  },
+  {
+    "asset": "consumer-circle-k",
+    "names": [
+      "Circle K"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/circle-k.png",
+    "sourceSHA256": "348874ed3d44c1e5870a03e7c311a6780218bcd2227a7256bfc0417da2e8ab7b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "20429b3ffd77aec32153e0db36b234c22bbacf12eebce60026e8d7a0b931e2a7"
+  },
+  {
+    "asset": "consumer-citgo",
+    "names": [
+      "CITGO"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/citgo.png",
+    "sourceSHA256": "c3e22051f798d309e1df74e77115967f06615168f585a3bd41a6d0fb35610c02",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5f423c999effe13e175c0b5031d137a6ab24112acde19f8e35b9ae762ce86a56"
+  },
+  {
+    "asset": "consumer-cold-stone-creamery",
+    "names": [
+      "Cold Stone",
+      "Cold Stone Creamery"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cold-stone-creamery.png",
+    "sourceSHA256": "0cdbf78e46e71073a6a63c4d6bf36856163de69929128e246def61be4c479a13",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "72d44916ad780dcda00ab53518a71b59b72d25fd8eea4e7e2cf1a56ecb9e6358"
+  },
+  {
+    "asset": "consumer-coles",
+    "names": [
+      "Coles"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/coles.svg",
+    "sourceSHA256": "31a6a4df76cd161eb9d7552a555cd2a24c11b3cacfb086ba185a19dbb16c062c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "edba09abff999f3a4ac447e450acee63784d8f8d8e65f6f8c05a48b942775d19"
+  },
+  {
+    "asset": "consumer-cook-out",
+    "names": [
+      "Cook Out"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cook-out.png",
+    "sourceSHA256": "635e47e1f26d74e56b7bc2707e0f12bb5a2ea5e6ce0b3d6fbec2ce7479598e6a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5921ea19ee9ec28adda437acf9bcb60483e5d815dc3865c0e3633e172ddc25a9"
+  },
+  {
+    "asset": "consumer-costco",
+    "names": [
+      "Costco",
+      "Costco Wholesale",
+      "Costco Whse",
+      "Costco Gas",
+      "Costco (Instacart)"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/costco.svg",
+    "sourceSHA256": "8586e17e24fd53d6f54ba2298ffc915906e43029d0c44cc2beb73c49e7530447",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a847a410d3537d951e7d8e0266a4e2c07803f76b0fd70f2eca2e4501dab1e9ce"
+  },
+  {
+    "asset": "consumer-cracker-barrel",
+    "names": [
+      "Cracker Barrel"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cracker-barrel.png",
+    "sourceSHA256": "9888f3df6de13149eac7586195bb182ad0c5ba091f0d01ffd76f4bb4ee39ec62",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c0366d19bd97aaac3bdd6a9981b232d6307d66a13a07f040d2597a68afc3307c"
+  },
+  {
+    "asset": "consumer-crate-barrel",
+    "names": [
+      "Crate & Barrel",
+      "Crate and Barrel"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/crate-barrel.png",
+    "sourceSHA256": "343dc10105bd07d8c85ac32b6856cc32ac6f4e931de855edfd0332cbc71930ab",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "55928f5a06ccfbdeed869208bddc01c4c7794a6f319e51a0f607831cd67f0923"
+  },
+  {
+    "asset": "consumer-crumbl-cookies",
+    "names": [
+      "Crumbl Cookies"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/crumbl-cookies.png",
+    "sourceSHA256": "a2b48d87143f02c672984512471add2d103ef266aba4808ce271937166b9aba9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "123d2da8d6cf1943a246ca6a880d9811142d7f43d0f9d61f048b01bf1b59efdd"
+  },
+  {
+    "asset": "consumer-culvers",
+    "names": [
+      "Culver's",
+      "Culvers"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/culvers.png",
+    "sourceSHA256": "6aeec36d94eda278289eaa50f63f9297d6f789000e352f2809b94f38629f279d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "585db2e6361f6273a29b779943ca19f244b75f7c7e2c4346ac13c4fa654fbfda"
+  },
+  {
+    "asset": "consumer-cumberland-farms",
+    "names": [
+      "Cumberland Farms"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cumberland-farms.png",
+    "sourceSHA256": "cdd4f69deaf8b5473d1f5a01f92544307bf894710f73786d091140674d8e18d9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "1a4504a20575d56c9936d1e0a8799a7efde6fbe1e52c85c1b3837226c8a96477"
+  },
+  {
+    "asset": "consumer-cvs-pharmacy",
+    "names": [
+      "CVS",
+      "CVS Pharmacy"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/cvs-pharmacy.png",
+    "sourceSHA256": "e5bb13baab8d1e890a16dbb57aeb591d078f4f9a8186d3bc5515fac27b3a38d6",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d6a9df88dbbbdee3f79443baf0a80b1607b7caf82eadf69250e2a0257b9c27b2"
+  },
+  {
+    "asset": "consumer-dave-busters",
+    "names": [
+      "Dave & Buster's",
+      "Dave and Busters"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dave-busters.png",
+    "sourceSHA256": "88c9a367568d76ebb41d53cce145aa4af1f2866a1a95d33d7c0a0ae0a72db039",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "26e3d1028354c07c00debc623b0f3dd9fb8bec17c5fb5b625a9ff519a2e47236"
+  },
+  {
+    "asset": "consumer-daves-hot-chicken",
+    "names": [
+      "Dave's Hot Chicken",
+      "Daves Hot Chicken"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/daves-hot-chicken.png",
+    "sourceSHA256": "2d2e1be930ff98e6b68db239923e0a4efc8b8e38b25804f856329dca136f021b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "47c677e087b799a3d8a5a7471cc5a64665e5674172b4b0087acbfcaf26cd70b8"
+  },
+  {
+    "asset": "consumer-del-taco",
+    "names": [
+      "Del Taco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/del-taco.png",
+    "sourceSHA256": "ce3e1f93115f36ae6a540f8048da2042f3377ea5ecdb9ecd0c8345e47ff03162",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "222aebfa1251282c33c69511766a1d589d969bdf5fed5a9ce1008d013800d4e7"
+  },
+  {
+    "asset": "consumer-dennys",
+    "names": [
+      "Denny's",
+      "Dennys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dennys.png",
+    "sourceSHA256": "f5fcbaa435c82c527db3e4679edb8425a0f007fa76c08bb270e37eb642414446",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e7f146b79f3f23f266d99728e4ba122ccd79c852fd33e48ec6eacb8c18444759"
+  },
+  {
+    "asset": "consumer-dicks-sporting-goods",
+    "names": [
+      "Dick's Sporting Goods",
+      "Dicks Sporting Goods"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dicks-sporting-goods.png",
+    "sourceSHA256": "7f1e92cc59af341dee9f99832a4c2a1d37d357045e3e9de54290e078e8d41dc7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2484550ec0488d8ed4833690a69ff480f7e2c10fef0d629b172e289efda403c1"
+  },
+  {
+    "asset": "consumer-din-tai-fung",
+    "names": [
+      "Din Tai Fung"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/din-tai-fung.png",
+    "sourceSHA256": "4f7bc1a606e81dabf1b8510de828b8488bc1df5ff7851f978faab1bcbd3dfeb7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ad51a85d8828a61ed7704aa81feef5799b066b609848113c83ebce4d61850fc4"
+  },
+  {
+    "asset": "consumer-dollar-general",
+    "names": [
+      "Dollar General"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dollar-general.png",
+    "sourceSHA256": "71090af38c556f8bb172dffdca661c3b1aee9a8f3d0939d71b65a8b3cd6e454c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "66d4d0a8f2f073ef0caa4227685c1d60e52c6bccb9c835ebcbef15ec6db5ef45"
+  },
+  {
+    "asset": "consumer-dollar-tree",
+    "names": [
+      "Dollar Tree"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dollar-tree.png",
+    "sourceSHA256": "6d0488b92c763e49c114ae26a481073223dff970a229cbe5fc8d8764bb2e7059",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "bb4087f89eb80c2c0e99fd979d735752b052869adcb37bf4ea72aadcc63a85e6"
+  },
+  {
+    "asset": "consumer-dominos",
+    "names": [
+      "Domino's",
+      "Dominos"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dominos.png",
+    "sourceSHA256": "e74a0ee8834abbd726f9712801b688b0fb02a4ee4556bcc5c89376b8c8176f9e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "94fd1c0da957b05204218e4a89ae5a3f9f80b6247782065bcbd6ebd074fbe552"
+  },
+  {
+    "asset": "consumer-dunkin",
+    "names": [
+      "Dunkin'",
+      "Dunkin"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dunkin.png",
+    "sourceSHA256": "2df7ae22059ec9b720bd7aefffe19be6089d870f206afefae9cfb4f4da53b022",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8fad809951f61a834725324fec6256cc3ffcc410239ee4dce495a9443acabf8a"
+  },
+  {
+    "asset": "consumer-dutch-bros-coffee",
+    "names": [
+      "Dutch Bros",
+      "Dutch Bros Coffee"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/dutch-bros-coffee.png",
+    "sourceSHA256": "b4830f1f98fc6a6876837630a298c84afb861e4a6d2581499c319b59cf5ee8c7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "743baee795ad56bc2aa0aecfd0ad2370f15812558d8c488359c1c1c31d14c8e1"
+  },
+  {
+    "asset": "consumer-einstein-bros-bagels",
+    "names": [
+      "Einstein Bros. Bagels"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/einstein-bros-bagels.png",
+    "sourceSHA256": "9dc020828fbccae6cb3e8828dddc152b238da3cb8acfba8b33906d16dc99c6d5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "473fc6aba85783a6b2579dd84945cefe7fbc9a5df87b27c25e3c89a589c925e6"
+  },
+  {
+    "asset": "consumer-el-pollo-loco",
+    "names": [
+      "El Pollo Loco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/el-pollo-loco.png",
+    "sourceSHA256": "78f83b2fbe7ba2f9fe143e28185e5ee3d5f695b2feb22ee98b0a7108d9d6f003",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f20de032d26bf81a02e7ec34f8edecb335ea28d43a082d6bcd0f2dcdf5042964"
+  },
+  {
+    "asset": "consumer-family-dollar",
+    "names": [
+      "Family Dollar"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/family-dollar.png",
+    "sourceSHA256": "98b6a23bde449831b999d2a1b7ea8d61c02e857631f3bb541eae95baeebfd5f5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "616d48b535d9e610be65ad56c94f40fd5bb1bd45b1c1376588622fa3aa3eb93f"
+  },
+  {
+    "asset": "consumer-famous-footwear",
+    "names": [
+      "Famous Footwear"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/famous-footwear.png",
+    "sourceSHA256": "7579a546609f53896b36f615a8c00e34211018bba75b5bad6381011988709653",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "036fdc33bdabe9772db313af2eb449ed4839ecc6597da4b59bd583592df16ddb"
+  },
+  {
+    "asset": "consumer-farmer-boys",
+    "names": [
+      "Farmer Boys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/farmer-boys.png",
+    "sourceSHA256": "fc6e4e49eb43d72be2ba9874729fdb84966d140cafa9d74bc4079d84c9a0f3a3",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2d68403c6ebc98e0e010820426efdf581d50262d63fec06e950943707ba0bb80"
+  },
+  {
+    "asset": "consumer-fastrak",
+    "names": [
+      "FasTrak"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/fastrak.png",
+    "sourceSHA256": "37f11f4181271aa4eb402221efa94a09a3f12c94acd252b8d5c3e575d15edd45",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c474dbe40369eae0e93872fe8a0f570328965c899015b6b09bf95f9b34ffe53d"
+  },
+  {
+    "asset": "consumer-finish-line",
+    "names": [
+      "Finish Line"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/finish-line.png",
+    "sourceSHA256": "78d181eebb663f60a50cb0539ebf073ce1cdea6c793ac9aebe2b70704d9fd908",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d3b6c49e7f7c633b5c1c0995d9e6538ffbba3421673be8f7c4daaaa8e4ef8789"
+  },
+  {
+    "asset": "consumer-firehouse-subs",
+    "names": [
+      "Firehouse Subs"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/firehouse-subs.png",
+    "sourceSHA256": "a786ae9884e8643ed9686cdf961a357259943d718189e6fb393eb5e7cd2e4860",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "be0d779c46ca644f352f906cb8622d79ba39502654a15d4132a35ee9d943c3b4"
+  },
+  {
+    "asset": "consumer-five-below",
+    "names": [
+      "Five Below"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/five-below.png",
+    "sourceSHA256": "28369d1dcb630d72faee0ca7ea969b9816f793c5630da3aa707fdf622000a46a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "652e368f8399a64d0bca282d51a678ed3d0c1292a7bd404c926aee09ac204af2"
+  },
+  {
+    "asset": "consumer-five-guys",
+    "names": [
+      "Five Guys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/five-guys.png",
+    "sourceSHA256": "4dd3717f4caaee3127e1fa193a5c13be1f9c1abd725009bfc7af605f3c7a4f80",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f25a4b509be1cbef86ad62506af1e6d6b479d010a4974a41b66ed2825c39fd51"
+  },
+  {
+    "asset": "consumer-fleet-farm",
+    "names": [
+      "Fleet Farm"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/fleet-farm.png",
+    "sourceSHA256": "c43cdbde998c5a43075aaee37a2b90cee31f9a985d774ac0d043c8cb2bd164dd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "55366ecceed08bd8704eb35e50a4719e82640aa806f8b3de6ab29f19ee366a3a"
+  },
+  {
+    "asset": "consumer-food-city",
+    "names": [
+      "Food City"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/food-city.png",
+    "sourceSHA256": "f3d808b4652a356233e52eb2d407dcdf903beacfe355e432ab10b9a809a3ab80",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "58f6446d1cc9a72a6f077d8a10e9028ea8be720943bb4f3a4c4f93fd093b42e3"
+  },
+  {
+    "asset": "consumer-food-lion",
+    "names": [
+      "Food Lion"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/food-lion.png",
+    "sourceSHA256": "38129429a0f8bcee4697338bbb812d33c64a2cdb2c0f49c645f0a88612026c66",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b01b40c3cca4d66874d2d82ad9b314860408d000497da5d88bef4722ca43c270"
+  },
+  {
+    "asset": "consumer-foodmaxx",
+    "names": [
+      "FoodMaxx"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/foodmaxx.png",
+    "sourceSHA256": "8e0dfa20ac2da2ba04214d7269306c565870f9a2d1f9f9005464d84207c5b9cf",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "93021a31f37e96a673f6fc8db7a31199bd5d148d2d6974fd48b5745a1908ef76"
+  },
+  {
+    "asset": "consumer-foot-locker",
+    "names": [
+      "Foot Locker"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/foot-locker.png",
+    "sourceSHA256": "db1911ef8d3883eef8e86e7fa55181e3c02abcf628c7c21fd52b0cfae43d036a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d8c6c4a1ffd7b7abb4abfb6d90d89984e9a2ef840f68be80003a01cfe1aafe63"
+  },
+  {
+    "asset": "consumer-freddys",
+    "names": [
+      "Freddy's",
+      "Freddys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/freddys.png",
+    "sourceSHA256": "ad55078de8ad136b00cf73d84fe8dcf6f41572f6d030c2030ba49ef7df323fbb",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3616ccc583f9f7b60ccd5c0894fca0998f7d09eb4ccbb7ed7dba00aae44f5788"
+  },
+  {
+    "asset": "consumer-gamestop",
+    "names": [
+      "GameStop"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/gamestop.png",
+    "sourceSHA256": "f7f6320c09ae09ea72362e9e01ae0b85b30cf486cc22f57e84fd828546ebfc1a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0c7ee945b06519c69ffbf722150d5f1636d444cd17ad5b82470472485ccb6b99"
+  },
+  {
+    "asset": "consumer-gap",
+    "names": [
+      "Gap"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/gap.png",
+    "sourceSHA256": "1c4376e8e2c4387d41507afee6552dc466597431e8e7248d3065ee1445f37078",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "01423876832de2050c1670b268643ad1bda1d40e9f98d87c0450fb749d1ccf9e"
+  },
+  {
+    "asset": "consumer-giant-food",
+    "names": [
+      "Giant Food"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/giant-food.svg",
+    "sourceSHA256": "88de5c6aa1a98de56bc4c718f221e04c434f9c25ce5140ad2eca7f42fc4a5a58",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "9686e63ce542d2539ad8c7e3083ca31b0911b3fc2647357e3ae341b87dfe42a9"
+  },
+  {
+    "asset": "consumer-gianteagle",
+    "names": [
+      "Giant Eagle"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/giant-eagle.png",
+    "sourceSHA256": "3e0a6adec1192efe2591cde34390482c499085e59ccc69db8f1568245fd3f002",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8885173a2a29ae621b316d878e130697d5f40d2495f5bf87870966e873146313"
+  },
+  {
+    "asset": "consumer-greggs",
+    "names": [
+      "Greggs"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/greggs.png",
+    "sourceSHA256": "508de3e646ae81baf1695e6e186f10dc2550a4b4b8e25f7c8210ad5b3e26e04c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "87853825de7b6a95e4468749eaa0da49b7de0f7c39869a271b83b06ad2f645a9"
+  },
+  {
+    "asset": "consumer-grocery-outlet",
+    "names": [
+      "Grocery Outlet"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/grocery-outlet.png",
+    "sourceSHA256": "290668bf00eed74ab6d65bb58a2e7eb83d12511b9f90ff6ab7f003ea1d76ef07",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "9bedca489f143295d6eba13096c90301d0b68a432834c339665f55cd346a3d37"
+  },
+  {
+    "asset": "consumer-h-e-b",
+    "names": [
+      "H-E-B",
+      "HEB"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/h-e-b.png",
+    "sourceSHA256": "196d0bffe2f73abd3ca52f9138f46d8a1e55aeaaf1fb034a037886820c1ee37c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0cf58c9cf73cf8fe7cb6be77773ac97fb88fb58a9288dd26131118675267f47a"
+  },
+  {
+    "asset": "consumer-habit-burger-grill",
+    "names": [
+      "Habit Burger",
+      "Habit Burger Grill",
+      "The Habit",
+      "The Habit Burger Grill"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/habit-burger-grill.png",
+    "sourceSHA256": "8ae5781d29b86938d467180aa65538edb31b70fc2077184f939d0d5d96650ced",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b4ec2605241563ddb25f52c995da9884fac348c063279dbeb2eaa7843507740e"
+  },
+  {
+    "asset": "consumer-harbor-freight-tools",
+    "names": [
+      "Harbor Freight Tools"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/harbor-freight-tools.png",
+    "sourceSHA256": "0438a4e9a55cb77013b77102b9d0436d01b1b39266790778f8b99da122db75dc",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d0883551ef3fae7fa53b5a589f86687899e934efae507a8eca601e7d153bb033"
+  },
+  {
+    "asset": "consumer-hardees",
+    "names": [
+      "Hardee's",
+      "Hardees"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/hardees.png",
+    "sourceSHA256": "3bd031ebe26ed058096d80f95dd0cb6b84a206ec5c752a1ae82ec00e1a5a063d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ed86f6387fc237b35397efbf1f26911efeb7a6fdfaa4e4f2a999dc04fafd9800"
+  },
+  {
+    "asset": "consumer-hobby-lobby",
+    "names": [
+      "Hobby Lobby"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/hobby-lobby.png",
+    "sourceSHA256": "1496d56f878ec4a3aed51b39b486c90ada5186c92ab2918b91abe4f81d98bc33",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f9ddc080b79c8d2343a59ee9e884323f0586218c266b34d89287363410dd2d48"
+  },
+  {
+    "asset": "consumer-homegoods",
+    "names": [
+      "HomeGoods"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/homegoods.png",
+    "sourceSHA256": "6c4b3eb62d5a1d4eae7e47999e64922e45bcfb6e25e825133bbd1eab8b2883e4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "20b6e1fe6f32f49adb1ec4b03835449d56424659469f5934cd15e71707449dac"
+  },
+  {
+    "asset": "consumer-homesense",
+    "names": [
+      "HomeSense"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/homesense.svg",
+    "sourceSHA256": "c2fe738ddeb088848bee2ae5a936de6a65b55afe84453f108d205ed3bf1e99e4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "468e60710edb3927b69845be6796100d65962100179ed47d9815d66640a05a5b"
+  },
+  {
+    "asset": "consumer-hot-topic",
+    "names": [
+      "Hot Topic"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/hot-topic.png",
+    "sourceSHA256": "3b32ce5d649ca39c2dfe00eb3bc9275e9c79983280b454c8fbe5559d27da9a8c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2d80b7a7c5d21f13aee7b66a2f357990ab9201753cf1450d1c9c87220116e075"
+  },
+  {
+    "asset": "consumer-hy-vee",
+    "names": [
+      "Hy-Vee"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/hy-vee.svg",
+    "sourceSHA256": "07f90ca1b7a5f723cee7a88ce9ee603e5fb6f16c16cb661d3f6e0b7bf07aa6cb",
+    "collection": "Open Food Facts Brand Images",
+    "originalSource": "https://commons.wikimedia.org/w/index.php?title=File:Hy-Vee_logo.svg&oldid=1114707289",
+    "originalSourceSHA1": "1e796318ff929a54eb860274f55daa903dcb9b5f",
+    "rights": "PD-textlogo (Wikimedia Commons)",
+    "author": "Unknown author (as listed by Commons)",
+    "pngSHA256": "9ea5af8b569be596a5fd3b243d7b119353a2d593f82fd3cf4188b7ec039c4cea"
+  },
+  {
+    "asset": "consumer-iga",
+    "names": [
+      "IGA Supermarkets"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/iga.svg",
+    "sourceSHA256": "d575bc45056e4697ad15b0e74936f90310362845f3d5ac1f5f86c8d8e4ac8b02",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "9ea9ec126f94908a8f7dbdd25c378b06b71712201768a5b0c3b75f73eebe2ebd"
+  },
+  {
+    "asset": "consumer-ihop",
+    "names": [
+      "IHOP"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ihop.png",
+    "sourceSHA256": "8ea15ee07bda551b4db75d32fdb1b4a62b75ec2328b6c3d896ce8c0bbdec657f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c9af70e9ef1f04a5b436d27cd65f6431b3669e47797e3dc6034cf8b20562f80d"
+  },
+  {
+    "asset": "consumer-in-n-out-burger",
+    "names": [
+      "In-N-Out",
+      "In-N-Out Burger",
+      "In N Out",
+      "In N Out Burger"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/in-n-out-burger.png",
+    "sourceSHA256": "704d8f455584ea59e665a8b921e26c12325f78227b343e442c559aefab844f94",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "11f7b15d60d8e68d0d76959845a6c0528cd6827824d8c9c6bc9a21d81647eeba"
+  },
+  {
+    "asset": "consumer-ingles",
+    "names": [
+      "Ingles"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ingles.png",
+    "sourceSHA256": "fc68870f8dcfd15aac1532671fc576e37b33897c32495b3c2cb9ebcb6754a1dc",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5f4b94522dfeaa7cb6e1db5a528bfa5ff1fba7d25b303fd6b555c65e067e8f2a"
+  },
+  {
+    "asset": "consumer-insomnia-cookies",
+    "names": [
+      "Insomnia Cookies"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/insomnia-cookies.png",
+    "sourceSHA256": "8cfc505020912d5ef2ad28dc7c9fa625c3ed88fc58eaccf6b38d25e4dab40301",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "103d024e90ece8ee5176aad4282a49150a6443e2834c276a3a9d66b549e1caf0"
+  },
+  {
+    "asset": "consumer-jasons-deli",
+    "names": [
+      "Jason's Deli",
+      "Jasons Deli"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/jasons-deli.png",
+    "sourceSHA256": "fcd3c14696a4ae7779bbed5c5a73892842eb358a146e1acc27de3f69d942fa73",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a160ca39c7b9b30c8b9acc2ad9435af6822ea6752c5450863bf40d56e35f9553"
+  },
+  {
+    "asset": "consumer-jersey-mikes-subs",
+    "names": [
+      "Jersey Mike's",
+      "Jersey Mike's Subs",
+      "Jersey Mikes",
+      "Jersey Mikes Subs"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/jersey-mikes-subs.png",
+    "sourceSHA256": "ff38e269f4a6a6161f47a2fe1bfca3cd0356ff68c14dcbc7a8d8654284a70d2e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "55b2c35272a320babb39386bda6ceb9aab2754aa8d1e16c63b5b960f71d60d36"
+  },
+  {
+    "asset": "consumer-jimmy-johns",
+    "names": [
+      "Jimmy John's",
+      "Jimmy Johns"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/jimmy-johns.png",
+    "sourceSHA256": "2ddd564856a6662e53378e598cafcb9e58a678843551026087b0bdb2fbe53d24",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5b5bf7612c6f60a6690e4a1e5cc154ef2e905a79985ed97e0cff5a4a01a70c7f"
+  },
+  {
+    "asset": "consumer-joann-fabrics-and-crafts",
+    "names": [
+      "Joann",
+      "Joann Fabrics and Crafts"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/joann-fabrics-and-crafts.png",
+    "sourceSHA256": "ed7ce493269cbb82ce79891b5d2149e5de348ac0396bfa577a4cd42fef20870a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ebe92f5e0fe0bac8f5864e27118efd06816c1b093d05dc833d1e3260322f8063"
+  },
+  {
+    "asset": "consumer-jollibee",
+    "names": [
+      "Jollibee"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/jollibee.png",
+    "sourceSHA256": "616ce6fc02b68d2d10c371ecc61e2ff50e16b88d2981d15bc633c4cd8d229c47",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "70f5b271aa4a640c07cceaef013211f920ccf7a6d95c5a89f233ff3e2282ae09"
+  },
+  {
+    "asset": "consumer-journeys",
+    "names": [
+      "Journeys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/journeys.png",
+    "sourceSHA256": "b02aae2ad07ba8acc817b522a58fd7aed8ed96eeb63c5dc1fd6b18f75f7ba0d3",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "9b31b02686df1d406d8945e4631c4a8d98b0ef1acb4dadba8395b1f2ded88bd6"
+  },
+  {
+    "asset": "consumer-kroger",
+    "names": [
+      "Kroger"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/brands/Kroger%20Company.svg",
+    "sourceSHA256": "95c077eb6c0357d219342abd7b1cb104e91731afad66544c07019e728223211c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "50f00cf5ae46fd168d54d80a44ff229ebf4371df3ebbdfea1fa14f517bd01a4a"
+  },
+  {
+    "asset": "consumer-kwik-trip",
+    "names": [
+      "Kwik Trip"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/kwik-trip.png",
+    "sourceSHA256": "6b97e13ba99a42fa963fd06a5f48ab5bc68d8a39608d5e0bb360798fb19dd5c9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "825e8b9bdab7dc6fc51781c8959324780592c9e98aebc27543d42d1a1fff4aa3"
+  },
+  {
+    "asset": "consumer-la-z-boy",
+    "names": [
+      "La-Z-Boy"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/la-z-boy.svg",
+    "sourceSHA256": "899a4c173fb0b3972342cb6e55b697ce8bdfa578a756cee040293f2039b8fa81",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "14cf8f1d31f2abff5c48051411dbbb828f6f28d40cfa303c8e5e9c8fe9255232"
+  },
+  {
+    "asset": "consumer-little-caesars",
+    "names": [
+      "Little Caesars"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/little-caesars.png",
+    "sourceSHA256": "93c9d76b73f3239dfef145db4a94d99877769f59d4f30ae81411a1a2dc2a6336",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3f9bfa7e3007f4ab7c195f89faaee8ad74d7fcbe37066f63115ee8d415c460bd"
+  },
+  {
+    "asset": "consumer-loblaws",
+    "names": [
+      "Loblaws"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/loblaws.png",
+    "sourceSHA256": "75bbd48614b48f5418850bfb9c03ee60c66a4f00a884f96bef2819bf60be1ade",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5f9db44d8ba446f4e04226fbe7b8beb219064e51a5fdf4fedae6ba0417886b56"
+  },
+  {
+    "asset": "consumer-long-john-silvers",
+    "names": [
+      "Long John Silver's",
+      "Long John Silvers"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/long-john-silvers.png",
+    "sourceSHA256": "2bc53f35d59449b6d20c85760d912b84e76f49289ff46ec59f932533a26f9c0b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b18be863181325b8a1b650350621a4ecf63e96054449c7211a73bdce93b78575"
+  },
+  {
+    "asset": "consumer-longhorn-steakhouse",
+    "names": [
+      "LongHorn Steakhouse"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/longhorn-steakhouse.png",
+    "sourceSHA256": "59b7a8e85653922b518fb21d9b9e3e757d47bc3269f9848558aaa7f93c5b845e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e1dd633702f38afee39f5829ddd9030b110bc976a13ec5f57db4763f81c056e4"
+  },
+  {
+    "asset": "consumer-lowes",
+    "names": [
+      "Lowe's",
+      "Lowes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/lowes.png",
+    "sourceSHA256": "d1a2541c51e8f526ddd2d3ec0c7228d7ca2fe87a71eed66070d7a56690042d8e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d8bf1fd3c2f095e9d3472c66e15d50452351cfa845efbdbb1efcd50cd554bc56"
+  },
+  {
+    "asset": "consumer-lululemon",
+    "names": [
+      "Lululemon"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/lululemon.png",
+    "sourceSHA256": "91deb415d1cc87996d66ec9802beeba2ef8a41d6a2f132dfc37ec7079611c789",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "57ded0bd65d70b8b6eb64dc63e19a4f6a986259c500ffbeefb0e512b87175c17"
+  },
+  {
+    "asset": "consumer-lush",
+    "names": [
+      "Lush"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/lush.png",
+    "sourceSHA256": "b9d066b56a6929f50691a487dae81581aba6c8c1b489f0bcc051b42bb40c930b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e3a4672f580f6c0f051b1efd822e78d510cd9c63f0d4cb0e83be739d2f5bdd56"
+  },
+  {
+    "asset": "consumer-maggianos-little-italy",
+    "names": [
+      "Maggiano's Little Italy",
+      "Maggianos Little Italy"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/maggianos-little-italy.png",
+    "sourceSHA256": "13e9eba3b25e7e9fee889325d4941e1a261e4393450c04472d897fa100fe1a84",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7cfd2e491c4e2e72cc36dff9cc789b507adeba354af923db07aaf3f9def0d077"
+  },
+  {
+    "asset": "consumer-marathon",
+    "names": [
+      "Marathon"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/marathon.png",
+    "sourceSHA256": "dc3518f8bfae90365458687efff19125c9014c171b1078f0b5b0d0de6fe0a844",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a6a07984505633932136646b872059a5fb671c81dde5826c4592a50f3a67d009"
+  },
+  {
+    "asset": "consumer-marshalls",
+    "names": [
+      "Marshalls"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/marshalls.png",
+    "sourceSHA256": "5bb495628645815cbe8aa53bc6a4acfd9bd0a8d460fb1a2d6ab621f44d116e4f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f9f694af93b391d6a8d0dbb714716eed5a80d8cc090c81c72a586c24729b62ad"
+  },
+  {
+    "asset": "consumer-meijer",
+    "names": [
+      "Meijer"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/meijer.svg",
+    "sourceSHA256": "f643715273724a09145b68d9bd9f24cf91d3fa389c622768422c454e926e7d54",
+    "collection": "Open Food Facts Brand Images",
+    "originalSource": "https://commons.wikimedia.org/w/index.php?title=File:Meijer_logo.svg&oldid=1179161284",
+    "originalSourceSHA1": "8834483635b3b0248d853a9e8ac005dd17226e4e",
+    "rights": "PD-textlogo (Wikimedia Commons)",
+    "author": "Meijer, Inc.",
+    "pngSHA256": "c543284f1ea3a85fc8429b66f7814cd10f85872b47b200c9f0b09672a84e2921"
+  },
+  {
+    "asset": "consumer-menards",
+    "names": [
+      "Menards"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/menards.png",
+    "sourceSHA256": "bb91120599c5c97803246042fcbbbba1cb255da9849cfcfe8fe09af5daeb01de",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "602da7e08d237b003f2ebed252d25ba00dd5087260f020f845e074f0b7b4b0f9"
+  },
+  {
+    "asset": "consumer-menchies",
+    "names": [
+      "Menchie's",
+      "Menchies"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/menchies.png",
+    "sourceSHA256": "ae43b18b6edae035bfb2add9ea88225d4e253da5221c72dfcde0a30b87daa17b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "fe94655850fbbcefd25eedc13e4107c338145876bc48b5817aff3fc2822cb2f3"
+  },
+  {
+    "asset": "consumer-michaels",
+    "names": [
+      "Michaels"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/michaels.png",
+    "sourceSHA256": "01b6c1dd0c72441b9d1781233ecaa0275417b0b080d9478c7a53d74ece82aa80",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "23fcde2e7063acbca7d0cc86833fbed5464609e0292730f8d9bc96b1255e4b05"
+  },
+  {
+    "asset": "consumer-mister-car-wash",
+    "names": [
+      "Mister Car Wash",
+      "Mister Carwash"
+    ],
+    "source": "https://raw.githubusercontent.com/johnpantini/ppp/7efa5d6a2cf84c3b2786a9c6223159db7e94e1b3/static/instruments/stocks/us/MCW.svg",
+    "sourceSHA256": "4a8f0b2b6d98cf4d324f659c3124be4a9224295443ae845a9d4e82b020753714",
+    "collection": "PPP stock icons",
+    "pngSHA256": "0db7dd541c8b35e77552e01c69ea91c1f66fea01f3fb3295ac6da3185b2726b4"
+  },
+  {
+    "asset": "consumer-mod-pizza",
+    "names": [
+      "MOD Pizza"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/mod-pizza.png",
+    "sourceSHA256": "6b833bfd70dfb0bd9a6cecdd16a9b048d7bd3cb43c9f8351969901a27f0253d7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "cad5142c85ebab4c649bb491e699fde78a1855010bf1b0b2f6a4f43d32d0a7e0"
+  },
+  {
+    "asset": "consumer-moes-southwest-grill",
+    "names": [
+      "Moe's Southwest Grill",
+      "Moes Southwest Grill"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/moes-southwest-grill.png",
+    "sourceSHA256": "0e2e278fef720c9e4f719f33d6bb133640331b0c84f475cbb0209c314562cf5e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8ea6eb38b07b43bb01b444dce72ff58ee1eaad975da623890f9cae25fcc3e11c"
+  },
+  {
+    "asset": "consumer-nandos",
+    "names": [
+      "Nando's",
+      "Nandos"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/nandos.png",
+    "sourceSHA256": "b020bcf2d5ced68e02a33adf2f7ef3332057837f85f7414f8f73339d3e032fe5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5bd153d773af4ade448921cb179d66a4e6cc79d14ca86c76bc68dcb3403a900a"
+  },
+  {
+    "asset": "consumer-no-frills",
+    "names": [
+      "No Frills"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/no-frills.png",
+    "sourceSHA256": "192f624c7920f5b0427cc54f08141f96df0c7f2fb4014403ad59a99990b7bce4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5f676c44272622ea4cff5005dff1bf69f3e8253d0e1783794ef02d5bd245cfa2"
+  },
+  {
+    "asset": "consumer-noodles-company",
+    "names": [
+      "Noodles & Company",
+      "Noodles and Company"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/noodles-company.png",
+    "sourceSHA256": "2a018d5c3b438f166b74a62d850e5ecbd0e0230dc68462c46f1ba9fd52fdd40c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "895403f742e68a187f4fc019a467afc6e2293bdbfc3dd76d0f5868302b775269"
+  },
+  {
+    "asset": "consumer-nordstrom-rack",
+    "names": [
+      "Nordstrom Rack"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/nordstrom-rack.png",
+    "sourceSHA256": "4c11838e5cd6e019e48d933ab82d11a3d5da61613fb18d977e0b9b87f8fb95df",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3b8a7bab751b908ed3dfda222209f502372d10fe79be1f37bab6792299e758ec"
+  },
+  {
+    "asset": "consumer-nothing-bundt-cakes",
+    "names": [
+      "Nothing Bundt Cakes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/nothing-bundt-cakes.png",
+    "sourceSHA256": "f8b2696326ab645ec51d433586c226d066c78bb46cf06218953e8f09cb9bf3ef",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3c48f7551203a25940af14072dd202d25b1f8e21effe454aa49a72a1681580c4"
+  },
+  {
+    "asset": "consumer-old-navy",
+    "names": [
+      "Old Navy"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/old-navy.png",
+    "sourceSHA256": "5041c3a0aa6672db1047f2069c7b7460564b154686ffb7d52b72a0e0eb6b87b9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8c31de56a48e980b9cb202d794468fc0520e555d44da99808262132621e43588"
+  },
+  {
+    "asset": "consumer-olive-garden",
+    "names": [
+      "Olive Garden"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/olive-garden.png",
+    "sourceSHA256": "75701b786794814051468c39c12b26adb2605eeff8846ba3f25e7deed2bc117e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5b568c631f47fdc346503af3ca7ff515dc4a681b4b28eb794278284e2d12be28"
+  },
+  {
+    "asset": "consumer-ollies-bargain-outlet",
+    "names": [
+      "Ollie's Bargain Outlet",
+      "Ollies Bargain Outlet"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ollies-bargain-outlet.png",
+    "sourceSHA256": "6939bf75c7c8fe43060454db51dd855bdc5f61d844f1ff79854c154938f6647f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b41db24c2d01bcb9826d48f1c1d963cb39ff9de35c42710625509748212a9d1b"
+  },
+  {
+    "asset": "consumer-orange-julius",
+    "names": [
+      "Orange Julius"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/orange-julius.png",
+    "sourceSHA256": "490d2d0ddb7864de6ff8a73715d7d301e5d0b8a8d055db3a1da6082eada4f3f3",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8d15a12fb0f8603eec0b0073687d7cf872c930c054428bfa8093051b0832297a"
+  },
+  {
+    "asset": "consumer-outback-steakhouse",
+    "names": [
+      "Outback Steakhouse"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/outback-steakhouse.png",
+    "sourceSHA256": "1c7ef110c148245f434545ada8ffe369e6ddd234f7f1abe5b349379a61fef55b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2aa91d94ddcd9ed090918e10dd02b6b3e7f2f732e62f68674218d29632aa7a08"
+  },
+  {
+    "asset": "consumer-p-f-changs",
+    "names": [
+      "P.F. Chang's",
+      "P.F. Changs"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/p-f-changs.png",
+    "sourceSHA256": "061345eadbc4b865a1d39c1ba8e6669996b5feb75df5b3d40205abe51eddac4e",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3d42dc549b7e0138cbad35a315ec96a686c7b8f72a1fefe995ff9c06a89ad8ad"
+  },
+  {
+    "asset": "consumer-panera-bread",
+    "names": [
+      "Panera Bread",
+      "Panera"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/panera-bread.png",
+    "sourceSHA256": "5d457c22fbff6aa867e152cc6583a9f9172804546decf67b9ab557ad396a234d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ead0da9c827084a08589364a93fceb1b72cd87524001e3a20b19b467f4aa95a3"
+  },
+  {
+    "asset": "consumer-papa-johns",
+    "names": [
+      "Papa John's",
+      "Papa Johns"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/papa-johns.png",
+    "sourceSHA256": "969f1195fa8ab9294844e6e0c6dec48c37ba28e5bfd54bd44a038c9359de80c5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c85e1a2d288f0b5e8276432631c4fb963aeacd5907cbcc61232182eb731f318f"
+  },
+  {
+    "asset": "consumer-paris-baguette",
+    "names": [
+      "Paris Baguette"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/paris-baguette.png",
+    "sourceSHA256": "288b06f64528ebc3d1deb858e4a7bba269bcc7770973b1080644cb55e31e7d79",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e910f86f15a8b1d108070917ee9a3011fc2216ce12d63df44ad906d9f05f7dce"
+  },
+  {
+    "asset": "consumer-peets-coffee",
+    "names": [
+      "Peet's Coffee",
+      "Peets Coffee"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/peets-coffee.png",
+    "sourceSHA256": "a41c47c7dd4e4de841167689d145bac179f298cda2472a6f8729b4cfc2fedb4c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3775449473bc16a16973ed58a3b0749ef7856a4cec8af969f8f258a915f101e8"
+  },
+  {
+    "asset": "consumer-perkins",
+    "names": [
+      "Perkins"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/perkins.png",
+    "sourceSHA256": "1d293a4014eadc0426f55cec5ab5b2b7fa61382a9ea421b2dae946b9b23acc26",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a447a6d2fe3413ae9bb8d071d952bca922756bfa33801cb2389814157fed3200"
+  },
+  {
+    "asset": "consumer-petco",
+    "names": [
+      "Petco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/petco.png",
+    "sourceSHA256": "77aacc19d7a7b90973735a4b67abfb26ffb9e1c561f0a5cf3bab937364f0760d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0576f1fc739734dd813e35350fc41c6cb12f7f2622e3e07fc29b30983e998e2f"
+  },
+  {
+    "asset": "consumer-petsmart",
+    "names": [
+      "PetSmart"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/petsmart.png",
+    "sourceSHA256": "a30a8d10af6ff857334e68a8eac97c3bfd5b7a2bce7f2db7d7aa043c4f193714",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e1e366f91f7e567a632f6f0f7693990d7f0b9ecc5ac45fa19b09575341158035"
+  },
+  {
+    "asset": "consumer-phillips-66",
+    "names": [
+      "Phillips 66"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/phillips-66.svg",
+    "sourceSHA256": "aa8e3f79a54b2e7e7e6797d51e52cf991da1e6d23dc5c09217761e764216bb1a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2bef0c9c3bc42612e87ab0ea750806729924251b87ad57692a7341bb9e878491"
+  },
+  {
+    "asset": "consumer-piggly-wiggly",
+    "names": [
+      "Piggly Wiggly"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/piggly-wiggly.png",
+    "sourceSHA256": "07f6dcb36d44bdf31b3420f5b62adbccab02d7ef1eab2f450eb3509afe64958c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "12bd1e9042e9af49930d6cab0883c2c8db380f6f64770eebc6b0d1bc7287200e"
+  },
+  {
+    "asset": "consumer-pilot",
+    "names": [
+      "Pilot"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/pilot.png",
+    "sourceSHA256": "2b8b5bc08cf0c5a11c1be1b66d8cb5b9d12f6303ad13103878b81876fce44d08",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "075ae6e11c8b6432eb9387ab5eb2bb6cd041460dcc7977278b29de17b5a0b2de"
+  },
+  {
+    "asset": "consumer-pizza-hut",
+    "names": [
+      "Pizza Hut"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/pizza-hut.png",
+    "sourceSHA256": "9a8351d39836a9d8da35b862b237f6586b46f6d90744ba35c9fc5ea022f2f2da",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "4400445f25ea26184e9734f10e3b923c5cb4f52f24c9237b0320c9a4447c5ccf"
+  },
+  {
+    "asset": "consumer-popeyes",
+    "names": [
+      "Popeyes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/popeyes.png",
+    "sourceSHA256": "1bb991731a1049e73b1da305f726589f47e80aa17f67e1f7cf816bd43e919500",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "19a85585187da3b2bf3ae388f2050d13b362a33c86891be02a168584555aa7f8"
+  },
+  {
+    "asset": "consumer-pottery-barn",
+    "names": [
+      "Pottery Barn"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/pottery-barn.png",
+    "sourceSHA256": "d6ea2275889b9a45d813bb86488ac05347e318341c7107dafe114de78b401e8b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "223c5c9ebbb1552ba0b89722c1f16ce885531f3bbc86ee4cba67fe41517603c8"
+  },
+  {
+    "asset": "consumer-pret-a-manger",
+    "names": [
+      "Pret A Manger"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/pret-a-manger.png",
+    "sourceSHA256": "a3ed92db60d399604fe6c33980d42eb552a3dd1db5cccb2a4cbee464059667db",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "aa980910f1611e2c8420128ef0709b3f5b70b7d2a256f6936b0c8719695bcea2"
+  },
+  {
+    "asset": "consumer-publix",
+    "names": [
+      "Publix"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/publix.png",
+    "sourceSHA256": "d3e41280ffb756bc495c1052c901aeae80a916b16af4187920cf6f1639e56751",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c2f9285190b958c8fbf601c3ec71680d168fae6ba90c2bf934ccd5a42d31e038"
+  },
+  {
+    "asset": "consumer-qdoba",
+    "names": [
+      "Qdoba"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/qdoba.png",
+    "sourceSHA256": "d2c154ab72cb5f4c2cd40e1cbab7ae070413674f06db7ff3b543467ef816de90",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c33a13b5a5aafd7e095dc336e36378a9b19d49154b7bf92db384e32dd1a6fdd7"
+  },
+  {
+    "asset": "consumer-quickchek",
+    "names": [
+      "QuickChek"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/quickchek.png",
+    "sourceSHA256": "cc5739755af6afa26c6dafc87389d2a5ce1aab83c9a75b9c171949d453d73b5d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c1b16f80b3e4b3934645c291b27cd52ff934449936a662239e2bc7179e5edbe4"
+  },
+  {
+    "asset": "consumer-quiktrip",
+    "names": [
+      "QuikTrip"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/quiktrip.png",
+    "sourceSHA256": "322ff1eec523f60c874d7e715cfaf2fc72ce7f80cd3ce7caf3ae8ffd61fadad7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "205f056323b08051c1ebffa32f45fe5a362d4775792d7075ca3fd34e08c1b8a3"
+  },
+  {
+    "asset": "consumer-racetrac",
+    "names": [
+      "RaceTrac"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/racetrac.png",
+    "sourceSHA256": "80a30c913f41c115df58f78efd609a3a0595fcda1d200dc7ecd43a4fe9ea789c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "afcc5702e38537c2257e1fe9d9cc2db5dfe565118677056697f2d6990eddcf6f"
+  },
+  {
+    "asset": "consumer-raceway",
+    "names": [
+      "RaceWay"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/raceway.png",
+    "sourceSHA256": "8b50c1fe3c5f372afc06098c11e6292ca82f7338b21b1e59f3c61ee5b3999673",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "be5682d6bd841a86fd8e76563fb71d6508a5520fe5eebd4dc72f49cac9112422"
+  },
+  {
+    "asset": "consumer-raising-canes",
+    "names": [
+      "Raising Cane's",
+      "Raising Canes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/raising-canes.png",
+    "sourceSHA256": "688ad55232a2d29682ebfe3850528bf2df3df5f633c1a9a6fae467a9bb227d4d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5977bb13d74faadc34970af8c408d07a722046c4d9311d00804e0f226362f80c"
+  },
+  {
+    "asset": "consumer-raleys",
+    "names": [
+      "Raley's",
+      "Raleys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/raleys.png",
+    "sourceSHA256": "6d244bb429ae59b463f04d89c7f28f39c3f92785c74509797a044e7f6600f0a5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a80e459449f67ef27de765d437ce2de77eec1da8b250dc7fda4b6b49a7b9c9bd"
+  },
+  {
+    "asset": "consumer-rallys",
+    "names": [
+      "Rally's",
+      "Rallys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rallys.png",
+    "sourceSHA256": "b927b2663945008fc887c364e810c0258eaea19e8102c5f8d78c918528ce8f65",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c0f175443445475030b70a0020f882b3da3ff7c8a163aa53f78d50da7467f442"
+  },
+  {
+    "asset": "consumer-ralphs",
+    "names": [
+      "Ralphs"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ralphs.svg",
+    "sourceSHA256": "2c7eb4a535d28dbff7f70243e909e2ad1b40f0e1e6e5d7f63fcb48baa5ea2cd0",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b1ed64375ac8814c008d08e351e7d2b37982f1b654f70b6262c6b4333c2ad6a0"
+  },
+  {
+    "asset": "consumer-red-lobster",
+    "names": [
+      "Red Lobster"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/red-lobster.png",
+    "sourceSHA256": "62125465dc4ca898da1d1eef42860d4c87deb68530cfd63c2022a5e3eba7d998",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "41f1c0242b735ae1697633400b315c1507af43661af463cf8c232e2d7ad128aa"
+  },
+  {
+    "asset": "consumer-rei",
+    "names": [
+      "REI"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rei.png",
+    "sourceSHA256": "0f30f52b2cd4b9fa06699fc0b37a8235304546ea1634c917c8c428e6ef02959c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "d301ec49a18e21bccaecdfece58c92f9aac9260acdeb5e4483a922b534413ead"
+  },
+  {
+    "asset": "consumer-rexall",
+    "names": [
+      "Rexall"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rexall.png",
+    "sourceSHA256": "5a0c3a5d17693be962e43ae62542851e8a95a3b5d2817a792065a5a9ce3c7a95",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "189f0249b18189555387661ed11e1103bd55a628f6e2c7baf13cef7a2c8e89d9"
+  },
+  {
+    "asset": "consumer-rite-aid",
+    "names": [
+      "Rite Aid"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rite-aid.png",
+    "sourceSHA256": "e2e4f770e1743153fa4438c1493446238b22d1a80d14c329371b02bdbace9daa",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "295395a20acd517035ce0d414da96c15d43dbac099157714f7e44b8ea2046698"
+  },
+  {
+    "asset": "consumer-rooms-to-go",
+    "names": [
+      "Rooms To Go"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rooms-to-go.png",
+    "sourceSHA256": "57e0fdf14aeb0e1dad6e088444b303944a16dc1e0e888116128432e2a7a74aec",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f3ae91d6300aa333acd9cd01db35ec91d850a18b4b45468eade42b518fc4e217"
+  },
+  {
+    "asset": "consumer-round-table-pizza",
+    "names": [
+      "Round Table Pizza"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/round-table-pizza.png",
+    "sourceSHA256": "07951c29267d9616b4b5cd1a245a7c29b38e88520fdb4b96706ece0e301c6cf7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "fe391601354ac0898cb08545d461e6eb27dbb3053399012e069af14ce3e52a70"
+  },
+  {
+    "asset": "consumer-ruby-tuesday",
+    "names": [
+      "Ruby Tuesday"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ruby-tuesday.png",
+    "sourceSHA256": "ae4dabfda16b4a1aaf7450f22ce69536fe0dbb4a74859d514296229083a0cc1f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "51ee160d7e3cabff9edbcbab9f2d204759376eccde1a55d77ee1dac9c8953c70"
+  },
+  {
+    "asset": "consumer-rural-king",
+    "names": [
+      "Rural King"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/rural-king.png",
+    "sourceSHA256": "bc4572e0682dbcb5292cfe5a4095c40edc6ba31661e0e37d195a4dc03d266e42",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a45b04cc2d4c8f5097d1383185dbdfed844a15ac59712440b0aa28fd697721f8"
+  },
+  {
+    "asset": "consumer-safeway",
+    "names": [
+      "Safeway",
+      "Safeway Fuel"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/safeway.png",
+    "sourceSHA256": "fad79cfd60e422f6d92369ad4c3a2252d40cd26915a385b69c2f86ab93867e85",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "befa573f2c3b7212872f767ffa76d0a28d7a88b9190098050216acbaec0743f7"
+  },
+  {
+    "asset": "consumer-sainsbury-s",
+    "names": [
+      "Sainsbury's",
+      "Sainsburys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sainsbury-s.svg",
+    "sourceSHA256": "4fb2add4d4531858dd72bde1d92a49a637681865095fce7cb8c7441e040372d0",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "51bcb295560db3eee510e33b66edc18058959d34144b3952a2a0975818f7d8dd"
+  },
+  {
+    "asset": "consumer-save-mart",
+    "names": [
+      "Save Mart",
+      "Savemart",
+      "Save Mart Supermarkets"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/save-mart.png",
+    "sourceSHA256": "b33fda97ef20d1b1dc205a29a7a6fb8c0558ba1bcd2aafe6330f7c77b307fd6b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c73af91ed91fc03d724b6826e5a7b5bba0763c1d87703551ba1f968234358466"
+  },
+  {
+    "asset": "consumer-sephora",
+    "names": [
+      "Sephora"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sephora.png",
+    "sourceSHA256": "2f55dd5e630484160d7b939e0c6cdb0a0e3b84d863a2230497daa2eeed7fc297",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "329e711ade93d31e587bf27e1d7813732980c4d3d696e62dee58167dede4c9f0"
+  },
+  {
+    "asset": "consumer-shake-shack",
+    "names": [
+      "Shake Shack"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/shake-shack.png",
+    "sourceSHA256": "1bed557abcd7748edf0e89edc7e9d4da778a2ef2c2db94b2245eff53624687f4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "81f28aa3b09151d7d3f557ab74a55e315e6a992b6d4cc09dced31174b43b62e2"
+  },
+  {
+    "asset": "consumer-sheetz",
+    "names": [
+      "Sheetz"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sheetz.png",
+    "sourceSHA256": "35cd9cb1370c9471c54d36cd22c80110bf718798a0e346504996899f13fb9d3d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "bdbe303f64d9cf8715067f53c071d48eb14ef0abf41203e90c7a6acd87b8e1f8"
+  },
+  {
+    "asset": "consumer-shoe-carnival",
+    "names": [
+      "Shoe Carnival"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/shoe-carnival.png",
+    "sourceSHA256": "e2aed172fdc4118e788656deeeb004153b300ba17e4c5184332df7353f6426e5",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "88b80ca28a7fb8f202da8a13651236818cf4493d016cd8bdef3b047d8e66c0d8"
+  },
+  {
+    "asset": "consumer-shoppers-drug-mart",
+    "names": [
+      "Shoppers Drug Mart"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/shoppers-drug-mart.png",
+    "sourceSHA256": "f67025458687af72c5437c18dfb22ec160197769b3b37f2bb377f62661f8708f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "90f01d7ab5c546cc48bdbe767eb6e3e44185f2de991143eb90a5f5bad1980376"
+  },
+  {
+    "asset": "consumer-shoprite",
+    "names": [
+      "ShopRite"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/shoprite.png",
+    "sourceSHA256": "ba235c07736c30d18ca76785f8fe4a27c82f461ab57bc12be3fc1de8cca4d689",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2aaf5be6d352f16c9ce7a29b20cc328eee874b01689e4570151c5723104d1878"
+  },
+  {
+    "asset": "consumer-sinclair",
+    "names": [
+      "Sinclair"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sinclair.png",
+    "sourceSHA256": "0969e3ade09b6b9fc7b299f7db92d4367c3d42ef9d1ec7d176405fe59baa70f7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2e7d49c2bc5dfeee7e955c7655c0118bc5ee6d00d06be77b666ae50b615f6c41"
+  },
+  {
+    "asset": "consumer-smart-final",
+    "names": [
+      "Smart & Final",
+      "Smart and Final"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/smart-final.png",
+    "sourceSHA256": "0fef6046d919b2fd52969bd5cee3bb72a2ff146ca294e7575e5c586bfc51d229",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ced6cc574fbd0088a537d1a2398bb662b1cb816011fff65c895c1ef387f22dcf"
+  },
+  {
+    "asset": "consumer-smoothie-king",
+    "names": [
+      "Smoothie King"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/smoothie-king.png",
+    "sourceSHA256": "418148c16186826ad1ac2327413687391561328b0e6c31e04d9165c9323a18ed",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "943bc3c924ff0f080bcf37a13ae09979d3fc37264b9cff6c51e070100d5cac2d"
+  },
+  {
+    "asset": "consumer-sobeys",
+    "names": [
+      "Sobeys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sobeys.png",
+    "sourceSHA256": "da61c131eee4d8d06747b894b6413ce8ae2e9877f2058a08f764c4dbb9ff6bce",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7188ab1011d006314c701e321aa33d047923d21ece0afb971ebb5f49ad8f240d"
+  },
+  {
+    "asset": "consumer-speedway",
+    "names": [
+      "Speedway"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/speedway.png",
+    "sourceSHA256": "e003a7d64f449f033cf3f7f11dbbd7dee4c64c6968b047f7c84ebb2d96454864",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e8f1fa21bfb0973e90e656bcbefe3d62d3a0c2ad03ba92ed78e68e092e07c101"
+  },
+  {
+    "asset": "consumer-spencers",
+    "names": [
+      "Spencer's",
+      "Spencers"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/spencers.png",
+    "sourceSHA256": "ab056e88819adace1033ba9ebf8687c920cebca2bbef35b6b5a813bb04de0613",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c39330cb07c96c368d083d2f19bed3411f7136b79382d8f01f41e7a258dcea82"
+  },
+  {
+    "asset": "consumer-sprouts-farmers-market",
+    "names": [
+      "Sprouts",
+      "Sprouts Farmers Market"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sprouts-farmers-market.png",
+    "sourceSHA256": "6414af06ddc0d8b74f397283c4151a364d3c19e795e54174e26100ca6ae70acd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "6f1d83d28d2732d13f125440f80b17579bece4984639ed861bd94e6f6f613966"
+  },
+  {
+    "asset": "consumer-steak-n-shake",
+    "names": [
+      "Steak 'n Shake",
+      "Steak n Shake"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/steak-n-shake.png",
+    "sourceSHA256": "c8dc095fb9be50b55a7cfc3edde39f72bb21b8dd4fddabe82587771bbd00c59c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "8879d7116277d4422098540422dcaf02e49b1fa8e7dc826dc8228d7dfedb2c8c"
+  },
+  {
+    "asset": "consumer-stop-shop",
+    "names": [
+      "Stop & Shop",
+      "Stop and Shop"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/stop-shop.svg",
+    "sourceSHA256": "8c3c9a5e8d7c0debf480c542e7900c4b3f086cd94488de2cf63d69d7ee0504da",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "93560178bc628ecddd842d9807bd9a95a6782bac457aec7cf1b04d3aa5b2f06a"
+  },
+  {
+    "asset": "consumer-subway",
+    "names": [
+      "Subway"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/subway.png",
+    "sourceSHA256": "3f186abc32aa23208fcd45a9aa1e17da098cef2fc31657850afbbc8bc1b3c845",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "eeebc65d7927d31a6e4609b2a78e3064ec84ca677d80f3d241e9dd126958d664"
+  },
+  {
+    "asset": "consumer-sunoco",
+    "names": [
+      "Sunoco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sunoco.png",
+    "sourceSHA256": "be7d9824db23e474f2aa36a4dd6ef7c84d60d4eff121b03ab6880320adae7b01",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "4a15c9bae103bae04c6ed1303d3bb8e4bd7ad45b46478e9eeed38e979c88d362"
+  },
+  {
+    "asset": "consumer-sur-la-table",
+    "names": [
+      "Sur La Table"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/sur-la-table.png",
+    "sourceSHA256": "d4b3f619910ee0c954129ef5b7316a3f9a60a48fbed4429711f28cdac26f5fc7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "05e16804ec350b6c17be0ae57e44bf906e1d63d806c80d67bd9f4741dfcd6c6d"
+  },
+  {
+    "asset": "consumer-teriyaki-madness",
+    "names": [
+      "Teriyaki Madness"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/teriyaki-madness.png",
+    "sourceSHA256": "223d6726f6f6422e30e514767195f6c52a1367b039ee26b2160ed7b3fa828fdc",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "754ceec31b281c7954b31bcb64f7c27da0fbda7bff77b908b72fa600f05dcd58"
+  },
+  {
+    "asset": "consumer-texaco",
+    "names": [
+      "Texaco"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/texaco.png",
+    "sourceSHA256": "326652d396c78e50bf184cf1f5220a6b2daea731b2b21e443a678ab6d7c128c9",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "33c9be8594f146906103ab463e24f0a6533b968f16dc0b3bb55b15f6417caf91"
+  },
+  {
+    "asset": "consumer-texas-roadhouse",
+    "names": [
+      "Texas Roadhouse"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/texas-roadhouse.png",
+    "sourceSHA256": "8477e6a787fccc5a0b3973a0fe16205d2d83227311eca9c780de29f36f4b1a75",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "4cae70006b28b863d17fdc498533aa2ecb451b96c31cd29eb871ba8e2ba76c1f"
+  },
+  {
+    "asset": "consumer-the-body-shop",
+    "names": [
+      "The Body Shop"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/the-body-shop.png",
+    "sourceSHA256": "adec6e4a6fc6412a5a2eeb5b17843166ea3477c0eba3e17d046d8ea8953d7796",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "306524af194dfa41fccc2f26faf5ba020f045b15139b60fff14995c02f4d4b7c"
+  },
+  {
+    "asset": "consumer-the-cheesecake-factory",
+    "names": [
+      "The Cheesecake Factory"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/the-cheesecake-factory.png",
+    "sourceSHA256": "8cf1c3372bf609308f7e7aa6592ab55441a3692a55a3705694e683bbaeb10650",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "01aa62dbc3ffdc641c54defb3e4ba4e3c9102569d76ef895be674c9d86d7b0b5"
+  },
+  {
+    "asset": "consumer-the-coffee-bean-tea-leaf",
+    "names": [
+      "The Coffee Bean & Tea Leaf",
+      "The Coffee Bean and Tea Leaf"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/the-coffee-bean-tea-leaf.png",
+    "sourceSHA256": "8c0d06e29285755bb4e3d8e6c4c86bf883af0b8c25e8df940e01fae49dbeda9b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c13c240041a0119a3fc8a2e1baf4b3ecb592a5f1b5457b69c6a4590f35143290"
+  },
+  {
+    "asset": "consumer-thorntons",
+    "names": [
+      "Thorntons"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/thorntons.png",
+    "sourceSHA256": "9e0061366914d3a0026899e36c545120998632b2bbffa5a4a5512bd09f204db8",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "571be4d312b5109fffffeb818a070c9858a2d996feab50c0a2235f73545e4a50"
+  },
+  {
+    "asset": "consumer-tim-hortons",
+    "names": [
+      "Tim Hortons"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/tim-hortons.png",
+    "sourceSHA256": "0382fb76ac4b717c66d26c3df0e0b0129f258161734179d2508ab94b0dc3ede4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5d92b93841f73b7b7c1476bcd8205e0d965ce233660ac9fdd25c4c18f3f85786"
+  },
+  {
+    "asset": "consumer-togos",
+    "names": [
+      "Togo's",
+      "Togos"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/togos.png",
+    "sourceSHA256": "e6328f89e638bcdf4de4c62e9b8131bd85e090cb077a089d5b93ecb9d2abd7d0",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "df16a5bfe96ca507159cef404c95b67d5d211236a9e621801ac61185d2283e7c"
+  },
+  {
+    "asset": "consumer-torrid",
+    "names": [
+      "Torrid"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/torrid.png",
+    "sourceSHA256": "619de45c8cc9f298b5c89af64232eec5b3bfbb446d909b63ad5505f9a97fdb93",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "0bdee2e1f5128effe6bb362abbf993047c0e85544b1407320d503e332a839e7e"
+  },
+  {
+    "asset": "consumer-tous-les-jours",
+    "names": [
+      "Tous Les Jours"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/tous-les-jours.png",
+    "sourceSHA256": "b0171566fd50a8e624bd1bcb2117cd0572caf12f25af29407b275e6000cd916a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "5c77f131e1cc179929494bd7ab337ff541445e0880bbe3ca41b1c0a82151f420"
+  },
+  {
+    "asset": "consumer-trader-joes",
+    "names": [
+      "Trader Joe's",
+      "Trader Joes"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/trader-joes.svg",
+    "sourceSHA256": "503e83d3207938d283c565f96f2bdfa09fac55a8184b5624d72d735d205edb6a",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2d2d18861254c8a1b5ad07305d6dd88f1086c697b51a5663b1e74c25b0c376e8"
+  },
+  {
+    "asset": "consumer-tropical-smoothie-cafe",
+    "names": [
+      "Tropical Smoothie Cafe"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/tropical-smoothie-cafe.png",
+    "sourceSHA256": "018868181452bfc54561db7a719942444b7e8fa8dbc57e25d5ae7daadf5a70d2",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3da8e9f2059f32e82f2f967e647547a89229b5e5d05e517a5d6410678ff36323"
+  },
+  {
+    "asset": "consumer-tuesday-morning",
+    "names": [
+      "Tuesday Morning"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/tuesday-morning.png",
+    "sourceSHA256": "6cd7ece621c14c8f55cf04e850408a839754be15010b1ac788da330a6da86f88",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "6e6a24e51873d93f9d2a891e4a2988018754e3768647f6070bf4d8879a3185cd"
+  },
+  {
+    "asset": "consumer-ulta-beauty",
+    "names": [
+      "Ulta Beauty"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/ulta-beauty.png",
+    "sourceSHA256": "f7ef44d7831d22d607ab463d5a907a17411b71fc12085bbe5322e10f1768c5df",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c692edb34e99daf57c98b74ed0e49f75f6fb35a1b6980dfd737abbb3eaeab948"
+  },
+  {
+    "asset": "consumer-valero",
+    "names": [
+      "Valero"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/valero.png",
+    "sourceSHA256": "9928fc80e84d5e9a757a0bf026225e8dea0c7f053609a8fafd4e8d14025e0511",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "16e774deb0522b0bd170941f5321840c800a33fbe2c0dcacaaa8756f71777baa"
+  },
+  {
+    "asset": "consumer-value-village",
+    "names": [
+      "Value Village"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/value-village.png",
+    "sourceSHA256": "eb36c22c4ee016042c02fa7ee6a24095a7e83f314c00ed12ab4a8527ebff8ecd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "bbcdd0ceea79031340300101dcf90cd8b3eba0458224fcd75fc0d1c84cb3d401"
+  },
+  {
+    "asset": "consumer-victorias-secret",
+    "names": [
+      "Victoria's Secret",
+      "Victorias Secret"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/victorias-secret.png",
+    "sourceSHA256": "862da92d1302ac15c1d070acb73938067a05d3d15b977f6314a5bd3e3e9fff6f",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "7bc3c87d38183ae8cb2ab22ac7cc85e703d2797f2a0563b49c20efa60494abea"
+  },
+  {
+    "asset": "consumer-vons",
+    "names": [
+      "Vons"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/vons.png",
+    "sourceSHA256": "86a331f05edc6662d37f36c1b492a00db37e2c572912f7d7bb687012b7a3bdac",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ed2608446e6710baa4a322b8518bb9ff20e19fc1f43132eb62bb066e0af4a974"
+  },
+  {
+    "asset": "consumer-waffle-house",
+    "names": [
+      "Waffle House"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/waffle-house.png",
+    "sourceSHA256": "5de511bc88eb00c218b6c8bd5208ac4cb860141574017120402249c88ab20d97",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "ba931e4811dd65e4bd791617dc8f709d4715d97b224fb58c2ccdf41aefcfb9ac"
+  },
+  {
+    "asset": "consumer-waitrose",
+    "names": [
+      "Waitrose"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/waitrose.svg",
+    "sourceSHA256": "3dab10f3bc04b9ce9c0d56bf01ebe34a18985c41782c5d5b38a93b4ddbb4ee1d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "42201adcf32b10fa10208739eb11cb43db030ae942025c079caa530b7ba5c3a4"
+  },
+  {
+    "asset": "consumer-walgreens",
+    "names": [
+      "Walgreens"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/walgreens.png",
+    "sourceSHA256": "4a37f1affa5f5328828c239092b619f69558b70b507ee1c1be7ba1e73b420e79",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "652afe7f3bbffdafb6a777621e9721f6c27c54cd44b7ed8aa964ecd44fa60be6"
+  },
+  {
+    "asset": "consumer-wawa",
+    "names": [
+      "Wawa"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wawa.png",
+    "sourceSHA256": "9e2464ef9709793bb2fae97700c005e00ae3e9fc1f382ed758b449bb8344de8b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3d5512acd9547ca8044e5c1905d9f9649155944f0237e4b84bff8628076473ed"
+  },
+  {
+    "asset": "consumer-wegmans",
+    "names": [
+      "Wegmans"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wegmans.svg",
+    "sourceSHA256": "4d47810db602ffed1042fa2ca3d84d4687fb4f0fe35c6871ba8885bb43436de4",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "730de08e7eb1860d4e798e1293047db2cea338bea3e635fda032b12fb20104fc"
+  },
+  {
+    "asset": "consumer-wendys",
+    "names": [
+      "Wendy's",
+      "Wendys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wendys.png",
+    "sourceSHA256": "f02ad58d318d7f1ddf2be448d22722d21be007639993a2b5c6cdc9c74172dddd",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "f65a3b453222a67d2f3354cec5223114676eb550ebc8578e1050435b636ca105"
+  },
+  {
+    "asset": "consumer-west-elm",
+    "names": [
+      "West Elm"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/west-elm.png",
+    "sourceSHA256": "5f6251bf9229585a337444ac08e3f90e57a805f43bc33665f7e8e0822da94d3d",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "c2c2fa92c25dbb65c213327fc1cd9cff7d7879e2d98ee5fa691d195e8d633b09"
+  },
+  {
+    "asset": "consumer-wetzels-pretzels",
+    "names": [
+      "Wetzel's Pretzels",
+      "Wetzels Pretzels"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wetzels-pretzels.png",
+    "sourceSHA256": "d9c08e687b06c73aa08557bfc4c031d4a162e994c626a4bab77c0bb40a005506",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "a60ef3c506c568044846f8f0e355b90bb925c51ea4a26babe12e43a983027180"
+  },
+  {
+    "asset": "consumer-whataburger",
+    "names": [
+      "Whataburger"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/whataburger.png",
+    "sourceSHA256": "44970474b5b8bd6d5f26a33cdefd732bf32304dded6cc645f88cc83a4c251d9c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "104f2c262a8b91513841386195d8263d3896ddf0bc74d4b36c55ef4278322e33"
+  },
+  {
+    "asset": "consumer-white-castle",
+    "names": [
+      "White Castle"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/white-castle.png",
+    "sourceSHA256": "d5aa42cc6a40917b0be2200aa4a22d0274c74a15f7f8b4cee76c6fbcdef9023c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "913e220691616d188168d0dd8bcbbbd284aab239c66a4cd979c8a011933caf89"
+  },
+  {
+    "asset": "consumer-whole-foods-market",
+    "names": [
+      "Whole Foods",
+      "Whole Foods Market"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/whole-foods-market.png",
+    "sourceSHA256": "281f8d292235c25a37ac4077263dfd7bf3da252500334583062f86b38da8ef73",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "2c9e8be2dd062fbe28971e95780c530c3cbfc6edf8a9b2e7eb58e6fb5b64a6ed"
+  },
+  {
+    "asset": "consumer-wienerschnitzel",
+    "names": [
+      "Wienerschnitzel",
+      "Wiener Schnitzel"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wienerschnitzel.svg",
+    "sourceSHA256": "247fedfeb83c863c5dfc23f7525dfc9b5fffca6c64b9faceec3912603077c8a8",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3dbe33a075a133feca7a9a558c5dd0ce03e9dd32969ea7b94eca6aca44248e2b"
+  },
+  {
+    "asset": "consumer-williams-sonoma",
+    "names": [
+      "Williams Sonoma"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/williams-sonoma.png",
+    "sourceSHA256": "aea09d8fb6859e7a7bd9f74aa12faa24209926be88c019719a0ef41e71b94630",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "b5d3463e45d7daa44b9500b87c94e13cda556b00425eea756944e74e129c3f62"
+  },
+  {
+    "asset": "consumer-winco-foods",
+    "names": [
+      "WinCo",
+      "WinCo Foods"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/winco-foods.svg",
+    "sourceSHA256": "507504170c05c8f063aac56ef6c21edff2f23ca9728425e5a91704d882ac2e31",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "e5a42775731d4ba96dc138da209ce246c71d510277fff2b8dd4666e73043b8c2"
+  },
+  {
+    "asset": "consumer-wingstop",
+    "names": [
+      "Wingstop"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/wingstop.png",
+    "sourceSHA256": "6c0042b648be1ad612feef6dea55cf8c4e0785420277e3933959946b366fe80c",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "3dfe8c33a7e916e2cf462af5efafda68952c96edefbba964017397cc96d56149"
+  },
+  {
+    "asset": "consumer-winn-dixie",
+    "names": [
+      "Winn-Dixie"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/winn-dixie.svg",
+    "sourceSHA256": "fbbae350e232c34f881d15ac73380fe62fb6df5ed0f9c2fe1daf960799bc18c7",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "fbb612dc1d6a9074352207c5ae9b5a2ca1672b37aeee570a4eaf2d937f083dc6"
+  },
+  {
+    "asset": "consumer-world-market",
+    "names": [
+      "World Market"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/world-market.png",
+    "sourceSHA256": "df55dd96ae45e5d9ab12d29848b3893d3697ac57bd715eb5b5c3a45e10763dcb",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "101c3ed32c30d0e89443e7f165062d7bf8565970e8d336ba9cdf993c30472ded"
+  },
+  {
+    "asset": "consumer-xfinity",
+    "names": [
+      "Xfinity",
+      "Comcast Xfinity",
+      "Xfinity Mobile"
+    ],
+    "source": "https://raw.githubusercontent.com/selfhst/icons/1d65d45a42e6323b54b8096967b1ea4b65321f97/svg/xfinity.svg",
+    "sourceSHA256": "63b2fef2da914edc9dfaee73f8544d9d45c6f6febbc13185a712f84767924c34",
+    "collection": "selfh.st Icons",
+    "pngSHA256": "d2575666386b9bc0d036e1211a1691026f600e160fa3a163b34346a3ce68dea9"
+  },
+  {
+    "asset": "consumer-yard-house",
+    "names": [
+      "Yard House"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/yard-house.png",
+    "sourceSHA256": "b024914747562aa236540951b40e211383001553fff114dbf4df4a24ec56e90b",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "130ee6ffdb8ca3c3e7cc96e9f4ac3d9154f6585524e0400b6a3b06a5d6b44e6e"
+  },
+  {
+    "asset": "consumer-yogurtland",
+    "names": [
+      "Yogurtland"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/yogurtland.png",
+    "sourceSHA256": "37c66e2c0961dd9d4a44df6a7d111b44d7a66e0ecc0aecb6a19ce5414ef483d6",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "45f6879566a8f0ea757f9c7cc566246e80b3adc2b72b8b97321d6db2ac785189"
+  },
+  {
+    "asset": "consumer-zaxbys",
+    "names": [
+      "Zaxby's",
+      "Zaxbys"
+    ],
+    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/zaxbys.png",
+    "sourceSHA256": "9110f4d4a192a1625b92259d0d6a00ddfc0c4b8e94be4a4e8ea74fdc56332f17",
+    "collection": "Open Food Facts Brand Images",
+    "pngSHA256": "34d383c65128f870e3145d23195d17773530820a8d871635c35702e8dba6d2d1"
   }
 ]

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Build the offline catalog from pinned public artwork, never from transaction data.
 
-Development dependency: pip install cairosvg==2.8.2
+Development dependencies: pip install cairosvg==2.8.2 Pillow==13.0.0
 Usage: python3 Scripts/generate-merchant-icons.py [path/to/simple-icons-13.21.0.tgz]
 Without an archive argument, download the pinned npm source archive.
+Use --supplement-only to refresh consumer artwork without rebuilding Simple Icons.
 """
+import argparse
 import concurrent.futures
 import collections
 import hashlib
@@ -12,12 +14,12 @@ import io
 import json
 import pathlib
 import re
-import sys
 import tarfile
 import unicodedata
 import urllib.request
 
 import cairosvg
+from PIL import Image, ImageChops
 
 VERSION = "13.21.0"
 ARCHIVE_URL = f"https://registry.npmjs.org/simple-icons/-/simple-icons-{VERSION}.tgz"
@@ -52,8 +54,72 @@ def slug(icon):
     return re.sub("[^a-z0-9]", "", unicodedata.normalize("NFD", name))
 
 
+def consumer_brands(cache):
+    manifest = json.loads((ROOT / "Scripts/merchant-icon-supplement.json").read_text())
+    cache.mkdir(parents=True, exist_ok=True)
+
+    def render(brand):
+        source_url = brand["source"]
+        collection = manifest["collections"][brand["collection"]]
+        if not re.fullmatch(r"[0-9a-f]{40}", collection["revision"]):
+            raise ValueError("Consumer artwork must pin a full Git revision.")
+        expected_root = ("https://raw.githubusercontent.com/" + collection["repository"]
+                         + "/" + collection["revision"] + "/")
+        if not source_url.startswith(expected_root):
+            raise ValueError("Consumer artwork must use the pinned public collection.")
+        if not re.fullmatch(r"consumer-[a-z0-9-]+", brand["asset"]):
+            raise ValueError("Consumer asset filenames must be plain names.")
+        cached = cache / brand["sourceSHA256"]
+        source = (cached.read_bytes() if cached.exists() else
+                  urllib.request.urlopen(source_url, timeout=60).read())
+        if hashlib.sha256(source).hexdigest() != brand["sourceSHA256"]:
+            raise ValueError(f"Consumer source checksum mismatch: {brand['asset']}")
+        if "originalSourceSHA1" in brand and hashlib.sha1(source).hexdigest() != brand["originalSourceSHA1"]:
+            raise ValueError(f"Original artwork provenance mismatch: {brand['asset']}")
+        cached.write_bytes(source)
+        if source_url.endswith(".svg"):
+            # All selected SVGs are standalone: do not fetch linked images or fonts.
+            if re.search(rb'(?:href\s*=\s*[\"\'](?!#)|url\(\s*(?!#))', source):
+                raise ValueError(f"External SVG reference: {brand['asset']}")
+            source_image = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=source,
+                                                               output_width=768, output_height=768)))
+        else:
+            source_image = Image.open(io.BytesIO(source))
+        image = source_image.convert("RGBA")
+        # Trim empty/white margins; preserve proportions, multicolor marks, and interior white.
+        background = Image.new("RGBA", image.size, "white")
+        background.alpha_composite(image)
+        bounds = ImageChops.difference(background.convert("RGB"),
+                                      Image.new("RGB", image.size, "white")).getbbox()
+        if bounds is None:
+            raise ValueError(f"Blank consumer artwork: {brand['asset']}")
+        image = image.crop(bounds)
+        image.thumbnail((192, 192), Image.Resampling.LANCZOS)
+        canvas = Image.new("RGBA", (192, 192))
+        canvas.alpha_composite(image, ((192 - image.width) // 2, (192 - image.height) // 2))
+        buffer = io.BytesIO()
+        canvas.save(buffer, format="PNG")
+        png = buffer.getvalue()
+        (OUTPUT / (brand["asset"] + ".png")).write_bytes(png)
+        return {**brand, "pngSHA256": hashlib.sha256(png).hexdigest()}
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        return list(pool.map(render, manifest["brands"]))
+
+
 def main():
-    archive = (pathlib.Path(sys.argv[1]).read_bytes() if len(sys.argv) > 1 else
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("archive", nargs="?", type=pathlib.Path)
+    parser.add_argument("--supplement-only", action="store_true")
+    parser.add_argument("--source-cache", type=pathlib.Path,
+                        default=pathlib.Path("/tmp/echoledger-consumer-source"))
+    args = parser.parse_args()
+    if args.supplement_only:
+        catalog = json.loads((OUTPUT / "catalog.json").read_text())
+        write_catalog([b for b in catalog if not b["asset"].startswith("consumer-")]
+                      + consumer_brands(args.source_cache))
+        return
+    archive = (args.archive.read_bytes() if args.archive else
                urllib.request.urlopen(ARCHIVE_URL, timeout=60).read())
     if hashlib.sha256(archive).hexdigest() != ARCHIVE_SHA256:
         raise ValueError("The source archive does not match the pinned version's SHA-256.")
@@ -98,15 +164,31 @@ def main():
     # Cairo's font-free, path-only SVG conversion is independent for each mark.
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         catalog = list(pool.map(render, sources))
+    catalog += consumer_brands(args.source_cache)
+    write_catalog(catalog)
+    (OUTPUT / "LICENSE-simple-icons.md").write_bytes(license_text)
+    (OUTPUT / "DISCLAIMER-simple-icons.md").write_bytes(disclaimer)
+    print(f"Source archive SHA-256: {hashlib.sha256(archive).hexdigest()}", flush=True)
+
+
+def write_catalog(catalog):
+    names = set()
+    assets = set()
+    for brand in catalog:
+        if brand["asset"] in assets:
+            raise ValueError(f"Duplicate asset: {brand['asset']}")
+        assets.add(brand["asset"])
+        for name in brand["names"]:
+            normalized = key(name)
+            if normalized in names:
+                raise ValueError(f"Ambiguous merchant name: {name}")
+            names.add(normalized)
     expected = {entry["asset"] + ".png" for entry in catalog}
     for old in OUTPUT.glob("*.png"):
         if old.name not in expected:
             old.unlink()
     (OUTPUT / "catalog.json").write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n")
-    (OUTPUT / "LICENSE-simple-icons.md").write_bytes(license_text)
-    (OUTPUT / "DISCLAIMER-simple-icons.md").write_bytes(disclaimer)
-    print(f"Generated {len(catalog)} brand marks / {len(used_names)} exact merchant names.", flush=True)
-    print(f"Source archive SHA-256: {hashlib.sha256(archive).hexdigest()}", flush=True)
+    print(f"Generated {len(catalog)} brand marks / {len(names)} exact merchant names.", flush=True)
 
 
 if __name__ == "__main__":

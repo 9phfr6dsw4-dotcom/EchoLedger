@@ -10,7 +10,7 @@ public struct MerchantIconDescriptor: Hashable, Sendable {
     public let tone: Tone
 }
 
-/// Exact matches against resolved merchant names, with no network access or fuzzy brand guesses.
+/// Explicit merchant names and numbered-store variants, without network access or fuzzy guesses.
 public enum MerchantIconCatalog {
     private static let resourceBundleName = "EchoLedger_EchoLedgerCore.bundle"
     private final class BundleMarker: NSObject {}
@@ -118,8 +118,17 @@ public enum MerchantIconCatalog {
             default: fallback = (nil, kind == .income ? .forest : .neutral)
             }
         }
-        return MerchantIconDescriptor(logo: kind == .transfer ? nil : byName[nameKey],
+        return MerchantIconDescriptor(logo: kind == .transfer ? nil : brandAsset(for: nameKey),
                                       symbol: fallback.0, initials: letters, tone: fallback.1)
+    }
+
+    private static func brandAsset(for name: String) -> String? {
+        if let exact = byName[name] { return exact }
+        // Only remove an explicit store identifier or a trailing 3+ digit store number.
+        // Arbitrary trailing words (including locations) do not establish brand identity.
+        let base = name.replacingOccurrences(of: #"\s+(?:(?:store\s*#?\s*|#\s*)\d+[a-z]?|\d{3,})$"#,
+                                             with: "", options: .regularExpression)
+        return base == name ? nil : byName[base]
     }
 
     public static func descriptor(for transaction: LedgerTransaction, ledger: Ledger) -> MerchantIconDescriptor {
