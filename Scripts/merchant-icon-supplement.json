@@ -118,15 +118,6 @@
       "collection": "Open Food Facts Brand Images"
     },
     {
-      "asset": "consumer-am-pm",
-      "names": [
-        "ampm"
-      ],
-      "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/am-pm.png",
-      "sourceSHA256": "f8e49539ac5f41bc99f641bd3fe150173c7abb9feb2a7a3b0e60d650f5a11d9f",
-      "collection": "Open Food Facts Brand Images"
-    },
-    {
       "asset": "consumer-amoco",
       "names": [
         "Amoco"
@@ -795,15 +786,6 @@
       ],
       "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/fleet-farm.png",
       "sourceSHA256": "c43cdbde998c5a43075aaee37a2b90cee31f9a985d774ac0d043c8cb2bd164dd",
-      "collection": "Open Food Facts Brand Images"
-    },
-    {
-      "asset": "consumer-food-city",
-      "names": [
-        "Food City"
-      ],
-      "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/food-city.png",
-      "sourceSHA256": "f3d808b4652a356233e52eb2d407dcdf903beacfe355e432ab10b9a809a3ab80",
       "collection": "Open Food Facts Brand Images"
     },
     {

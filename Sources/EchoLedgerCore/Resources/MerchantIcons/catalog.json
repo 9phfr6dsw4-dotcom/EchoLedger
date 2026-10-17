@@ -34501,16 +34501,6 @@
     "pngSHA256": "353a6f95e282ba6c54713704b7962dc517f20a6d237b33893248c186ebee38a2"
   },
   {
-    "asset": "consumer-am-pm",
-    "names": [
-      "ampm"
-    ],
-    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/am-pm.png",
-    "sourceSHA256": "f8e49539ac5f41bc99f641bd3fe150173c7abb9feb2a7a3b0e60d650f5a11d9f",
-    "collection": "Open Food Facts Brand Images",
-    "pngSHA256": "96803f6c4428c0eda419fafde1ffb5189801dc0cfdfa715107c906837f953dd9"
-  },
-  {
     "asset": "consumer-amoco",
     "names": [
       "Amoco"
@@ -35251,16 +35241,6 @@
     "sourceSHA256": "c43cdbde998c5a43075aaee37a2b90cee31f9a985d774ac0d043c8cb2bd164dd",
     "collection": "Open Food Facts Brand Images",
     "pngSHA256": "55366ecceed08bd8704eb35e50a4719e82640aa806f8b3de6ab29f19ee366a3a"
-  },
-  {
-    "asset": "consumer-food-city",
-    "names": [
-      "Food City"
-    ],
-    "source": "https://raw.githubusercontent.com/openfoodfacts/brand-images/9890268558563ee11cdfd89d23f99499234a40d3/xx/stores/food-city.png",
-    "sourceSHA256": "f3d808b4652a356233e52eb2d407dcdf903beacfe355e432ab10b9a809a3ab80",
-    "collection": "Open Food Facts Brand Images",
-    "pngSHA256": "58f6446d1cc9a72a6f077d8a10e9028ea8be720943bb4f3a4c4f93fd093b42e3"
   },
   {
     "asset": "consumer-food-lion",
