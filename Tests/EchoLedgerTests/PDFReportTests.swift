@@ -57,6 +57,14 @@ final class PDFReportTests: XCTestCase {
             XCTAssertGreaterThan(pdf.pageCount, 8)
             XCTAssertTrue(text.contains("Example account 40"))
             XCTAssertTrue(text.contains("every number was checked"))
+            if !text.contains("NOTE_1_START") {
+                for pageIndex in 0..<pdf.pageCount {
+                    if let pageText = pdf.page(at: pageIndex)?.string, pageText.contains("explanation") {
+                        print("Synthetic note extraction diagnostic: " + String(pageText.prefix(900)))
+                        break
+                    }
+                }
+            }
             for index in 1...45 {
                 for marker in ["NOTE_\(index)_START", "NOTE_\(index)_END"] {
                     XCTAssertTrue(text.contains(marker), "\(style.name) lost \(marker)")
@@ -113,6 +121,28 @@ final class PDFReportTests: XCTestCase {
         let pdf = try XCTUnwrap(PDFDocument(data: ReportPDF.data(content: PDFReportContent(report: refund, ledger: household.ledger, summary: []), style: .everyday)))
         XCTAssertTrue(pdf.string?.contains(Money.format(-500)) == true)
         XCTAssertTrue(pdf.string?.contains("negative amounts represent net refunds") == true)
+    }
+
+    func testNonUSDCurrencyAndCategoryNameLongerThanAPage() throws {
+        let household = TestHousehold.make()
+        var report = household.report()
+        report.filter.currency = "EUR"
+        report.categories[0].name = "CATEGORYSTART " + Array(repeating: "An unusually long fictional category label", count: 120).joined(separator: " ") + " CATEGORYEND"
+        for style in PDFReportStyle.allCases {
+            let pdf = try XCTUnwrap(PDFDocument(data: ReportPDF.data(content: PDFReportContent(report: report, ledger: household.ledger, summary: []), style: style)))
+            let text = try XCTUnwrap(pdf.string)
+            XCTAssertTrue(text.contains(Money.format(report.spending, currency: "EUR")))
+            XCTAssertFalse(text.contains("$"))
+            for marker in ["CATEGORYSTART", "CATEGORYEND"] {
+                XCTAssertTrue(text.contains(marker))
+                for selection in pdf.findString(marker, withOptions: .literal) {
+                    for page in selection.pages {
+                        XCTAssertGreaterThan(selection.bounds(for: page).minY, 65)
+                        XCTAssertLessThan(selection.bounds(for: page).maxY, 680)
+                    }
+                }
+            }
+        }
     }
 
     func testMonthRowsAndIncomeBeyondTheOldLimitsAreRetained() throws {

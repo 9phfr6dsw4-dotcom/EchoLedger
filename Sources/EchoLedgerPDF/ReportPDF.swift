@@ -73,7 +73,7 @@ private final class PDFLayout {
     }
 
     var report: Report { content.report }
-    func amount(_ cents: Cents) -> String { Money.format(cents) }
+    func amount(_ cents: Cents) -> String { Money.format(cents, currency: report.filter.currency) }
     func share(_ cents: Cents) -> String {
         Money.shareTenths(cents, of: report.spending).map { Money.percentText(tenths: $0) } ?? "—"
     }
@@ -285,9 +285,14 @@ private final class PDFLayout {
         let maximum = max(1, report.categories.map { abs(Double($0.amount)) }.max() ?? 1)
         for line in report.categories {
             let labelHeight = height(line.name, width: 155, font: bodyFont())
-            let h = max(30, labelHeight + 10)
+            // Exceptionally long names use the same splitting path as report notes.
+            let separateLabel = labelHeight > 90
+            if separateLabel { paragraph(line.name, font: bodyFont(10, bold: true), gap: 4, continuation: "Spending by category continued") }
+            let h = separateLabel ? 30 : max(30, labelHeight + 10)
             ensure(h, continuation: "Spending by category continued")
-            text(line.name, rect: CGRect(x: left, y: y + 4, width: 155, height: labelHeight), font: bodyFont())
+            if !separateLabel {
+                text(line.name, rect: CGRect(x: left, y: y + 4, width: 155, height: labelHeight), font: bodyFont())
+            }
             let bar = CGRect(x: left + 165, y: y + 8, width: 190, height: 11)
             fill(bar, color: pale, radius: style == .everyday ? 4 : 0)
             fill(CGRect(x: bar.minX, y: bar.minY, width: 190 * abs(Double(line.amount)) / maximum, height: bar.height), color: line.amount < 0 ? muted : sage)
@@ -297,22 +302,30 @@ private final class PDFLayout {
         }
         paragraph("Net spending after refunds · negative amounts represent net refunds.", font: bodyFont(8), color: muted)
     }
+    var ringLines: [(name: String, amount: Cents)] {
+        let lines = report.categories.map { (name: $0.name, amount: $0.amount) }
+        if lines.count <= 7 { return lines }
+        return Array(lines.prefix(6)) + [(name: "Other categories (\(lines.count - 6))", amount: lines.dropFirst(6).reduce(0) { $0 + $1.amount })]
+    }
     var canUseRing: Bool {
-        report.spending > 0 && report.categories.count <= 7 && report.categories.allSatisfy { $0.amount >= 0 }
-            && report.categories.allSatisfy { height($0.name, width: 200, font: bodyFont()) <= 18 }
+        report.spending > 0 && report.categories.allSatisfy { $0.amount >= 0 }
+            && ringLines.allSatisfy { height($0.name, width: 190, font: bodyFont()) <= 18 }
+    }
+    func ringColor(_ index: Int) -> NSColor {
+        index == 0 ? green : sage.blended(withFraction: CGFloat(index) * 0.09, of: pale) ?? sage
     }
     func ring() {
         ensure(190, continuation: "Spending by category")
         let center = CGPoint(x: left + 85, y: y + 85)
-        let categories = report.categories
+        let categories = ringLines
         let total = Double(report.spending)
-        let green = green, sage = sage, pale = pale
+        let colors = categories.indices.map { ringColor($0) }
         pages[pages.count - 1].commands.append { context in
             var angle = -Double.pi / 2
             for (index, line) in categories.enumerated() {
                 guard line.amount > 0 else { continue }
                 let next = angle + Double(line.amount) / total * 2 * .pi
-                context.setStrokeColor((index == 0 ? green : sage.blended(withFraction: CGFloat(index) * 0.09, of: pale) ?? sage).cgColor)
+                context.setStrokeColor(colors[index].cgColor)
                 context.setLineWidth(22)
                 context.addArc(center: center, radius: 66, startAngle: angle, endAngle: next, clockwise: false)
                 context.strokePath()
@@ -323,10 +336,14 @@ private final class PDFLayout {
         moneyText(amount(report.spending), x: left + 29, top: y + 84, width: 112, size: 16, bold: true)
         for (index, line) in categories.enumerated() {
             let top = y + CGFloat(index) * 25
-            text(line.name, rect: CGRect(x: left + 190, y: top, width: 200, height: 31), font: bodyFont())
+            fill(CGRect(x: left + 186, y: top + 3, width: 8, height: 8), color: colors[index], radius: 4)
+            text(line.name, rect: CGRect(x: left + 202, y: top, width: 190, height: 20), font: bodyFont())
             moneyText(amount(line.amount), x: left + 400, top: top, width: 128)
         }
         y += 195
+        if report.categories.count > 7 {
+            paragraph("Smaller categories are grouped in this chart. Every category appears separately in the detailed ledger.", font: bodyFont(8), color: muted)
+        }
     }
 
     func tableHeader(heading: String = "Categories and merchants") {
