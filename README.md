@@ -100,3 +100,7 @@ MIT. See [LICENSE](LICENSE).
 In Settings → Household & Accounts, add people and choose who uses each account or card. A card can have several users, or none for a plain household card. Individual cards appear beneath an account when an import supplies cardholder or card-number details; unknown layouts can map those optional columns. New imports use the saved default. Choose Apply to Past Transactions to update earlier imports while preserving individual corrections; Undo reverses that action. Legacy shared accounts stay shared.
 
 Reports and Transactions let you choose the whole household, selected people, shared spending, or unassigned transactions, and switch between two ways of counting for the people you pick: **Spending assigned to them** (follows each purchase, including single purchases you reassigned) or **Everything on their cards** (every purchase on a card they use; a card several of them use is counted once). Person-only reports exclude shared spending unless selected. Joint expenses count once in the whole-household total. Exports use the same selection and figures.
+
+### PDF report styles
+
+In Reports, choose **Export → Report as PDF…**, then select **Signature**, **Everyday**, or **Precision**. The last style is remembered. Every style exports the same selected people/cards, figures, income sources, merchant details, and report notes. Long reports continue onto additional letter-size pages with repeated scope and page numbers.

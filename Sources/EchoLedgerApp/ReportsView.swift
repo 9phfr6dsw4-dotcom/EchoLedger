@@ -1,5 +1,6 @@
 import Charts
 import EchoLedgerCore
+import EchoLedgerPDF
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -40,6 +41,11 @@ struct ReportBundle {
     }
 }
 
+struct PDFExportRequest: Identifiable {
+    let id = UUID()
+    let content: PDFReportContent
+}
+
 struct DrillDown: Identifiable {
     let id = UUID()
     let title: String
@@ -54,6 +60,7 @@ struct ReportsView: View {
     @State private var people = PeopleSelection()
     @State private var tab: ReportTab = .overview
     @State private var drillDown: DrillDown?
+    @State private var pdfReport: PDFExportRequest?
 
     private var filter: ReportFilter {
         let span = period.span(today: runtime.today, earliest: runtime.ledger.transactions.values.map(\.date).min(),
@@ -79,6 +86,9 @@ struct ReportsView: View {
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
         .background(Theme.canvas)
+        .sheet(item: $pdfReport) { request in
+            PDFExportSheet { style in exportPDF(request.content, style: style) }
+        }
         .sheet(item: $drillDown) { item in
             DrillDownSheet(drillDown: item)
         }
@@ -114,7 +124,7 @@ struct ReportsView: View {
             PeopleScopePicker(selection: $people)
             Spacer()
             Menu {
-                Button("Report as PDF…") { exportPDF(bundle) }
+                Button("Report as PDF…") { preparePDF(bundle) }
                 Button("Report summary as CSV…") {
                     SavePanel.save(text: CSVExport.reportSummary(bundle.report),
                                    suggestedName: "EchoLedger \(bundle.report.filter.span.label).csv",
@@ -132,13 +142,20 @@ struct ReportsView: View {
         }
     }
 
-    private func exportPDF(_ bundle: ReportBundle) {
-        guard let url = SavePanel.choose(suggestedName: "EchoLedger \(bundle.report.filter.span.label).pdf", type: .pdf) else { return }
+    private func preparePDF(_ bundle: ReportBundle) {
         let key = runtime.intelligence.narrativeKey(filter: bundle.filter, revision: runtime.revision)
         let bullets = runtime.intelligence.narratives[key] ?? []
-        let who = bundle.report.scopeLabel
+        // Freeze the report and its assignments together before presenting either dialog.
+        let content = PDFReportContent(report: bundle.report, ledger: runtime.ledger,
+                                       summary: bullets.isEmpty ? bundle.facts.prefix(6).map(\.text) : bullets.map(\.text),
+                                       summaryIsAI: !bullets.isEmpty, recurring: bundle.recurring)
+        pdfReport = PDFExportRequest(content: content)
+    }
+
+    private func exportPDF(_ content: PDFReportContent, style: PDFReportStyle) {
+        guard let url = SavePanel.choose(suggestedName: "EchoLedger \(content.report.filter.span.label) \(style.name).pdf", type: .pdf) else { return }
         do {
-            try ReportPDF.write(bundle: bundle, ledger: runtime.ledger, bullets: bullets, who: who, to: url)
+            try ReportPDF.write(content: content, style: style, to: url)
             runtime.statusMessage = "Saved \(url.lastPathComponent)."
         } catch {
             runtime.errorMessage = "Couldn't save the PDF: \(error.localizedDescription)"
@@ -422,6 +439,7 @@ struct MonthBars: View {
             }
         }
         .chartForegroundStyleScale(["Income": Theme.income, "Spending": Theme.spending])
+        .chartXAxis { ReportMonthAxis.marks }
         .chartYAxis {
             AxisMarks { value in
                 AxisGridLine()
@@ -964,6 +982,7 @@ struct SpendingBars: View {
                     Text(Money.formatWhole(month.spending)).font(.caption2).foregroundStyle(.secondary)
                 }
         }
+        .chartXAxis { ReportMonthAxis.marks }
         .chartYAxis {
             AxisMarks { value in
                 AxisGridLine().foregroundStyle(.primary.opacity(0.08))
@@ -973,5 +992,16 @@ struct SpendingBars: View {
             }
         }
         .chartPlotStyle { $0.padding(.top, 14) }
+    }
+}
+
+/// Keep month names outside the plot, below zero-value bars and their amount annotations.
+enum ReportMonthAxis {
+    static var marks: some AxisContent {
+        AxisMarks(preset: .aligned, position: .bottom) {
+            AxisGridLine().foregroundStyle(.primary.opacity(0.06))
+            AxisTick()
+            AxisValueLabel(anchor: .top, verticalSpacing: 8)
+        }
     }
 }

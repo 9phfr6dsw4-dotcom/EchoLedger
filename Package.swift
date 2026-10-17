@@ -13,13 +13,14 @@ let package = Package(
             name: "EchoLedgerCore",
             linkerSettings: [.linkedLibrary("sqlite3")]
         ),
+        .target(name: "EchoLedgerPDF", dependencies: ["EchoLedgerCore"]),
         .executableTarget(
             name: "EchoLedgerApp",
-            dependencies: ["EchoLedgerCore"]
+            dependencies: ["EchoLedgerCore", "EchoLedgerPDF"]
         ),
         .testTarget(
             name: "EchoLedgerTests",
-            dependencies: ["EchoLedgerCore"]
+            dependencies: ["EchoLedgerCore", "EchoLedgerPDF"]
         )
     ]
 )
