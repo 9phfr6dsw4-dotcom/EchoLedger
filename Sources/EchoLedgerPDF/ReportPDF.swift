@@ -236,7 +236,7 @@ private final class PDFLayout {
                 rule(at: y)
             }
         }
-        section("Income sources")
+        section("Income sources", reserve: 60)
         if report.incomeSources.isEmpty { paragraph("No income in this period.", color: muted) }
         if !report.incomeSources.isEmpty { tableHeader(heading: "Income sources") }
         for line in report.incomeSources {
@@ -244,7 +244,7 @@ private final class PDFLayout {
         }
         totalRow("Total income", value: report.income)
         if !content.recurring.isEmpty {
-            section("Recurring charges")
+            section("Recurring charges", reserve: 60)
             tableHeader(heading: "Recurring charges")
             for charge in content.recurring {
                 let detail = "\(charge.merchantName) · \(charge.cadence.label)" + (charge.priceChanged ? " · price changed" : "")

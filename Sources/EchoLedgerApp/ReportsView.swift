@@ -43,7 +43,7 @@ struct ReportBundle {
 
 struct PDFExportRequest: Identifiable {
     let id = UUID()
-    let bundle: ReportBundle
+    let content: PDFReportContent
 }
 
 struct DrillDown: Identifiable {
@@ -87,7 +87,7 @@ struct ReportsView: View {
         }
         .background(Theme.canvas)
         .sheet(item: $pdfReport) { request in
-            PDFExportSheet { style in exportPDF(request.bundle, style: style) }
+            PDFExportSheet { style in exportPDF(request.content, style: style) }
         }
         .sheet(item: $drillDown) { item in
             DrillDownSheet(drillDown: item)
@@ -124,7 +124,7 @@ struct ReportsView: View {
             PeopleScopePicker(selection: $people)
             Spacer()
             Menu {
-                Button("Report as PDF…") { pdfReport = PDFExportRequest(bundle: bundle) }
+                Button("Report as PDF…") { preparePDF(bundle) }
                 Button("Report summary as CSV…") {
                     SavePanel.save(text: CSVExport.reportSummary(bundle.report),
                                    suggestedName: "EchoLedger \(bundle.report.filter.span.label).csv",
@@ -142,14 +142,19 @@ struct ReportsView: View {
         }
     }
 
-    private func exportPDF(_ bundle: ReportBundle, style: PDFReportStyle) {
-        guard let url = SavePanel.choose(suggestedName: "EchoLedger \(bundle.report.filter.span.label).pdf", type: .pdf) else { return }
+    private func preparePDF(_ bundle: ReportBundle) {
         let key = runtime.intelligence.narrativeKey(filter: bundle.filter, revision: runtime.revision)
         let bullets = runtime.intelligence.narratives[key] ?? []
+        // Freeze the report and its assignments together before presenting either dialog.
+        let content = PDFReportContent(report: bundle.report, ledger: runtime.ledger,
+                                       summary: bullets.isEmpty ? bundle.facts.prefix(6).map(\.text) : bullets.map(\.text),
+                                       summaryIsAI: !bullets.isEmpty, recurring: bundle.recurring)
+        pdfReport = PDFExportRequest(content: content)
+    }
+
+    private func exportPDF(_ content: PDFReportContent, style: PDFReportStyle) {
+        guard let url = SavePanel.choose(suggestedName: "EchoLedger \(content.report.filter.span.label) \(style.name).pdf", type: .pdf) else { return }
         do {
-            let content = PDFReportContent(report: bundle.report, ledger: runtime.ledger,
-                                           summary: bullets.isEmpty ? bundle.facts.prefix(6).map(\.text) : bullets.map(\.text),
-                                           summaryIsAI: !bullets.isEmpty, recurring: bundle.recurring)
             try ReportPDF.write(content: content, style: style, to: url)
             runtime.statusMessage = "Saved \(url.lastPathComponent)."
         } catch {
@@ -434,7 +439,7 @@ struct MonthBars: View {
             }
         }
         .chartForegroundStyleScale(["Income": Theme.income, "Spending": Theme.spending])
-        .chartXAxis { ReportMonthAxis() }
+        .chartXAxis { ReportMonthAxis.marks }
         .chartYAxis {
             AxisMarks { value in
                 AxisGridLine()
@@ -977,7 +982,7 @@ struct SpendingBars: View {
                     Text(Money.formatWhole(month.spending)).font(.caption2).foregroundStyle(.secondary)
                 }
         }
-        .chartXAxis { ReportMonthAxis() }
+        .chartXAxis { ReportMonthAxis.marks }
         .chartYAxis {
             AxisMarks { value in
                 AxisGridLine().foregroundStyle(.primary.opacity(0.08))
@@ -991,8 +996,8 @@ struct SpendingBars: View {
 }
 
 /// Keep month names outside the plot, below zero-value bars and their amount annotations.
-struct ReportMonthAxis: AxisContent {
-    var body: some AxisContent {
+enum ReportMonthAxis {
+    static var marks: some AxisContent {
         AxisMarks(preset: .aligned, position: .bottom) {
             AxisGridLine().foregroundStyle(.primary.opacity(0.06))
             AxisTick()
