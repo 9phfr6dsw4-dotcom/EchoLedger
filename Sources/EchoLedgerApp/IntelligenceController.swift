@@ -297,7 +297,7 @@ final class IntelligenceController {
     // MARK: Report summaries
 
     func narrativeKey(filter: ReportFilter, revision: Int) -> String {
-        "\(filter.wholeHousehold)|\(filter.includeShared)|\(filter.includeUnassigned)|\(filter.currency)|\(revision)|\(filter.span.start.iso)|\(filter.span.end.iso)|\(filter.personIDs.map(\.uuidString).sorted().joined(separator: ","))|\(filter.accountIDs.map(\.uuidString).sorted().joined(separator: ","))"
+        "\(filter.wholeHousehold)|\(filter.peopleMode.rawValue)|\(filter.includeShared)|\(filter.includeUnassigned)|\(filter.currency)|\(revision)|\(filter.span.start.iso)|\(filter.span.end.iso)|\(filter.personIDs.map(\.uuidString).sorted().joined(separator: ","))|\(filter.accountIDs.map(\.uuidString).sorted().joined(separator: ","))"
     }
 
     /// Writes a short summary from EchoLedger's computed facts. Bullets that cite no fact, or use a

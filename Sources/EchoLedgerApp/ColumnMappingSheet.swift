@@ -64,7 +64,7 @@ struct ColumnMappingSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 620, height: 680)
+        .frame(minWidth: 540, idealWidth: 620, minHeight: 460, idealHeight: 620)
         .onAppear(perform: guessColumns)
     }
 

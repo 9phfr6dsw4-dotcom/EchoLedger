@@ -891,7 +891,11 @@ public struct Ledger: Sendable {
         delta.delete(.person, id)
         for index in accounts.indices {
             var account = accounts[index]
-            if account.personID == id { account.defaultAssignment = .unassigned }
+            if account.userIDs == [id] {
+                account.defaultAssignment = .unassigned
+            } else if account.userIDs.contains(id) {
+                account.userIDs.removeAll { $0 == id }
+            }
             for key in Array(account.cardAssignments.keys) where account.cardAssignments[key] == .person(id) {
                 account.cardAssignments[key] = .unassigned
             }

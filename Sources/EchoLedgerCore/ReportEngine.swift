@@ -1,5 +1,13 @@
 import Foundation
 
+/// How a report counts the people it's filtered to.
+public enum PeopleMode: String, Hashable, Sendable {
+    /// Spending assigned to them, including single purchases you reassigned.
+    case assigned
+    /// Everything on the cards they use, whoever a single purchase was reassigned to.
+    case cards
+}
+
 /// What a report covers. Every screen, chart, PDF, CSV export and AI answer uses the same filter
 /// and the same calculations, so their numbers always agree.
 public struct ReportFilter: Hashable, Sendable {
@@ -12,9 +20,11 @@ public struct ReportFilter: Hashable, Sendable {
     public var wholeHousehold: Bool
     public var includeShared: Bool
     public var includeUnassigned: Bool
+    public var peopleMode: PeopleMode
 
     public init(span: DateSpan, personIDs: Set<UUID> = [], accountIDs: Set<UUID> = [], currency: String = "USD",
-                wholeHousehold: Bool? = nil, includeShared: Bool = false, includeUnassigned: Bool = false) {
+                wholeHousehold: Bool? = nil, includeShared: Bool = false, includeUnassigned: Bool = false,
+                peopleMode: PeopleMode = .assigned) {
         self.span = span
         self.personIDs = personIDs
         self.accountIDs = accountIDs
@@ -22,6 +32,7 @@ public struct ReportFilter: Hashable, Sendable {
         self.wholeHousehold = wholeHousehold ?? personIDs.isEmpty
         self.includeShared = includeShared
         self.includeUnassigned = includeUnassigned
+        self.peopleMode = peopleMode
     }
 
     public func includes(_ account: Account) -> Bool {
@@ -33,6 +44,12 @@ public struct ReportFilter: Hashable, Sendable {
     public func includes(_ transaction: LedgerTransaction, ledger: Ledger) -> Bool {
         guard let account = ledger.account(transaction.accountID), includes(account) else { return false }
         if wholeHousehold { return true }
+        if peopleMode == .cards {
+            // A card several of them use is counted once here, not once per person.
+            let users = ledger.cardUsers(for: transaction)
+            if users.isEmpty { return ledger.cardIsUndecided(for: transaction) ? includeUnassigned : includeShared }
+            return users.contains { personIDs.contains($0) }
+        }
         switch ledger.assignment(for: transaction) {
         case .person(let id): return personIDs.contains(id)
         case .shared: return includeShared
@@ -45,7 +62,9 @@ public struct ReportFilter: Hashable, Sendable {
         var names = ledger.people.filter { personIDs.contains($0.id) }.map(\.name)
         if includeShared { names.append("Shared household") }
         if includeUnassigned { names.append("Unassigned") }
-        return names.isEmpty ? "No people selected" : names.joined(separator: " + ")
+        if names.isEmpty { return "No people selected" }
+        let label = names.joined(separator: " + ")
+        return peopleMode == .cards ? label + " (their cards)" : label
     }
 
     public func withSpan(_ span: DateSpan) -> ReportFilter {
@@ -353,7 +372,14 @@ public enum ReportEngine {
                                   text: "Accounts in other currencies aren't added in: \(otherCurrency.map(\.name).sorted().joined(separator: ", "))."))
         }
         if !filter.wholeHousehold {
-            let text = filter.includeShared ? "Shared household spending is included in this selection." : "Shared household spending is excluded from this selection."
+            let text: String
+            if filter.peopleMode == .cards {
+                text = filter.includeShared
+                    ? "Everything on the cards these people use is included, plus household cards nobody in particular uses. A card used by several of them is counted once."
+                    : "Everything on the cards these people use is included. A card used by several of them is counted once. Household cards nobody in particular uses are left out."
+            } else {
+                text = filter.includeShared ? "Shared household spending is included in this selection." : "Shared household spending is excluded from this selection."
+            }
             notes.append(DataNote(id: "shared", severity: .info, text: text))
         }
         let partialKey = "partial|\(filter.span.end.iso)"

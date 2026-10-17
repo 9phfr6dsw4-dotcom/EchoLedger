@@ -13,7 +13,8 @@ enum DemoLedger {
         let card = Account(name: "Travel credit card", personID: sam.id, type: .creditCard, rarelyUsed: true,
                            cardAssignments: ["Cardholder: Riley": .person(riley.id)])
         let debit = Account(name: "Riley debit card", personID: riley.id, type: .checking, rarelyUsed: true)
-        let joint = Account(name: "Joint checking", personID: nil, type: .checking, rarelyUsed: true)
+        let joint = Account(name: "Joint checking", personID: nil, type: .checking, rarelyUsed: true,
+                            userIDs: [alex.id, sam.id])
         let savings = Account(name: "New savings", personID: nil, type: .savings, rarelyUsed: true, isUnassigned: true)
         ledger.accounts = [checking, card, debit, joint, savings]
         let lastMonth = today.firstOfMonth.adding(months: -1)

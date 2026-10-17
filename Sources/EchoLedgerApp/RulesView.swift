@@ -314,7 +314,7 @@ struct RuleEditorSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 640, height: 760)
+        .frame(minWidth: 560, idealWidth: 640, minHeight: 460, idealHeight: 640)
         .onAppear(perform: load)
     }
 
@@ -508,7 +508,7 @@ struct MerchantEditorSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 560, height: 640)
+        .frame(minWidth: 500, idealWidth: 560, minHeight: 420, idealHeight: 580)
         .onAppear(perform: load)
     }
 

@@ -233,14 +233,23 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
     public var historyStartsOn: LocalDate?
     public var isUnassigned: Bool
     public var cardAssignments: [String: SpendingAssignment]
+    /// The people who use this account or card. Every account belongs to the household; none
+    /// listed means a plain household account. Several people can share one card.
+    /// `personID` follows it (the one user, or nil) so older saved data keeps its meaning.
+    public var userIDs: [UUID] {
+        didSet { personID = userIDs.count == 1 ? userIDs[0] : nil }
+    }
 
     public init(id: UUID = UUID(), name: String, personID: UUID?, type: AccountType, currency: String = "USD",
                 last4: String? = nil, profileID: String? = nil, flipSigns: Bool = false, isArchived: Bool = false,
                 rarelyUsed: Bool = false, upToDateThrough: LocalDate? = nil, historyStartsOn: LocalDate? = nil,
-                isUnassigned: Bool = false, cardAssignments: [String: SpendingAssignment] = [:]) {
+                isUnassigned: Bool = false, cardAssignments: [String: SpendingAssignment] = [:],
+                userIDs: [UUID]? = nil) {
+        let users = userIDs ?? (personID.map { [$0] } ?? [])
         self.id = id
         self.name = name
-        self.personID = personID
+        self.userIDs = users
+        self.personID = users.count == 1 ? users[0] : nil
         self.type = type
         self.currency = currency
         self.last4 = last4
@@ -259,7 +268,10 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        personID = try container.decodeIfPresent(UUID.self, forKey: .personID)
+        let savedPersonID = try container.decodeIfPresent(UUID.self, forKey: .personID)
+        personID = savedPersonID
+        // Accounts saved before card users existed had one optional owner.
+        userIDs = try container.decodeIfPresent([UUID].self, forKey: .userIDs) ?? (savedPersonID.map { [$0] } ?? [])
         type = try container.decode(AccountType.self, forKey: .type)
         currency = try container.decodeIfPresent(String.self, forKey: .currency) ?? "USD"
         last4 = try container.decodeIfPresent(String.self, forKey: .last4)

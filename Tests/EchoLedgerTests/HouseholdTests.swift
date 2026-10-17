@@ -155,9 +155,93 @@ final class HouseholdTests: XCTestCase {
         XCTAssertNil(oldPerson.monthlyAllowance)
     }
 
-    private func report(_ ledger: Ledger, people: Set<UUID> = [], whole: Bool? = nil, shared: Bool = false, unassigned: Bool = false) -> Report {
+    func testSeveralPeopleCanShareACardAndReportsCanFollowTheirCards() {
+        var ledger = Ledger.starter()
+        let sam = Person(name: "Sam"), alex = Person(name: "Alex")
+        ledger.people = [sam, alex]
+        let joint = Account(name: "Example joint card", personID: nil, type: .creditCard, userIDs: [sam.id, alex.id])
+        let personal = Account(name: "Sample card", personID: sam.id, type: .creditCard)
+        let household = Account(name: "Plain household", personID: nil, type: .checking)
+        let undecided = Account(name: "New", personID: nil, type: .savings, isUnassigned: true)
+        ledger.accounts = [joint, personal, household, undecided]
+        for (account, amount) in [(joint, Cents(-1_000)), (personal, -2_000), (household, -300), (undecided, -400)] {
+            let transaction = expense(account: account, amount: amount)
+            ledger.transactions[transaction.id] = transaction
+        }
+        var reassigned = expense(account: personal, amount: -500)
+        reassigned.spendingAssignment = .person(alex.id)
+        ledger.transactions[reassigned.id] = reassigned
+
+        XCTAssertNil(joint.personID)
+        XCTAssertEqual(joint.defaultAssignment, .shared)
+        XCTAssertEqual(ledger.usersLabel(joint), "Sam, Alex")
+        XCTAssertEqual(ledger.usersLabel(household), "Household")
+        XCTAssertEqual(ledger.usersLabel(undecided), "Unassigned")
+        XCTAssertEqual(ledger.cardUserNames(for: reassigned), ["Sam"])
+
+        // Spending assigned to them: a card with two users is shared unless a purchase is reassigned.
+        XCTAssertEqual(report(ledger).spending, 4_200)
+        XCTAssertEqual(report(ledger, people: [sam.id]).spending, 2_000)
+        XCTAssertEqual(report(ledger, people: [alex.id]).spending, 500)
+        XCTAssertEqual(report(ledger, whole: false, shared: true).spending, 1_300)
+        XCTAssertEqual(report(ledger, whole: false, unassigned: true).spending, 400)
+
+        // Everything on the cards they use: the reassigned purchase stays with Sam's card, and the
+        // joint card counts for both of them.
+        XCTAssertEqual(report(ledger, people: [sam.id], mode: .cards).spending, 3_500)
+        XCTAssertEqual(report(ledger, people: [alex.id], mode: .cards).spending, 1_000)
+        XCTAssertEqual(report(ledger, people: [sam.id, alex.id], mode: .cards).spending, 3_500)
+        XCTAssertEqual(report(ledger, people: [sam.id], shared: true, mode: .cards).spending, 3_800)
+        XCTAssertEqual(report(ledger, whole: false, shared: true, mode: .cards).spending, 300)
+        XCTAssertEqual(report(ledger, whole: false, unassigned: true, mode: .cards).spending, 400)
+        XCTAssertEqual(report(ledger, whole: true, mode: .cards).spending, 4_200)
+        XCTAssertEqual(report(ledger, people: [sam.id], mode: .cards).scopeLabel, "Sam (their cards)")
+        XCTAssertEqual(report(ledger, people: [sam.id]).scopeLabel, "Sam")
+        XCTAssertTrue(report(ledger, people: [sam.id], mode: .cards).notes.contains { $0.id == "shared" && $0.text.contains("counted once") })
+    }
+
+    func testChangingCardUsersKeepsPastAssignmentsAndRemovingAUserKeepsTheOthers() {
+        var ledger = Ledger.starter()
+        let sam = Person(name: "Sam"), alex = Person(name: "Alex")
+        ledger.people = [sam, alex]
+        var account = Account(name: "Example card", personID: sam.id, type: .creditCard)
+        ledger.accounts = [account]
+        let transaction = expense(account: account)
+        ledger.transactions[transaction.id] = transaction
+        account.userIDs.append(alex.id)
+        XCTAssertNil(account.personID)
+        _ = ledger.upsertAccount(account)
+        // The past purchase stays Sam's in "assigned" reports; new ones follow the shared card.
+        XCTAssertEqual(ledger.assignment(for: ledger.transactions[transaction.id]!), .person(sam.id))
+        XCTAssertEqual(ledger.accounts[0].defaultAssignment, .shared)
+        // But the card itself is now used by both, which "their cards" reports follow.
+        XCTAssertEqual(Set(ledger.cardUsers(for: ledger.transactions[transaction.id]!)), [sam.id, alex.id])
+        _ = ledger.deletePerson(sam.id)
+        XCTAssertEqual(ledger.accounts[0].userIDs, [alex.id])
+        XCTAssertEqual(ledger.accounts[0].personID, alex.id)
+        XCTAssertEqual(ledger.cardUsers(for: ledger.transactions[transaction.id]!), [alex.id])
+    }
+
+    func testCardUsersSurviveSavingAndOlderAccountsBecomeOneUser() throws {
+        let sam = Person(name: "Sam"), alex = Person(name: "Alex")
+        let shared = Account(name: "Example card", personID: nil, type: .creditCard, userIDs: [sam.id, alex.id])
+        let again: Account = try legacy(shared, removing: [])
+        XCTAssertEqual(again.userIDs, [sam.id, alex.id])
+        XCTAssertNil(again.personID)
+        let single = Account(name: "Sample card", personID: sam.id, type: .creditCard)
+        XCTAssertEqual(single.userIDs, [sam.id])
+        let old: Account = try legacy(single, removing: ["userIDs"])
+        XCTAssertEqual(old.userIDs, [sam.id])
+        XCTAssertEqual(old.personID, sam.id)
+        let oldHousehold: Account = try legacy(Account(name: "Joint", personID: nil, type: .checking), removing: ["userIDs", "personID"])
+        XCTAssertEqual(oldHousehold.userIDs, [])
+        XCTAssertEqual(oldHousehold.defaultAssignment, .shared)
+    }
+
+    private func report(_ ledger: Ledger, people: Set<UUID> = [], whole: Bool? = nil, shared: Bool = false, unassigned: Bool = false,
+                        mode: PeopleMode = .assigned) -> Report {
         ReportEngine.build(ledger, filter: ReportFilter(span: span, personIDs: people, wholeHousehold: whole,
-            includeShared: shared, includeUnassigned: unassigned), today: span.end)
+            includeShared: shared, includeUnassigned: unassigned, peopleMode: mode), today: span.end)
     }
 
     private func expense(account: Account, amount: Cents = -1_000) -> LedgerTransaction {
