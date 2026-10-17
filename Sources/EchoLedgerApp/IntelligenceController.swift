@@ -92,7 +92,8 @@ final class IntelligenceController {
     /// After an import: look at everything EchoLedger couldn't place, then tidy merchant names.
     func afterImport(runtime: LedgerRuntime) {
         guard isReady, autoSuggest else { return }
-        let groups = ReviewQueue.groups(runtime.ledger).filter { $0.suggestion?.source != .ai }
+        // Zelle never gets a guess: nothing in the bank text says why the money moved, so Review asks you.
+        let groups = ReviewQueue.groups(runtime.ledger).filter { $0.suggestion?.source != .ai && !ZelleActivity.isZelle($0.example) }
         lookTask = Task {
             if !groups.isEmpty { await self.lookAt(groups, runtime: runtime) }
             if self.tidyNames, !Task.isCancelled { await self.tidyMerchantNames(runtime: runtime) }

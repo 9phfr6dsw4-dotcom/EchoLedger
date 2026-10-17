@@ -98,8 +98,12 @@ struct ReviewGroupCard: View {
     @State private var merchantName = ""
     @State private var kind: TransactionKind = .expense
     @State private var categoryID: UUID?
+    @State private var zelleChoice: ZelleChoice?
     @State private var remember = true
     @State private var loaded = false
+
+    /// Zelle never gets a guess: the bank text doesn't say why the money moved, so you choose.
+    private var isZelle: Bool { ZelleActivity.isZelle(group.example) }
 
     var body: some View {
         GroupBox {
@@ -189,7 +193,44 @@ struct ReviewGroupCard: View {
         .background(Theme.accent.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
     }
 
+    @ViewBuilder
     private var editor: some View {
+        if isZelle { zelleEditor } else { standardEditor }
+    }
+
+    private var zelleEditor: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                TextField("Name", text: $merchantName)
+                    .frame(minWidth: 160, maxWidth: 220)
+                Picker("What was this for?", selection: $zelleChoice) {
+                    Text("What was this for?").tag(ZelleChoice?.none)
+                    ForEach(ZelleChoice.choices(moneyIn: group.isMoneyIn)) { choice in
+                        Text(choice.label).tag(ZelleChoice?.some(choice))
+                    }
+                }
+                .labelsHidden()
+                .frame(width: 260)
+                if let choice = zelleChoice, choice.needsCategory {
+                    Picker("Category", selection: $categoryID) {
+                        Text("Choose…").tag(UUID?.none)
+                        ForEach(zelleCategoryChoices(choice)) { category in
+                            Text(category.name).tag(UUID?.some(category.id))
+                        }
+                    }
+                    .labelsHidden()
+                    .frame(width: 200)
+                }
+            }
+        }
+        .onChange(of: zelleChoice) { _, _ in categoryID = nil }
+    }
+
+    private func zelleCategoryChoices(_ choice: ZelleChoice) -> [LedgerCategory] {
+        runtime.ledger.categories.filter { $0.group == choice.categoryGroup }
+    }
+
+    private var standardEditor: some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
             TextField("Merchant", text: $merchantName)
                 .frame(minWidth: 180, maxWidth: 260)
@@ -228,7 +269,11 @@ struct ReviewGroupCard: View {
     }
 
     private var canSave: Bool {
-        kind == .transfer || categoryID != nil
+        if isZelle {
+            guard let choice = zelleChoice else { return false }
+            return !choice.needsCategory || categoryID != nil
+        }
+        return kind == .transfer || categoryID != nil
     }
 
     private var rememberExplanation: String {
@@ -241,6 +286,11 @@ struct ReviewGroupCard: View {
     private func load() {
         guard !loaded else { return }
         loaded = true
+        if isZelle {
+            // Nothing is preselected for a Zelle.
+            merchantName = group.suggestion?.merchantName ?? group.displayName
+            return
+        }
         if let suggestion = group.suggestion {
             merchantName = suggestion.merchantName ?? group.displayName
             kind = suggestion.kind == .unknown ? (group.isMoneyIn ? .income : .expense) : suggestion.kind
@@ -255,6 +305,17 @@ struct ReviewGroupCard: View {
     private func save() {
         let ids = group.transactionIDs
         let name = merchantName
+        if isZelle {
+            guard let choice = zelleChoice else { return }
+            let chosenCategory = choice.needsCategory ? categoryID : nil
+            let keep = remember
+            runtime.commit {
+                $0.classifyZelle(ids, merchantName: name, choice: choice, categoryID: chosenCategory, remember: keep,
+                                 label: "Review \(name)")
+            }
+            onSave?()
+            return
+        }
         let chosenKind = kind
         let chosenCategory = kind == .transfer ? nil : categoryID
         let keep = remember

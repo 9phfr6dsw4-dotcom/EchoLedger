@@ -53,7 +53,7 @@ You need an Apple Silicon Mac with macOS 26 or later.
    - exact repeats are skipped (two identical coffees on the same day stay two coffees),
    - a posted charge replaces its earlier pending version,
    - anything that only *looks* like a saved transaction is held back for you to decide.
-2. **Match.** Each transaction gets a merchant (who) and a category (what for), decided separately, in this order: your rules → your household → merchants you've taught it → built-in rules → the built-in merchant list. If none of those knows it, Apple Intelligence files it (marked, counted in a note on your reports until you check it, and remembered for the same bank text next month). Otherwise a similar known merchant may *suggest* one, which you approve in Review.
+2. **Match.** Each transaction gets a merchant (who) and a category (what for), decided separately, in this order: your rules → your household → merchants you've taught it → built-in rules → the built-in merchant list. If none of those knows it, Apple Intelligence files it (marked, counted in a note on your reports until you check it, and remembered for the same bank text next month; Zelle is the exception, because the bank text never says why the money moved, so Review always asks). Otherwise a similar known merchant may *suggest* one, which you approve in Review.
 3. **Report.** Only posted transactions count. Spending is purchases minus refunds; transfers and card payments are never income or spending; anything still needing review is listed separately. Every screen, chart, export and AI answer uses the same calculation.
 
 Money is stored as exact cents, never as floating-point numbers. Dates from your bank files are kept exactly as written.
@@ -104,3 +104,11 @@ Reports and Transactions let you choose the whole household, selected people, sh
 ### PDF report styles
 
 In Reports, choose **Export → Report as PDF…**, then select **Signature**, **Everyday**, or **Precision**. The last style is remembered. Every style exports the same selected people/cards, figures, income sources, merchant details, and report notes. Long reports continue onto additional letter-size pages with repeated scope and page numbers.
+
+### Zelle
+
+The bank text for a Zelle never says why the money moved, so EchoLedger doesn't guess: Apple Intelligence leaves Zelle alone, and **Review** asks. Money going out can be spending (with a category), a gift, or back-and-forth with someone. Money coming in can be income, something you sold, a gift received, someone paying you back (which lowers the category, like a refund), or back-and-forth. Zelle with a household member (see Household names in Settings) stays a transfer, not counted as income or spending.
+
+- **Paying each other** is one spending category for people you pay back and forth. Money out adds to it and money in lowers it, so each month shows a net amount, which can be negative. It is never income.
+- **Gifts received** is shown as its own line in Reports. It is counted in net cash flow but kept separate from income.
+- Reports has a **Zelle** card that lists everyone you Zelled with (received, sent, net, and how each is counted), and Transactions has a **Zelle** filter. On a person's report, **Money moved within the household** shows what was sent to or received from the others in the household. Those lines change nothing in the totals.

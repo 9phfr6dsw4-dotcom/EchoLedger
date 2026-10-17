@@ -21,7 +21,7 @@ struct TransactionRow: Identifiable, Hashable {
 }
 
 enum TransactionFilter: Hashable {
-    case all, needsReview, aiFiled, spending, income, transfers, pending, removed
+    case all, needsReview, aiFiled, spending, income, transfers, zelle, pending, removed
     case category(UUID)
 
     var label: String {
@@ -32,6 +32,7 @@ enum TransactionFilter: Hashable {
         case .spending: return "Spending"
         case .income: return "Income"
         case .transfers: return "Transfers"
+        case .zelle: return "Zelle"
         case .pending: return "Pending"
         case .removed: return "Removed"
         case .category: return "Category"
@@ -208,6 +209,7 @@ struct TransactionsView: View {
                 Text("Spending").tag(TransactionFilter.spending)
                 Text("Income").tag(TransactionFilter.income)
                 Text("Transfers").tag(TransactionFilter.transfers)
+                Text("Zelle").tag(TransactionFilter.zelle)
                 Text("Pending").tag(TransactionFilter.pending)
                 Text("Removed").tag(TransactionFilter.removed)
                 Divider()
@@ -283,6 +285,7 @@ struct TransactionsView: View {
             case .spending: if transaction.kind != .expense || transaction.voided { continue }
             case .income: if transaction.kind != .income || transaction.voided { continue }
             case .transfers: if transaction.kind != .transfer || transaction.voided { continue }
+            case .zelle: if !ZelleActivity.isZelle(transaction.rawDescription) || transaction.voided { continue }
             case .pending: if transaction.status != .pending || transaction.voided { continue }
             case .removed: if !transaction.voided { continue }
             case .category(let id): if transaction.categoryID != id || transaction.voided { continue }
