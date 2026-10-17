@@ -410,6 +410,41 @@ private final class PDFLayout {
         y += 40
     }
 
+    /// The same nested echo geometry as the existing app icon, drawn in one ink for print.
+    func drawBrandMark(context: CGContext, color: NSColor) {
+        context.saveGState()
+        context.translateBy(x: left - 7, y: 22)
+        context.scaleBy(x: 0.03, y: 0.03)
+        context.setStrokeColor(color.cgColor)
+        context.setLineWidth(64)
+        context.setLineCap(.round)
+        context.setLineJoin(.round)
+        for index in 0..<3 {
+            let path = CGMutablePath()
+            if index == 0 {
+                path.move(to: CGPoint(x: 770, y: 226)); path.addLine(to: CGPoint(x: 389, y: 226))
+                path.addQuadCurve(to: CGPoint(x: 226, y: 389), control: CGPoint(x: 226, y: 226))
+                path.addLine(to: CGPoint(x: 226, y: 635))
+                path.addQuadCurve(to: CGPoint(x: 389, y: 798), control: CGPoint(x: 226, y: 798))
+                path.addLine(to: CGPoint(x: 770, y: 798))
+            } else if index == 1 {
+                path.move(to: CGPoint(x: 770, y: 337)); path.addLine(to: CGPoint(x: 493, y: 337))
+                path.addQuadCurve(to: CGPoint(x: 337, y: 493), control: CGPoint(x: 337, y: 337))
+                path.addLine(to: CGPoint(x: 337, y: 531))
+                path.addQuadCurve(to: CGPoint(x: 493, y: 687), control: CGPoint(x: 337, y: 687))
+                path.addLine(to: CGPoint(x: 770, y: 687))
+            } else {
+                path.move(to: CGPoint(x: 770, y: 448)); path.addLine(to: CGPoint(x: 531, y: 448))
+                path.addQuadCurve(to: CGPoint(x: 448, y: 512), control: CGPoint(x: 448, y: 448))
+                path.addQuadCurve(to: CGPoint(x: 531, y: 576), control: CGPoint(x: 448, y: 576))
+                path.addLine(to: CGPoint(x: 770, y: 576))
+            }
+            context.addPath(path)
+            context.strokePath()
+        }
+        context.restoreGState()
+    }
+
     func drawFrame(page: Page, index: Int, count: Int, context: CGContext) {
         context.setFillColor((style == .signature ? NSColor(srgbRed: 0.993, green: 0.989, blue: 0.976, alpha: 1) : .white).cgColor)
         context.fill(CGRect(origin: .zero, size: ReportPDF.pageSize))
@@ -420,9 +455,7 @@ private final class PDFLayout {
         let headerColor: NSColor = style == .everyday ? .white : green
         let headerAttributes = attributes(font: bodyFont(15, bold: true), color: headerColor)
         ("EchoLedger" as NSString).draw(in: CGRect(x: left + 25, y: 27, width: 150, height: 23), withAttributes: headerAttributes)
-        // Small vector echo mark; no external resources or new icon files.
-        context.setFillColor(headerColor.cgColor)
-        for row in 0..<3 { context.fill(CGRect(x: left, y: 29 + CGFloat(row) * 6, width: row == 1 ? 13 : 18, height: 4)) }
+        drawBrandMark(context: context, color: headerColor)
         let runningTitle = "\(style.name) · \(page.title)"
         (runningTitle as NSString).draw(in: CGRect(x: 230, y: 30, width: 340, height: 18), withAttributes: attributes(font: bodyFont(8), color: headerColor, alignment: .right))
         let scope = report.scopeLabel.count > 105 ? String(report.scopeLabel.prefix(102)) + "…" : report.scopeLabel

@@ -46,9 +46,11 @@ final class PDFReportTests: XCTestCase {
         report.categories[0].name = Array(repeating: "Long category name", count: 8).joined(separator: " ")
         report.categories[0].merchants[0].name = Array(repeating: "Long merchant name", count: 16).joined(separator: " ")
         report.accountNames = (1...40).map { "Example account \($0) with an intentionally long name" }
+        // Plain markers avoid PDFKit reordering the low underscore glyphs during extraction.
+        // Each note's first and last marker still must survive, inside the printable body.
         report.notes = (1...45).map { index in
             DataNote(id: "note-\(index)", severity: .info,
-                     text: "NOTE_\(index)_START " + Array(repeating: "A fictional coverage explanation that must remain readable.", count: 9).joined(separator: " ") + " NOTE_\(index)_END")
+                     text: "Note\(index)start " + Array(repeating: "A fictional coverage explanation that must remain readable.", count: 9).joined(separator: " ") + " Note\(index)end")
         }
         let content = PDFReportContent(report: report, ledger: household.ledger, summary: ["Summary survives."], summaryIsAI: true)
         for style in PDFReportStyle.allCases {
@@ -57,16 +59,8 @@ final class PDFReportTests: XCTestCase {
             XCTAssertGreaterThan(pdf.pageCount, 8)
             XCTAssertTrue(text.contains("Example account 40"))
             XCTAssertTrue(text.contains("every number was checked"))
-            if !text.contains("NOTE_1_START") {
-                for pageIndex in 0..<pdf.pageCount {
-                    if let pageText = pdf.page(at: pageIndex)?.string, pageText.contains("explanation") {
-                        print("Synthetic note extraction diagnostic: " + String(pageText.prefix(900)))
-                        break
-                    }
-                }
-            }
             for index in 1...45 {
-                for marker in ["NOTE_\(index)_START", "NOTE_\(index)_END"] {
+                for marker in ["Note\(index)start", "Note\(index)end"] {
                     XCTAssertTrue(text.contains(marker), "\(style.name) lost \(marker)")
                     let matches = pdf.findString(marker, withOptions: .literal)
                     XCTAssertFalse(matches.isEmpty)
@@ -127,6 +121,9 @@ final class PDFReportTests: XCTestCase {
         let household = TestHousehold.make()
         var report = household.report()
         report.filter.currency = "EUR"
+        // The fixture's original prose notes contain USD amounts; this test changes only the
+        // numeric report fields to EUR, so do not carry over those unrelated USD sentences.
+        report.notes = []
         report.categories[0].name = "CATEGORYSTART " + Array(repeating: "An unusually long fictional category label", count: 120).joined(separator: " ") + " CATEGORYEND"
         for style in PDFReportStyle.allCases {
             let pdf = try XCTUnwrap(PDFDocument(data: ReportPDF.data(content: PDFReportContent(report: report, ledger: household.ledger, summary: []), style: style)))
