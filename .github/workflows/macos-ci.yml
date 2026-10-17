@@ -27,7 +27,16 @@ jobs:
           sdk_major="${sdk_version%%.*}"
           test "$sdk_major" -ge 26
       - name: Run tests
+        env:
+          ECHOLEDGER_PDF_PREVIEW_DIR: ${{ runner.temp }}/echoledger-pdf-previews
         run: swift test
+      - name: Upload fictional PDF report previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: EchoLedger-PDF-previews-${{ github.sha }}
+          path: ${{ runner.temp }}/echoledger-pdf-previews/
+          if-no-files-found: error
+          retention-days: 14
       - name: Build, package, and verify native app
         run: bash Scripts/package-app.sh
       - name: Launch packaged app from a clean location without .build

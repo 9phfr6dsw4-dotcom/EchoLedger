@@ -18,10 +18,13 @@ install -m 755 ".build/release/EchoLedgerApp" "$APP_BUNDLE/Contents/MacOS/EchoLe
 cp "Resources/Info.plist" "$APP_BUNDLE/Contents/Info.plist"
 test -x "$APP_BUNDLE/Contents/MacOS/EchoLedger"
 
-# Copy any SwiftPM resource bundles (EchoLedger has none today; kept for future resources).
+# Copy SwiftPM bundles, including the offline merchant artwork shared by the app and PDFs.
 while IFS= read -r bundle_path; do
     cp -R "$bundle_path" "$APP_BUNDLE/Contents/Resources/"
 done < <(find -L .build/release -maxdepth 2 -type d -name '*.bundle' -print)
+MERCHANT_ICONS="$APP_BUNDLE/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/MerchantIcons"
+test -s "$MERCHANT_ICONS/catalog.json"
+test -s "$MERCHANT_ICONS/spotify.png"
 
 swift Scripts/create-app-icon.swift "$ICONSET_DIR"
 iconutil -c icns "$ICONSET_DIR" -o "$APP_BUNDLE/Contents/Resources/AppIcon.icns"
@@ -45,18 +48,19 @@ codesign --verify --deep --strict "$APP_BUNDLE"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'EchoLedger'
 /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'com.echoledger.app'
 plutil -lint "$APP_BUNDLE/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.4.0'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '6'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.4.1'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '7'
 
 mkdir -p "$VERIFY_DIR"
 ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "$ZIP_PATH"
 ditto -x -k "$ZIP_PATH" "$VERIFY_DIR"
 EXTRACTED_APP="$VERIFY_DIR/${APP_NAME}.app"
+test -s "$EXTRACTED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/MerchantIcons/catalog.json"
 test -x "$EXTRACTED_APP/Contents/MacOS/EchoLedger"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx 'EchoLedger'
 plutil -lint "$EXTRACTED_APP/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.4.0'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '6'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.4.1'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '7'
 codesign --verify --deep --strict "$EXTRACTED_APP"
 (
     cd "$(dirname "$ZIP_PATH")"

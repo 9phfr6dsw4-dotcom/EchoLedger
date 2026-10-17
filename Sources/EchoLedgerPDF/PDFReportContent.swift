@@ -28,6 +28,12 @@ public struct PDFReportContent: Sendable {
     public let recurring: [RecurringCharge]
     public let allocation: [Allocation]
     public let generatedAt: Date
+    private let merchantIcons: [UUID: MerchantIconDescriptor]
+
+    public func merchantIcon(name: String, transactionIDs: [UUID]) -> MerchantIconDescriptor {
+        transactionIDs.lazy.compactMap { merchantIcons[$0] }.first
+            ?? MerchantIconCatalog.descriptor(name: name)
+    }
 
     public init(report: Report, ledger: Ledger, summary: [String], summaryIsAI: Bool = false,
                 recurring: [RecurringCharge] = [], generatedAt: Date = Date()) {
@@ -36,6 +42,14 @@ public struct PDFReportContent: Sendable {
         self.summaryIsAI = summaryIsAI
         self.recurring = recurring.filter(\.isActive)
         self.generatedAt = generatedAt
+        var icons: [UUID: MerchantIconDescriptor] = [:]
+        let iconIDs = Set(report.includedIDs).union(self.recurring.flatMap(\.transactionIDs))
+        for id in iconIDs {
+            if let transaction = ledger.transactions[id] {
+                icons[id] = MerchantIconCatalog.descriptor(for: transaction, ledger: ledger)
+            }
+        }
+        merchantIcons = icons
         // Attribute only included spending, once per transaction, even when several people use a card.
         var totals: [SpendingAssignment: Cents] = [:]
         for id in report.includedIDs {
