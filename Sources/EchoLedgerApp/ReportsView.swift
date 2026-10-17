@@ -29,6 +29,7 @@ struct ReportBundle {
     let recurring: [RecurringCharge]
     let unusual: [UnusualCharge]
     let facts: [ReportFact]
+    let zelle: ZelleSummary
 
     var report: Report { comparison.current }
 
@@ -38,6 +39,7 @@ struct ReportBundle {
         recurring = Insights.recurring(ledger, filter: filter, asOf: min(filter.span.end, today))
         unusual = Insights.unusual(ledger, filter: filter)
         facts = ReportFacts.build(comparison: comparison, recurring: recurring, unusual: unusual)
+        zelle = ZelleActivity.build(ledger, filter: filter)
     }
 }
 
@@ -202,6 +204,10 @@ struct OverviewTab: View {
                 VStack(spacing: 18) { spendingChart; categoryChart(report) }
             }
             if !report.filter.wholeHousehold { householdContext(report) }
+            if !report.filter.wholeHousehold, !bundle.zelle.household.isEmpty { householdMoneyCard(report) }
+            if !bundle.zelle.lines.isEmpty {
+                ZelleCard(summary: bundle.zelle, currency: report.filter.currency, drillDown: $drillDown)
+            }
             SummaryCard(bundle: bundle, drillDown: $drillDown)
         }
     }
@@ -267,6 +273,39 @@ struct OverviewTab: View {
         }
     }
 
+    /// Money sent to or received from other people of the household. It is not income or spending;
+    /// it is here so a person's report adds up to what happened in their accounts.
+    private func householdMoneyCard(_ report: Report) -> some View {
+        let money = bundle.zelle.household
+        let currency = report.filter.currency
+        return GroupBox("Money moved within the household") {
+            VStack(alignment: .leading, spacing: 8) {
+                if !money.sentIDs.isEmpty {
+                    householdRow("Sent to the household", amount: money.sent, ids: money.sentIDs, currency: currency)
+                }
+                if !money.receivedIDs.isEmpty {
+                    householdRow("Received from the household", amount: money.received, ids: money.receivedIDs, currency: currency)
+                }
+                Caption("Not counted as income or spending. Shown so these numbers line up with what happened in the accounts.")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private func householdRow(_ title: String, amount: Cents, ids: [UUID], currency: String) -> some View {
+        Button {
+            drillDown = DrillDown(title: title, ids: ids)
+        } label: {
+            HStack {
+                Text(title)
+                Spacer()
+                Text(Money.format(amount, currency: currency)).monospacedDigit()
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
     private func tiles(_ report: Report) -> some View {
         let comparison = bundle.comparison
         let change = Money.changeTenthsOfPercent(from: comparison.previous.spending, to: report.spending)
@@ -283,8 +322,12 @@ struct OverviewTab: View {
         }
 
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 190), spacing: 12)], spacing: 12) {
-            MetricTile(title: "Income", value: Money.format(report.income), detail: "\(report.incomeSources.count) sources",
-                       symbol: "arrow.down.circle", tint: Theme.income)
+            MetricTile(title: "Income", value: Money.format(report.income - report.giftsReceived),
+                       detail: "\(report.incomeSources.count) sources", symbol: "arrow.down.circle", tint: Theme.income)
+            if report.giftsReceived > 0 {
+                MetricTile(title: "Gifts received", value: Money.format(report.giftsReceived),
+                           detail: "Counted in net cash flow", symbol: "gift", tint: Theme.income)
+            }
             MetricTile(title: "Spending", value: Money.format(report.spending), detail: spendingDetail,
                        symbol: "arrow.up.circle", tint: Theme.spending)
             MetricTile(title: "Net cash flow", value: Money.format(report.savings), detail: rate, symbol: "banknote", tint: Theme.accent)
@@ -293,6 +336,86 @@ struct OverviewTab: View {
                 MetricTile(title: "Allowance left", value: Money.format(periodAllowance - report.spending), detail: selectedPerson?.name, symbol: "checkmark.circle")
             }
         }
+    }
+}
+
+/// Every Zelle in the report's period, by name. It only shows them; how each one is counted is set in Review.
+struct ZelleCard: View {
+    @Environment(LedgerRuntime.self) private var runtime
+    let summary: ZelleSummary
+    let currency: String
+    @Binding var drillDown: DrillDown?
+
+    private static let visibleLines = 12
+
+    var body: some View {
+        GroupBox("Zelle") {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .bottom, spacing: 24) {
+                    figure("Received", summary.received)
+                    figure("Sent", summary.sent)
+                    figure("Net", summary.net)
+                    Spacer()
+                    Button("Show in Transactions") {
+                        runtime.showTransactions(TransactionsFocus(title: "Zelle", ids: Set(summary.transactionIDs)))
+                    }
+                }
+                Divider()
+                HStack(spacing: 12) {
+                    Spacer()
+                    columnTitle("In")
+                    columnTitle("Out")
+                    columnTitle("Net")
+                }
+                ForEach(summary.lines.prefix(Self.visibleLines)) { line in
+                    row(line)
+                }
+                if summary.lines.count > Self.visibleLines {
+                    Caption("\(summary.lines.count - Self.visibleLines) more names. Use Show in Transactions to see them all.")
+                }
+                Caption("This only shows your Zelles. Each one is counted the way you filed it in Review; nothing here changes your totals.")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private func figure(_ title: String, _ value: Cents) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title).font(.caption).foregroundStyle(.secondary)
+            Text(Money.format(value, currency: currency)).font(.headline).monospacedDigit()
+        }
+    }
+
+    private func columnTitle(_ title: String) -> some View {
+        Text(title).font(.caption).foregroundStyle(.secondary).frame(width: 84, alignment: .trailing)
+    }
+
+    private func amountColumn(_ value: Cents) -> some View {
+        Text(value == 0 ? "—" : Money.format(value, currency: currency))
+            .monospacedDigit()
+            .frame(width: 84, alignment: .trailing)
+    }
+
+    private func row(_ line: ZelleLine) -> some View {
+        Button {
+            drillDown = DrillDown(title: "Zelle: \(line.name)", ids: line.transactionIDs)
+        } label: {
+            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(line.name).lineLimit(1)
+                    Text(line.howCounted.joined(separator: " · "))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
+                Spacer(minLength: 8)
+                amountColumn(line.received)
+                amountColumn(line.sent)
+                amountColumn(line.net)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }
 

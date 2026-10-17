@@ -169,6 +169,9 @@ public struct Report: Sendable {
     public var aiFiledIDs: [UUID]
     public var notes: [DataNote]
     public var accountNames: [String]
+    /// The part of `income` that came from the "Gifts received" category. It is still counted in
+    /// `income` and `savings`; screens show it as its own line.
+    public var giftsReceived: Cents = 0
 
     public var savings: Cents { income - spending }
 
@@ -214,6 +217,7 @@ public enum ReportEngine {
         var pendingTotal: Cents = 0
         var included: [UUID] = []
         var aiFiled: [UUID] = []
+        var gifts: Cents = 0
 
         let inSpan = scoped
             .filter { filter.span.contains($0.date) }
@@ -234,6 +238,9 @@ public enum ReportEngine {
             case .income:
                 included.append(transaction.id)
                 income += transaction.amount
+                if transaction.categoryID.flatMap({ categoriesByID[$0] })?.name.lowercased() == ZelleActivity.giftsReceivedCategory.lowercased() {
+                    gifts += transaction.amount
+                }
                 monthIncome[month, default: 0] += transaction.amount
                 let (id, name) = merchantIdentity(transaction, ledger: ledger)
                 var line: Bucket = incomeTotals[id] ?? (name: name, amount: 0, count: 0, ids: [])
@@ -312,7 +319,7 @@ public enum ReportEngine {
                       months: months, transferCount: transferCount, transferVolume: transferVolume,
                       unknownCount: unknownCount, unknownIn: unknownIn, unknownOut: unknownOut, unknownIDs: unknownIDs,
                       pendingCount: pendingCount, pendingTotal: pendingTotal, includedIDs: included, aiFiledIDs: aiFiled, notes: notes,
-                      accountNames: accounts.map(\.name).sorted())
+                      accountNames: accounts.map(\.name).sorted(), giftsReceived: gifts)
     }
 
     /// The merchant a transaction is grouped under: your merchant, else a cleaned-up name.

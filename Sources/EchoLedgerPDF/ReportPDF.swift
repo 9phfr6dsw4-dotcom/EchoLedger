@@ -252,6 +252,9 @@ private final class PDFLayout {
             }
         }
         section("About these numbers")
+        if report.giftsReceived > 0 {
+            paragraph("Income includes \(amount(report.giftsReceived)) of gifts received, which EchoLedger shows as its own line.", continuation: "About these numbers continued")
+        }
         paragraph("Posted transactions only. Transfers and card payments are excluded from income and spending. Refunds reduce spending. Apple Intelligence filings that are already counted remain marked in the report notes.")
         paragraph("Transfers and card payments: \(report.transferCount) transactions (\(amount(report.transferVolume)) moved).\nNeeding review: \(report.unknownCount) transactions (\(amount(-report.unknownOut)) out; \(amount(report.unknownIn)) in).\nPending: \(report.pendingCount) charges (\(amount(report.pendingTotal))).", continuation: "About these numbers continued")
         for note in report.notes { paragraph("•  " + note.text, color: muted, continuation: "About these numbers continued") }
