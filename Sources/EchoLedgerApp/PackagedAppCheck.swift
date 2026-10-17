@@ -40,6 +40,19 @@ enum PackagedAppCheck {
                 let image = MerchantIconArtwork.image(for: descriptor)
                 guard image.tiffRepresentation != nil else { throw CheckFailed("Merchant artwork did not render.") }
             }
+            // Check every prepared asset in the installed resource bundle, including generated symbols.
+            for item in MerchantIconCatalog.brands.filter({ $0.asset.hasPrefix("prepared-") }) {
+                guard let name = item.names.first,
+                      let url = MerchantIconCatalog.logoURL(for: item.asset),
+                      url.standardizedFileURL.path.hasPrefix(resources.standardizedFileURL.path + "/"),
+                      MerchantIconCatalog.descriptor(name: name).logo == item.asset,
+                      MerchantIconArtwork.image(for: MerchantIconCatalog.descriptor(name: name)).tiffRepresentation != nil else {
+                    throw CheckFailed("The installed app could not load prepared merchant artwork.")
+                }
+            }
+            guard MerchantIconCatalog.descriptor(name: "Zelle transfer", kind: .transfer).logo == "zelle" else {
+                throw CheckFailed("Zelle artwork was replaced by a generic transfer symbol.")
+            }
             guard let view = NSApp.windows.first(where: { $0.isVisible })?.contentView,
                   let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
                 throw CheckFailed("The demo Transactions window did not render.")

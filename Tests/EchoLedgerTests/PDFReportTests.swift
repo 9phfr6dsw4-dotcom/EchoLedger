@@ -5,6 +5,51 @@ import XCTest
 
 @MainActor
 final class PDFReportTests: XCTestCase {
+    func testPreparedAndZelleArtworkSurvivesPDFSnapshotInEveryStyle() throws {
+        var household = TestHousehold.make()
+        let account = try XCTUnwrap(household.ledger.accounts.first)
+        let category = try XCTUnwrap(household.ledger.category(named: "Education"))
+        let definitions = [("College Transcript", "College Transcript", "prepared-college-transcript"),
+                           ("Casey Example", "Zelle payment to Casey Example", "zelle")]
+        var ids: [UUID] = []
+        for (name, raw, _) in definitions {
+            let merchant = Merchant(name: name)
+            household.ledger.merchants[merchant.id] = merchant
+            var transaction = LedgerTransaction(accountID: account.id, batchID: nil, sourceLine: 1,
+                date: day("2026-09-10"), postedDate: nil, amount: -2500, currency: "USD",
+                rawDescription: raw, status: .posted, fingerprint: UUID().uuidString, occurrence: 1)
+            transaction.kind = .expense; transaction.categoryID = category.id
+            transaction.merchantID = merchant.id; transaction.review = .confirmed
+            household.ledger.transactions[transaction.id] = transaction
+            ids.append(transaction.id)
+        }
+        let report = household.report()
+        let content = PDFReportContent(report: report, ledger: household.ledger, summary: [])
+        for (index, definition) in definitions.enumerated() {
+            XCTAssertEqual(content.merchantIcon(name: definition.0, transactionIDs: [ids[index]]).logo, definition.2)
+        }
+        household.ledger.transactions.removeAll()
+        for style in PDFReportStyle.allCases {
+            let bytes = try ReportPDF.data(content: content, style: style)
+            let pdf = try XCTUnwrap(PDFDocument(data: bytes))
+            let text = try XCTUnwrap(pdf.string)
+            XCTAssertTrue(text.contains("College Transcript"))
+            XCTAssertTrue(text.contains("Casey Example"))
+            XCTAssertTrue(text.contains(Money.format(report.spending)))
+            let provider = try XCTUnwrap(CGDataProvider(data: bytes as CFData))
+            let document = try XCTUnwrap(CGPDFDocument(provider))
+            var count = 0
+            for index in 1...document.numberOfPages {
+                var resources: CGPDFDictionaryRef?
+                if let dictionary = document.page(at: index)?.dictionary,
+                   CGPDFDictionaryGetDictionary(dictionary, "Resources", &resources), let resources {
+                    count += embeddedImages(in: resources)
+                }
+            }
+            XCTAssertGreaterThanOrEqual(count, 2)
+        }
+    }
+
     func testEveryStyleEmbedsMerchantArtworkAndPreservesTheIconSnapshot() throws {
         let household = TestHousehold.make()
         let report = household.report()

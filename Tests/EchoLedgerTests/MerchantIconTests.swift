@@ -71,10 +71,10 @@ final class MerchantIconTests: XCTestCase {
             XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, "consumer-costco", name)
         }
         for name in ["Costco Support", "Costco #42 Repair", "Costco Retail Partners", "Habit Cafe",
-                     "Habit Exampleville", "Skewers", "Shellfish Kitchen", "Not Panera Bread", "Wendysmith"] {
+                     "Habit Exampleville", "Shellfish Kitchen", "Not Panera Bread", "Wendysmith"] {
             XCTAssertNil(MerchantIconCatalog.descriptor(name: name, categoryName: "Dining").logo, name)
         }
-        XCTAssertNil(MerchantIconCatalog.descriptor(name: "Costco #0042", kind: .transfer).logo)
+        XCTAssertEqual(MerchantIconCatalog.descriptor(name: "Costco #0042", kind: .transfer).logo, "prepared-person-payment")
     }
 
     func testDemoCategoryAndTransferFallbacks() {
@@ -85,7 +85,7 @@ final class MerchantIconTests: XCTestCase {
         XCTAssertEqual(MerchantIconCatalog.descriptor(name: "Local market", categoryName: "Groceries").symbol, "basket.fill")
         XCTAssertNil(MerchantIconCatalog.descriptor(name: "Local artisan").symbol)
         let transfer = MerchantIconCatalog.descriptor(name: "Apple", kind: .transfer)
-        XCTAssertNil(transfer.logo)
+        XCTAssertEqual(transfer.logo, "prepared-person-payment")
         XCTAssertEqual(transfer.symbol, "arrow.left.arrow.right")
     }
 
@@ -106,6 +106,63 @@ final class MerchantIconTests: XCTestCase {
         }
     }
 
+    func testPreparedArtworkAndGenericPurposesAreAvailableOffline() throws {
+        XCTAssertEqual(MerchantIconCatalog.prepared.count, 50)
+        for item in MerchantIconCatalog.prepared {
+            XCTAssertTrue(item.asset.hasPrefix("prepared-"))
+            let url = try XCTUnwrap(MerchantIconCatalog.logoURL(for: item.asset))
+            let image = try XCTUnwrap(NSBitmapImageRep(data: Data(contentsOf: url)))
+            XCTAssertEqual(image.pixelsWide, 192)
+            XCTAssertEqual(image.pixelsHigh, 192)
+            XCTAssertTrue(image.hasAlpha)
+        }
+        for (name, asset) in [("Example College Transcript", "diploma"),
+                              ("Sample Donation", "donation"),
+                              ("Example Background Check", "teacher-background-check"),
+                              ("Example University Tuition", "university")] {
+            XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, "prepared-" + asset)
+        }
+        XCTAssertEqual(MerchantIconCatalog.descriptor(name: "Capital One Transfer", kind: .transfer).logo,
+                       "prepared-capital-one-transfer")
+        for name in ["Transcription Studio", "Donationville Cafe", "Universityville Market"] {
+            XCTAssertNil(MerchantIconCatalog.descriptor(name: name).logo)
+        }
+    }
+
+    func testZelleArtworkOverridesCounterpartAndTransferFallbackWithoutChangingMoney() throws {
+        var household = TestHousehold.make()
+        let account = try XCTUnwrap(household.ledger.accounts.first)
+        let category = try XCTUnwrap(household.ledger.category(named: "Dining"))
+        let counterpart = Merchant(name: "Casey Example")
+        household.ledger.merchants[counterpart.id] = counterpart
+        for kind in [TransactionKind.transfer, .income, .expense, .unknown] {
+            for amount in [Cents(-2500), Cents(2500)] {
+                for text in ["Zelle payment from Casey Example", "zElLe TO CASEY EXAMPLE", "ZellePay transfer"] {
+                    var item = LedgerTransaction(accountID: account.id, batchID: nil, sourceLine: 1,
+                        date: day("2026-09-10"), postedDate: nil, amount: amount, currency: "USD",
+                        rawDescription: text, status: .posted, fingerprint: UUID().uuidString, occurrence: 1)
+                    item.kind = kind; item.categoryID = category.id; item.merchantID = counterpart.id
+                    XCTAssertEqual(MerchantIconCatalog.descriptor(for: item, ledger: household.ledger).logo, "zelle")
+                }
+            }
+        }
+        XCTAssertEqual(MerchantIconCatalog.descriptor(name: "Zelle gift", kind: .income).logo, "zelle")
+        for text in ["Gazelle", "Gazelle payment", "Zellex", "NotZellePay"] {
+            XCTAssertFalse(MerchantIconCatalog.identifiesZelle(text))
+        }
+        var columnOnly = LedgerTransaction(accountID: account.id, batchID: nil, sourceLine: 1,
+            date: day("2026-09-10"), postedDate: nil, amount: 2500, currency: "USD",
+            rawDescription: "Payment from Casey Example", bankMerchant: "Zelle", status: .posted,
+            fingerprint: UUID().uuidString, occurrence: 1)
+        columnOnly.kind = .transfer
+        XCTAssertEqual(MerchantIconCatalog.descriptor(for: columnOnly, ledger: household.ledger).logo, "zelle")
+        columnOnly.bankMerchant = nil
+        let savedZelle = Merchant(name: "Zelle payment")
+        household.ledger.merchants[savedZelle.id] = savedZelle
+        columnOnly.merchantID = savedZelle.id
+        XCTAssertEqual(MerchantIconCatalog.descriptor(for: columnOnly, ledger: household.ledger).logo, "zelle")
+    }
+
     func testUsesLedgerMerchantIdentityInsteadOfPaymentProcessor() throws {
         let household = TestHousehold.make()
         let transaction = try XCTUnwrap(household.ledger.transactions.values.first {
@@ -118,6 +175,7 @@ final class MerchantIconTests: XCTestCase {
     func testAllBrandAndFallbackArtworkRendersAndIsCached() throws {
         let names = ["Spotify", "Starbucks", "Amazon", "Apple Services", "Max", "YouTube TV",
                      "Costco", "Panera Bread", "Trader Joe's", "In-N-Out",
+                     "College Transcript", "ATM", "Rent", "Zelle transfer", "Person Payment",
                      "Example Cafe", "Sample Market", "Local Artisan", ""]
         for name in names {
             let descriptor = MerchantIconCatalog.descriptor(name: name)

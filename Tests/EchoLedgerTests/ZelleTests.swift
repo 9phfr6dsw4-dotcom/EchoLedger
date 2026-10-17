@@ -129,6 +129,61 @@ final class ZelleTests: XCTestCase {
         XCTAssertEqual(negative.categories.first?.amount, -9_000)
     }
 
+    func testSalaryThenHouseholdTransferKeepsAccountDirectionAndOriginalIncome() throws {
+        var s = setup()
+        let salary = try XCTUnwrap(s.ledger.category(named: "Salary")).id
+        let wages = payment("Example employer payroll", 200_000, on: s.samChecking,
+                            kind: .income, categoryID: salary)
+        let sent = payment("Zelle payment to Alex Rivera", -80_000, on: s.samChecking, kind: .transfer)
+        let received = payment("Zelle payment from Sam Rivera", 80_000, on: s.alexChecking, kind: .transfer)
+        for item in [wages, sent, received] { s.ledger.transactions[item.id] = item }
+
+        let before = report(s.ledger)
+        let summary = ZelleActivity.build(s.ledger, filter: ReportFilter(span: span))
+        XCTAssertEqual(summary.sent, 80_000)
+        XCTAssertEqual(summary.received, 80_000)
+        XCTAssertEqual(summary.net, 0)
+
+        // Rows name the counterpart, not the owner of the bank account.
+        let fromSam = try XCTUnwrap(summary.lines.first { $0.name == "Sam Rivera" })
+        XCTAssertEqual(fromSam.received, 80_000)
+        XCTAssertEqual(fromSam.sent, 0)
+        XCTAssertEqual(fromSam.net, 80_000)
+        let toAlex = try XCTUnwrap(summary.lines.first { $0.name == "Alex Rivera" })
+        XCTAssertEqual(toAlex.sent, 80_000)
+        XCTAssertEqual(toAlex.received, 0)
+        XCTAssertEqual(toAlex.net, -80_000)
+
+        let senderFilter = ReportFilter(span: span, personIDs: [s.sam.id])
+        let sender = ZelleActivity.build(s.ledger, filter: senderFilter)
+        XCTAssertEqual(sender.sent, 80_000)
+        XCTAssertEqual(sender.received, 0)
+        XCTAssertEqual(sender.net, -80_000)
+        let senderReport = ReportEngine.build(s.ledger, filter: senderFilter, today: span.end)
+        XCTAssertEqual(senderReport.income, 200_000)
+        XCTAssertEqual(senderReport.spending, 0)
+
+        let recipientFilter = ReportFilter(span: span, personIDs: [s.alex.id])
+        let recipient = ZelleActivity.build(s.ledger, filter: recipientFilter)
+        XCTAssertEqual(recipient.received, 80_000)
+        XCTAssertEqual(recipient.sent, 0)
+        XCTAssertEqual(recipient.net, 80_000)
+        let recipientReport = ReportEngine.build(s.ledger, filter: recipientFilter, today: span.end)
+        XCTAssertEqual(recipientReport.income, 0)
+        XCTAssertEqual(recipientReport.spending, 0)
+
+        let after = report(s.ledger)
+        XCTAssertEqual(after.income, before.income)
+        XCTAssertEqual(after.spending, before.spending)
+        XCTAssertEqual(after.savings, before.savings)
+        XCTAssertEqual(after.income, 200_000)
+        XCTAssertEqual(after.savings, 200_000)
+        XCTAssertEqual(after.transferVolume, 80_000)
+        XCTAssertEqual(after.transferCount, 2)
+        XCTAssertEqual(s.ledger.transactions[sent.id]?.kind, .transfer)
+        XCTAssertEqual(s.ledger.transactions[received.id]?.kind, .transfer)
+    }
+
     func testPayingMeBackLowersTheCategoryYouPick() throws {
         var s = setup()
         let dining = try XCTUnwrap(s.ledger.category(named: "Dining")).id

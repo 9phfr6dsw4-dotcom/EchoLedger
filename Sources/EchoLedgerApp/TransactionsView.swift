@@ -8,6 +8,7 @@ struct TransactionRow: Identifiable, Hashable {
     let id: UUID
     let date: LocalDate
     let merchant: String
+    let icon: MerchantIconDescriptor
     let detail: String
     let categoryName: String
     let colorIndex: Int
@@ -236,7 +237,10 @@ struct TransactionsView: View {
         let counted = rows.filter { !$0.isVoided && !$0.isPending }
         let moneyIn = counted.filter { $0.amount > 0 }.reduce(Cents(0)) { $0 + $1.amount }
         let moneyOut = counted.filter { $0.amount < 0 }.reduce(Cents(0)) { $0 + $1.amount }
-        let summary = "\(rows.count) transactions · money in \(Money.format(moneyIn)) · money out \(Money.format(moneyOut))"
+        let zelleOnly = filter == .zelle || (!counted.isEmpty && counted.allSatisfy { ZelleActivity.isZelle($0.detail) })
+        let summary = zelleOnly
+            ? "\(rows.count) transactions · sent \(Money.format(-moneyOut)) · received \(Money.format(moneyIn)) · net \(Money.format(moneyIn + moneyOut))"
+            : "\(rows.count) transactions · money in \(Money.format(moneyIn)) · money out \(Money.format(moneyOut))"
         return HStack {
             Text(summary)
                 .font(.callout)
@@ -308,6 +312,7 @@ struct TransactionsView: View {
             default: categoryName = category?.name ?? "Uncategorized"
             }
             rows.append(TransactionRow(id: transaction.id, date: transaction.date, merchant: merchant,
+                                       icon: MerchantIconCatalog.descriptor(for: transaction, ledger: runtime.ledger),
                                        detail: transaction.rawDescription, categoryName: categoryName,
                                        colorIndex: category?.colorIndex ?? -1, kind: transaction.kind,
                                        accountName: account?.name ?? "", amount: transaction.amount,
@@ -323,7 +328,7 @@ struct MerchantCell: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            MerchantIconView(name: row.merchant, categoryName: row.categoryName, kind: row.kind)
+            MerchantIconView(descriptor: row.icon)
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 6) {
                     Text(row.merchant)

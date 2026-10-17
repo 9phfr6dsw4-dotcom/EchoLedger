@@ -56,13 +56,13 @@ public enum ZelleChoice: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
-/// Everything one person (or business) did over Zelle in a report's period.
+/// Payments with one counterpart, viewed from the bank accounts on the selected transactions.
 public struct ZelleLine: Identifiable, Hashable, Sendable {
     public var id: String
     public var name: String
-    /// Money that came in (positive).
+    /// Money received from this counterpart into the selected transaction's account (positive).
     public var received: Cents
-    /// Money that went out (positive).
+    /// Money sent from the selected transaction's account to this counterpart (positive).
     public var sent: Cents
     public var count: Int
     /// How the Zelles with this name are counted, for example "Spending: Groceries".

@@ -26,6 +26,10 @@ MERCHANT_ICONS="$APP_BUNDLE/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/
 test -s "$MERCHANT_ICONS/catalog.json"
 test -s "$MERCHANT_ICONS/spotify.png"
 test -s "$MERCHANT_ICONS/consumer-costco.png"
+PREPARED_ICONS="$APP_BUNDLE/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/PreparedMerchantIcons"
+test -s "$PREPARED_ICONS/catalog.json"
+test -s "$PREPARED_ICONS/prepared-atm.png"
+test -s "$PREPARED_ICONS/prepared-openrouter-inc.png"
 
 swift Scripts/create-app-icon.swift "$ICONSET_DIR"
 iconutil -c icns "$ICONSET_DIR" -o "$APP_BUNDLE/Contents/Resources/AppIcon.icns"
@@ -49,8 +53,8 @@ codesign --verify --deep --strict "$APP_BUNDLE"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'EchoLedger'
 /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'com.echoledger.app'
 plutil -lint "$APP_BUNDLE/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.4.3'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '9'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.4.4'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '10'
 
 mkdir -p "$VERIFY_DIR"
 ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "$ZIP_PATH"
@@ -58,11 +62,13 @@ ditto -x -k "$ZIP_PATH" "$VERIFY_DIR"
 EXTRACTED_APP="$VERIFY_DIR/${APP_NAME}.app"
 test -s "$EXTRACTED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/MerchantIcons/catalog.json"
 test -s "$EXTRACTED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/MerchantIcons/consumer-costco.png"
+test -s "$EXTRACTED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/PreparedMerchantIcons/prepared-atm.png"
+test -s "$EXTRACTED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/PreparedMerchantIcons/prepared-openrouter-inc.png"
 test -x "$EXTRACTED_APP/Contents/MacOS/EchoLedger"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx 'EchoLedger'
 plutil -lint "$EXTRACTED_APP/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.4.3'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '9'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.4.4'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '10'
 codesign --verify --deep --strict "$EXTRACTED_APP"
 (
     cd "$(dirname "$ZIP_PATH")"

@@ -1,0 +1,478 @@
+[
+  {
+    "asset": "prepared-arco",
+    "names": [
+      "ARCO",
+      "ARCO Gas"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "cf9aaf71b6dd97bc3ebe49ffbcf807e149c36bb7329ed24c0961ae736f5796de"
+  },
+  {
+    "asset": "prepared-bjs-restaurant",
+    "names": [
+      "BJ’s Restaurant",
+      "BJ's Restaurant & Brewhouse",
+      "BJs Restaurant"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "cbd5858ba10d1bebdd970c03a5f157f71e3fc8f59b0b80b343941bdf8f41896a"
+  },
+  {
+    "asset": "prepared-blink",
+    "names": [
+      "Blink"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "0fd1ee326a98d02d95fd44e1a255b1a78837664a732407bc35c1c58bb26352af"
+  },
+  {
+    "asset": "prepared-body-spa",
+    "names": [
+      "Body Spa"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "e37fc895632641f80eaf658bc2b4d5d3a4aa36681f08555230171b2053823b2f"
+  },
+  {
+    "asset": "prepared-california-dental-network-premium",
+    "names": [
+      "California Dental Network",
+      "California Dental Network Premium"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "d8795ab24035d04cc197cb28aee86687f884ac73dd809bde91f33959f772b267"
+  },
+  {
+    "asset": "prepared-coast-appliance-parts",
+    "names": [
+      "Coast Appliance Parts"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "3c063959a62e05ef94663fc2b0aaa6ff0d9b8d31660312ddf75f0838097daef1"
+  },
+  {
+    "asset": "prepared-decisionhr-payroll",
+    "names": [
+      "DecisionHR",
+      "Decisionhr Payroll"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "5799368e24da21884650f93cd2cb861a0c8f48b14022bfb7daaf511a9cf65603"
+  },
+  {
+    "asset": "prepared-geico",
+    "names": [
+      "GEICO"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "7746093c5ae38c608a5c9577065cc6486c6ace52253a86b2a2295f434342cbd9"
+  },
+  {
+    "asset": "prepared-gptzero-llc",
+    "names": [
+      "GPTZero",
+      "GPTZero LLC",
+      "GPTZero, LLC"
+    ],
+    "artworkType": "sourced-logo",
+    "source": "https://raw.githubusercontent.com/oacore/about/ab2cca51e7e193167be615a705dab05a67d91b4e/public/images/logos/gptzero.svg",
+    "sha256": "e1851c3c2e3153ba9ded09bcbdc7d792b88232ad012b08082221b1d07570835b"
+  },
+  {
+    "asset": "prepared-hulu",
+    "names": [
+      "Hulu"
+    ],
+    "artworkType": "sourced-logo",
+    "source": "https://raw.githubusercontent.com/selfhst/icons/1d65d45a42e6323b54b8096967b1ea4b65321f97/svg/hulu.svg",
+    "sha256": "7e11d1865cceeeeee76dccbc022e812ee7de9f413ff8c6a9e9b7a5becd8bcb13"
+  },
+  {
+    "asset": "prepared-kaiser-rx",
+    "names": [
+      "Kaiser Rx",
+      "Kaiser Permanente"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "f349f6eb7d978329c21107c1db9cc956211e701f46b6f6c1146d7090856112d8"
+  },
+  {
+    "asset": "prepared-kohls",
+    "names": [
+      "Kohl's",
+      "Kohls"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "a32fead95327e6caeadaee42007d18989ae10c54f8257c024813d24e0f36920f"
+  },
+  {
+    "asset": "prepared-lemonade-insurance",
+    "names": [
+      "Lemonade Insurance"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "007d0e62926df631efc5c449944d30f313d9948f5081c9cf083828cbea7372f0"
+  },
+  {
+    "asset": "prepared-meridian",
+    "names": [
+      "Meridian"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "88ac78e2168db867a3e5087a6f2bbc2f78820f7152847f41dc546c5936061a52"
+  },
+  {
+    "asset": "prepared-modesto-irrigation-district",
+    "names": [
+      "Modesto Irrigation District"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "fea53e71534eb311942d18de38a9612dc39cfa6cf6f13f4652fd441ee1379698"
+  },
+  {
+    "asset": "prepared-mr-ts-delicate-donuts",
+    "names": [
+      "Mr. T's Delicate Donuts",
+      "Mr T's Delicate Donuts"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "e8460a7bea4e16b7f9d601cb0d26c6ab3d4d96493935cba4aa4cb236798610fe"
+  },
+  {
+    "asset": "prepared-new-era",
+    "names": [
+      "New Era"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "6b47b53f0a5a255452bafa166cb95a54c19d92082746f8394e002af1770ffd31"
+  },
+  {
+    "asset": "prepared-openrouter-inc",
+    "names": [
+      "OpenRouter",
+      "Openrouter, Inc",
+      "OpenRouter Inc"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "e2f08bc745bd72f656ae5c5168e7bc482c0cd1e67de83fec0990ea7a87b90717"
+  },
+  {
+    "asset": "prepared-oura",
+    "names": [
+      "Oura"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "0d243286bab5f93fa66715f92680dd86c02d2d0905266e5bdb41f312f76137cb"
+  },
+  {
+    "asset": "prepared-parchment",
+    "names": [
+      "Parchment"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "903ec8b9d0ff57140270d89c8663fbd117061f36b88b13c5308e03516af6039f"
+  },
+  {
+    "asset": "prepared-peacock",
+    "names": [
+      "Peacock",
+      "Peacock TV"
+    ],
+    "artworkType": "sourced-logo",
+    "source": "https://raw.githubusercontent.com/selfhst/icons/1d65d45a42e6323b54b8096967b1ea4b65321f97/svg/peacock.svg",
+    "sha256": "8fa58a6049ce5536a2befdef6a9a623a1c36d587d971db8ff607bf755d0c67b8"
+  },
+  {
+    "asset": "prepared-pge",
+    "names": [
+      "PG&E",
+      "PGE",
+      "Pacific Gas and Electric"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "e69233126958288bdc86eb8911f2e4cd978e4c98e1c278c0eb9a787d93084e9b"
+  },
+  {
+    "asset": "prepared-reliant-parking",
+    "names": [
+      "Reliant Parking"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "126aea424efe82dbc5683b533a5136568ff63ef768a0dbd5cfdcb3530ff15eb6"
+  },
+  {
+    "asset": "prepared-skewers",
+    "names": [
+      "Skewers"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "0e14ff7afb9df160fc66de0c64ba1aa36e880cc6a0b12aceb0b4a901dc39b2e7"
+  },
+  {
+    "asset": "prepared-sonic-drive-in",
+    "names": [
+      "Sonic Drive-In",
+      "Sonic Drive In"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "bdaff74d6838a2c2bda0838d9d0cf185ba668ca70db4b99c1b3e2dafb0b3659d"
+  },
+  {
+    "asset": "prepared-straighterline",
+    "names": [
+      "StraighterLine"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "37d70d2ab8e475147f54772b5cb880c52a350941ec5c7bbe9d0ee4db2220129e"
+  },
+  {
+    "asset": "prepared-study-com",
+    "names": [
+      "Study.com"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "d49fd4ac6b8aad9fef3cb70bb8a63c803884e446122a2d2e40ee121c3ad86baa"
+  },
+  {
+    "asset": "prepared-visible-wireless",
+    "names": [
+      "Visible Wireless",
+      "Visible by Verizon"
+    ],
+    "artworkType": "sourced-logo",
+    "source": "https://raw.githubusercontent.com/selfhst/icons/1d65d45a42e6323b54b8096967b1ea4b65321f97/svg/visible-by-verizon.svg",
+    "sha256": "f6e5a686bd8f093ec4dde0b81d0ac51a05cfbbfff5de96322ee267a73535a4f8"
+  },
+  {
+    "asset": "prepared-walter-ai",
+    "names": [
+      "Walter AI"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "924129f9234d5d94bb319ea0e71ca9ce22b1b617c589675a4f280abd537274f4"
+  },
+  {
+    "asset": "prepared-atm",
+    "names": [
+      "ATM",
+      "ATM Withdrawal"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "3c6cf71999c39b628bca5fc1c44a3bfac98e94e587489db2cee7cf751e741738"
+  },
+  {
+    "asset": "prepared-capital-one-transfer",
+    "names": [
+      "Capital One Transfer"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "afeaf65a8f3bb3d1d1ab899e0fbe73e0cacc6c362d2b10d740cbe6421fd4778d"
+  },
+  {
+    "asset": "prepared-car-payments",
+    "names": [
+      "Car Payments",
+      "Car Payment"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "d9048477fb85b0e51c5a44b25b4ec4e6b66bb0b8f84b2b05b8bb9063cd90d9ad"
+  },
+  {
+    "asset": "prepared-cash-back-redemption-ref",
+    "names": [
+      "Cash Back Redemption Ref",
+      "Cash Back Redemption",
+      "Cashback Redemption"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "1925f19de1c794627c45b47552366ae9d1bf4dabc367af8cd9b4080c3440ee62"
+  },
+  {
+    "asset": "prepared-college-transcript",
+    "names": [
+      "College Transcript"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "85fd56f28c48ce59a366f5a5bffce9d62ab42e143aa63acb592350d145f6a4d7"
+  },
+  {
+    "asset": "prepared-daily-cash-adjustment",
+    "names": [
+      "Daily Cash Adjustment"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "d8732de15aa9393be33e1bbca4e4db8f41cc4008e041ff39c4d583b607b471a3"
+  },
+  {
+    "asset": "prepared-donation",
+    "names": [
+      "Donation",
+      "Charitable Donation"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "43568466b802a14a501e7313e2e1b8e01b8db0a7448b81db8aa8df949ef53888"
+  },
+  {
+    "asset": "prepared-interest-charge",
+    "names": [
+      "Interest Charge"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "299e3d24a7cafd4277b4ba24f3c2b00de87a05ab179f0e0ad3a0f76f34d3f291"
+  },
+  {
+    "asset": "prepared-interest-charge-on-cash-advances",
+    "names": [
+      "Interest Charge on Cash Advances"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "adfbbd9eefd8ee2686f644897a9e0c2a4346a928d7456ee6ed3d1bb122faa5b3"
+  },
+  {
+    "asset": "prepared-interest-charge-on-purchases",
+    "names": [
+      "Interest Charge on Purchases"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "a93ffaf7ba1ba1ad68a4e8dddea844487359f4323d22c92c77db57b3734d1335"
+  },
+  {
+    "asset": "prepared-late-fee",
+    "names": [
+      "Late Fee"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "44691927614204880e8fc0182bd2c99a844bc53744c7069d79f20c8e194d57af"
+  },
+  {
+    "asset": "prepared-political-donation",
+    "names": [
+      "Political Donation"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "75367d83a3610a163fe47bf985e861cbe046526a628b12eb27bdf4a0916adadd"
+  },
+  {
+    "asset": "prepared-pre-service-teacher",
+    "names": [
+      "Pre Service Teacher",
+      "Pre-Service Teacher"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "a2ee3a85132d1be00b79720f7b86cfe3453340a2284f6408828e9d414c13ff6f"
+  },
+  {
+    "asset": "prepared-purchase-interest-charge",
+    "names": [
+      "Purchase Interest Charge"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "0a1083ecf86dd5398af9a3cd3aae1ab062d73c9ac904449fd043714cea502b8a"
+  },
+  {
+    "asset": "prepared-rent",
+    "names": [
+      "Rent"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "fc312bc716720ac46eaec8d119437d53c9ff6f4561047d5b4e06fbf94ce35d33"
+  },
+  {
+    "asset": "prepared-sjcoe-teachers",
+    "names": [
+      "SJCOE",
+      "SJCOE Teachers"
+    ],
+    "artworkType": "supplied-logo",
+    "source": "Supplied company artwork; original provenance unverified",
+    "sha256": "1c5817ebfa764c2b6182a208a67cd093d38f559ca70a1a80283d3a4dbfa5bf9a"
+  },
+  {
+    "asset": "prepared-teacher-background-check",
+    "names": [
+      "Teacher Background Check"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "bf87e6caec9a25bca39324b84c051150d0c67b75f980325f1d22e4aed8560f1c"
+  },
+  {
+    "asset": "prepared-diploma",
+    "names": [
+      "Academic Transcript"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "da863389f643a514b20616d0217010520b5b593a90fa3ba9fbc66220e5f0d184"
+  },
+  {
+    "asset": "prepared-person-payment",
+    "names": [
+      "Person Payment"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "79a04fd020c99749fe926fcdc00679ec31ff115d8f80ead210bf5873b26364ac"
+  },
+  {
+    "asset": "prepared-family-payment",
+    "names": [
+      "Family Payment",
+      "Household Transfer"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "f52f86a28a725a61d2f0451ccfc3f570db160b5efe766a4a2803cf41e8a145b8"
+  },
+  {
+    "asset": "prepared-university",
+    "names": [
+      "University",
+      "University Tuition"
+    ],
+    "artworkType": "generated-symbol",
+    "source": "Generated category artwork",
+    "sha256": "56c38aad86c9ffc2677f3258f2a6151866bb512bea3b7ab897993f66de73891c"
+  }
+]
