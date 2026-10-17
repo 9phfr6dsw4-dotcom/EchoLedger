@@ -667,7 +667,9 @@ struct CategoryComparisonRow: View {
                         drillDown = DrillDown(title: "\(merchant.name) · \(line.name)", ids: merchant.transactionIDs)
                     } label: {
                         HStack {
-                            Text(merchant.name).padding(.leading, 34)
+                            MerchantReportIcon(name: merchant.name, transactionIDs: merchant.transactionIDs, size: 16)
+                                .padding(.leading, 34)
+                            Text(merchant.name)
                             Text("\(merchant.count)×").foregroundStyle(.secondary)
                             Spacer()
                             Text(Money.format(merchant.amount)).monospacedDigit()
@@ -707,6 +709,7 @@ struct MerchantsTab: View {
                         drillDown = DrillDown(title: merchant.name, ids: merchant.transactionIDs)
                     } label: {
                         HStack {
+                            MerchantReportIcon(name: merchant.name, transactionIDs: merchant.transactionIDs)
                             Text(merchant.name).lineLimit(1)
                             Text("\(merchant.count) transaction\(merchant.count == 1 ? "" : "s")")
                                 .font(.caption)
@@ -812,6 +815,7 @@ struct IncomeTab: View {
                         drillDown = DrillDown(title: source.name, ids: source.transactionIDs)
                     } label: {
                         HStack {
+                            MerchantReportIcon(name: source.name, transactionIDs: source.transactionIDs)
                             Text(source.name)
                             Text("\(source.count)×").font(.caption).foregroundStyle(.secondary)
                             Spacer()
@@ -988,6 +992,7 @@ struct RecurringTab: View {
                             drillDown = DrillDown(title: item.merchantName, ids: [item.transactionID])
                         } label: {
                             HStack {
+                                MerchantReportIcon(name: item.merchantName, transactionIDs: [item.transactionID])
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text("\(item.merchantName) · \(DateText.medium(item.date))")
                                     Text(item.reason).font(.caption).foregroundStyle(.secondary)
@@ -1015,6 +1020,7 @@ struct RecurringRow: View {
             drillDown = DrillDown(title: charge.merchantName, ids: charge.transactionIDs)
         } label: {
             HStack {
+                MerchantReportIcon(name: charge.merchantName, transactionIDs: charge.transactionIDs)
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 6) {
                         Text(charge.merchantName)
@@ -1066,6 +1072,7 @@ struct DrillDownSheet: View {
                 .foregroundStyle(.secondary)
             List(transactions) { transaction in
                 HStack {
+                    MerchantIconView(descriptor: MerchantIconCatalog.descriptor(for: transaction, ledger: runtime.ledger))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(ReportEngine.merchantIdentity(transaction, ledger: runtime.ledger).name)
                         Text("\(DateText.medium(transaction.date)) · \(transaction.rawDescription)")

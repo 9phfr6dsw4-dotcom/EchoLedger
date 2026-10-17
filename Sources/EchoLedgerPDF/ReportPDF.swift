@@ -211,13 +211,14 @@ private final class PDFLayout {
         if report.categories.isEmpty { paragraph("No spending in this period.", color: muted) }
         for category in report.categories {
             // Do not orphan a category heading at the bottom of a page.
-            let firstMerchantHeight = category.merchants.first.map { rowHeight($0.name, indent: 12) } ?? 0
+            let firstMerchantHeight = category.merchants.first.map { rowHeight($0.name, indent: 12, hasIcon: true) } ?? 0
             tableSpace(rowHeight(category.name) + min(firstMerchantHeight, 180), heading: "Categories and merchants")
             tableRow(name: category.name, count: "\(category.count)", value: amount(category.amount), share: share(category.amount),
                      heading: "Categories and merchants", bold: true)
             for merchant in category.merchants {
                 tableRow(name: merchant.name, count: "\(merchant.count)", value: amount(merchant.amount), share: "",
-                         heading: "Categories and merchants", indent: 12)
+                         heading: "Categories and merchants", indent: 12,
+                         icon: content.merchantIcon(name: merchant.name, transactionIDs: merchant.transactionIDs))
             }
         }
         totalRow("Total spending", value: report.spending)
@@ -240,7 +241,8 @@ private final class PDFLayout {
         if report.incomeSources.isEmpty { paragraph("No income in this period.", color: muted) }
         if !report.incomeSources.isEmpty { tableHeader(heading: "Income sources") }
         for line in report.incomeSources {
-            tableRow(name: line.name, count: "\(line.count)", value: amount(line.amount), share: "", heading: "Income sources")
+            tableRow(name: line.name, count: "\(line.count)", value: amount(line.amount), share: "", heading: "Income sources",
+                     icon: content.merchantIcon(name: line.name, transactionIDs: line.transactionIDs))
         }
         totalRow("Total income", value: report.income)
         if !content.recurring.isEmpty {
@@ -248,7 +250,8 @@ private final class PDFLayout {
             tableHeader(heading: "Recurring charges")
             for charge in content.recurring {
                 let detail = "\(charge.merchantName) · \(charge.cadence.label)" + (charge.priceChanged ? " · price changed" : "")
-                tableRow(name: detail, count: "", value: amount(charge.typicalAmount), share: "", heading: "Recurring charges")
+                tableRow(name: detail, count: "", value: amount(charge.typicalAmount), share: "", heading: "Recurring charges",
+                         icon: content.merchantIcon(name: charge.merchantName, transactionIDs: charge.transactionIDs))
             }
         }
         section("About these numbers")
@@ -374,8 +377,8 @@ private final class PDFLayout {
         y += 23
         rule(at: y - 3)
     }
-    func rowHeight(_ name: String, indent: CGFloat = 0) -> CGFloat {
-        max(25, height(name, width: 280 - indent, font: bodyFont()) + 12)
+    func rowHeight(_ name: String, indent: CGFloat = 0, hasIcon: Bool = false) -> CGFloat {
+        max(25, height(name, width: 280 - indent - (hasIcon ? 22 : 0), font: bodyFont()) + 12)
     }
     func tableSpace(_ h: CGFloat, heading: String) {
         if y + h > bottom {
@@ -384,16 +387,26 @@ private final class PDFLayout {
         }
     }
     func tableRow(name: String, count: String, value: String, share: String, heading: String,
-                  bold: Bool = false, indent: CGFloat = 0) {
+                  bold: Bool = false, indent: CGFloat = 0, icon: MerchantIconDescriptor? = nil) {
+        let iconWidth: CGFloat = icon == nil ? 0 : 22
+        let textWidth = 280 - indent - iconWidth
         var remaining = name
         var first = true
         repeat {
-            let part = fittingPrefix(remaining, width: 280 - indent, font: bodyFont(10, bold: bold), maxHeight: 160)
-            let h = max(25, height(part, width: 280 - indent, font: bodyFont(10, bold: bold)) + 12)
+            let part = fittingPrefix(remaining, width: textWidth, font: bodyFont(10, bold: bold), maxHeight: 160)
+            let h = max(25, height(part, width: textWidth, font: bodyFont(10, bold: bold)) + 12)
             tableSpace(h, heading: heading)
             if bold { fill(CGRect(x: left, y: y, width: width, height: h), color: pale, radius: style == .everyday ? 3 : 0) }
-            text(part, rect: CGRect(x: left + 6 + indent, y: y + 6, width: 280 - indent, height: h - 8), font: bodyFont(10, bold: bold))
+            text(part, rect: CGRect(x: left + 6 + indent + iconWidth, y: y + 6, width: textWidth, height: h - 8), font: bodyFont(10, bold: bold))
             if first {
+                if let icon {
+                    let image = MerchantIconArtwork.image(for: icon)
+                    let rect = CGRect(x: left + 6 + indent, y: y + 5, width: 16, height: 16)
+                    pages[pages.count - 1].commands.append { _ in
+                        image.draw(in: rect, from: .zero, operation: .sourceOver, fraction: 1,
+                                   respectFlipped: true, hints: nil)
+                    }
+                }
                 moneyText(count, x: left + 292, top: y + 6, width: 48)
                 moneyText(value, x: left + 350, top: y + 6, width: 104, bold: bold)
                 moneyText(share, x: left + 466, top: y + 6, width: 56)

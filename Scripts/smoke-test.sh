@@ -13,6 +13,7 @@ if [[ ! -d "$PACKAGED_APP" ]]; then
 fi
 test -x "$PACKAGED_APP/Contents/MacOS/EchoLedger"
 test -s "$PACKAGED_APP/Contents/Resources/AppIcon.icns"
+test -s "$PACKAGED_APP/Contents/Resources/EchoLedger_EchoLedgerCore.bundle/MerchantIcons/spotify.png"
 
 mkdir -p "$SMOKE_PARENT"
 SMOKE_DIR="$(mktemp -d "$SMOKE_PARENT/echoledger-smoke.XXXXXX")"

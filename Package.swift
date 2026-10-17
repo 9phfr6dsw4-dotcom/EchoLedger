@@ -11,6 +11,7 @@ let package = Package(
     targets: [
         .target(
             name: "EchoLedgerCore",
+            resources: [.copy("Resources/MerchantIcons")],
             linkerSettings: [.linkedLibrary("sqlite3")]
         ),
         .target(name: "EchoLedgerPDF", dependencies: ["EchoLedgerCore"]),

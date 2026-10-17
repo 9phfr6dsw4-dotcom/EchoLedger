@@ -1,0 +1,546 @@
+[
+  {
+    "asset": "amazon",
+    "names": [
+      "Amazon",
+      "Amazon Prime"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/amazon.svg",
+    "upstreamSource": "https://www.amazon.com",
+    "hex": "FF9900",
+    "svgSHA256": "f7ef379d2ea0da19e63e74e394ec6a1423e335ef785a456729da66a840858dbf",
+    "pngSHA256": "04f93c3380e043f01bc7e7f417669f9b8b9f45f41ff33139b191ce3ffdd7c8b9"
+  },
+  {
+    "asset": "apple",
+    "names": [
+      "Apple",
+      "Apple Store",
+      "Apple Services",
+      "Apple Card Installments",
+      "Apple Music",
+      "iCloud+"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/apple.svg",
+    "upstreamSource": "https://www.apple.com",
+    "hex": "000000",
+    "svgSHA256": "2a1509dccd25e6d2bc7a11a8e52941077e1a48555e192ce638699b9f083c2a7c",
+    "pngSHA256": "205b2be86250b7ea99ef0acc00b3e64faf860c541fe2bb92bc3a874230bdd758"
+  },
+  {
+    "asset": "spotify",
+    "names": [
+      "Spotify"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/spotify.svg",
+    "upstreamSource": "https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo",
+    "hex": "1ED760",
+    "svgSHA256": "b9ec9bec7769c35643981586d6ea0d675aaf3871b32f8a291bcac7a87fff0bc1",
+    "pngSHA256": "1ad2f9e5ad42fd11fb51b90c5679153dd800c1d94c0ae397de552e4da5e70af3"
+  },
+  {
+    "asset": "netflix",
+    "names": [
+      "Netflix"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/netflix.svg",
+    "upstreamSource": "https://brand.netflix.com/en/assets/brand-symbol",
+    "hex": "E50914",
+    "svgSHA256": "953016177fafc83dc8a51868a584600b39dfeff652a07be028a61283915df547",
+    "pngSHA256": "988b4bac5816e1533405aa796a5d93c7a225304a3ea30f5ae9cf1698a263e449"
+  },
+  {
+    "asset": "starbucks",
+    "names": [
+      "Starbucks"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/starbucks.svg",
+    "upstreamSource": "https://starbucks.com",
+    "hex": "006241",
+    "svgSHA256": "b12ac9042b77a04d88f28e5be655719dd1e321b0b700ea5a280df4e1ca8c23c8",
+    "pngSHA256": "6ab026f377a9b38eb45855fa6de720f13ed9ce84218cc9d74ecd649e260679a2"
+  },
+  {
+    "asset": "walmart",
+    "names": [
+      "Walmart",
+      "Walmart Grocery"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/walmart.svg",
+    "upstreamSource": "https://corporate.walmart.com",
+    "hex": "0071CE",
+    "svgSHA256": "e7deae878c81e93ef8e23de0465795a966043284d2a3e69a2e0044246cc08240",
+    "pngSHA256": "fcc398608c28a21f69437ea8500f6aa9f4a754d8b548e235eaed67e149948f23"
+  },
+  {
+    "asset": "target",
+    "names": [
+      "Target"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/target.svg",
+    "upstreamSource": "https://www.target.com",
+    "hex": "CC0000",
+    "svgSHA256": "4085202ff6b3e3de8752f93bbc7677f37d7a3e8e868b60dda6a89e120a4f9948",
+    "pngSHA256": "445c2d02f8a86e19ed98b96f70f0dc4da112c8773c1955402b068cf3fd2cc9d9"
+  },
+  {
+    "asset": "uber",
+    "names": [
+      "Uber",
+      "Uber One"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/uber.svg",
+    "upstreamSource": "https://assets.uber.com/d/k4nuxdZ8MC7E/logos/collection/151",
+    "hex": "000000",
+    "svgSHA256": "8e580232236d43c715637618ce31621f2afc802a22af9b12706dc153c6a52002",
+    "pngSHA256": "4bd50b9bfb3193d538214b34263fc9f2006423f35a1189ff5fbe7d0da3429117"
+  },
+  {
+    "asset": "ubereats",
+    "names": [
+      "Uber Eats"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/ubereats.svg",
+    "upstreamSource": "https://assets.uber.com/d/k4nuxdZ8MC7E/logos/collection/150",
+    "hex": "06C167",
+    "svgSHA256": "3c4f80f4eab7ed6d571202ddf4d2e8608c16781d4b77bd4e9e81f9117e0be11c",
+    "pngSHA256": "e9215967048a8c7dcb838b701189dd96f68dd94bb62c2ff148ac51fdf6bb03fb"
+  },
+  {
+    "asset": "lyft",
+    "names": [
+      "Lyft"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/lyft.svg",
+    "upstreamSource": "https://www.lyft.com/press",
+    "hex": "FF00BF",
+    "svgSHA256": "204b20eef15f58af54ab3cf8bc21eb04b6ae73832f0bf3a0f6f5b386ef1bc277",
+    "pngSHA256": "207c24fbdc75d85ace3e0ab56ed44d6d0e3eec208f67120b5153f2a75b64d618"
+  },
+  {
+    "asset": "doordash",
+    "names": [
+      "DoorDash",
+      "DashPass"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/doordash.svg",
+    "upstreamSource": "https://www.doordash.com/about/",
+    "hex": "FF3008",
+    "svgSHA256": "d4722809d3377dfc36aae584598de10e38a2e1a6f0ef089251b2c2d7d73e7d5c",
+    "pngSHA256": "e7b032cfe563a241f7a1c2c2b294b86964f082da86b4e129fe76bce0a2754591"
+  },
+  {
+    "asset": "instacart",
+    "names": [
+      "Instacart"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/instacart.svg",
+    "upstreamSource": "https://www.instacart.com/press",
+    "hex": "43B02A",
+    "svgSHA256": "8d85541ccfbfd57e0503bbada0c661c44e411b8a262f483a5241d85908314ec6",
+    "pngSHA256": "d51b1240cf48a9c1b01a363bc050567f667fe297d1f4de8f73e8a246b2fcb017"
+  },
+  {
+    "asset": "mcdonalds",
+    "names": [
+      "McDonald's"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/mcdonalds.svg",
+    "upstreamSource": "https://www.mcdonalds.com/gb/en-gb/newsroom.html",
+    "hex": "FBC817",
+    "svgSHA256": "35c203615d2d5d61184ea1f4ded91ebbf329a59e7e2d52e0a640f3b8fd8b740a",
+    "pngSHA256": "2921d198703c3e95bc2172b78d8938ac1174b357343b008ebeafc6972af91ca8"
+  },
+  {
+    "asset": "burgerking",
+    "names": [
+      "Burger King"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/burgerking.svg",
+    "upstreamSource": "https://www.bk.com",
+    "hex": "D62300",
+    "svgSHA256": "f5eaca1a07de55966d05662d77f4e038cb04511d3369b8578f764fc6d66fc102",
+    "pngSHA256": "e809bf11adb51bfd7dd5a852b80ced29624d01e099c51f429c8f172ad1d9950a"
+  },
+  {
+    "asset": "kfc",
+    "names": [
+      "KFC"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/kfc.svg",
+    "upstreamSource": "https://global.kfc.com/asset-library/",
+    "hex": "F40027",
+    "svgSHA256": "40633083f981957fcb5ee91642785474c188e4c6468143c5e5d240448e3f4b9e",
+    "pngSHA256": "066620904ca61e46d97371c894f16e3906782ca5352f8c3515eb0560a0d542ae"
+  },
+  {
+    "asset": "tacobell",
+    "names": [
+      "Taco Bell"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/tacobell.svg",
+    "upstreamSource": "https://www.tacobell.com",
+    "hex": "38096C",
+    "svgSHA256": "096be713731f9d112f54feb7da35300632181a8d5e9bbb6582b6bdd74f8e8a2c",
+    "pngSHA256": "5a8c61c7b43c0759fff01702fa29da2bd197e576c1634d4ed9aa17211f6c7066"
+  },
+  {
+    "asset": "youtube",
+    "names": [
+      "YouTube",
+      "YouTube TV",
+      "YouTube Premium"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/youtube.svg",
+    "upstreamSource": "https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors",
+    "hex": "FF0000",
+    "svgSHA256": "5038808acbbc4e6edda16cbeb1cc6dec80e4e4ee4e227e039c41229fa222aa8c",
+    "pngSHA256": "7f1c68939cb4a0fb95f47164792d1e34269d01a20837d7d08e03d75989ef3231"
+  },
+  {
+    "asset": "hbo",
+    "names": [
+      "HBO",
+      "HBO Max"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/hbo.svg",
+    "upstreamSource": "https://www.hbo.com",
+    "hex": "000000",
+    "svgSHA256": "bbde93e1cbc6cfb145994e16aa05886e5dcde7880190676cbacc8b4a0e463519",
+    "pngSHA256": "bcb9f30d7beb241885df0714d3f8420c618d50fab83be3f16929e3637bf11d8f"
+  },
+  {
+    "asset": "paramountplus",
+    "names": [
+      "Paramount+"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/paramountplus.svg",
+    "upstreamSource": "https://www.paramount.com/brand/paramount-plus",
+    "hex": "0064FF",
+    "svgSHA256": "6b8a777222266eefdb08b9737cef97cdecf10143f5402d06634f615b127851f9",
+    "pngSHA256": "6f8e83b35cddad6e9457a3b48184432f6aa1c3601787e7ea62296871cf17cab0"
+  },
+  {
+    "asset": "audible",
+    "names": [
+      "Audible"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/audible.svg",
+    "upstreamSource": "https://commons.wikimedia.org/wiki/File:Audible_logo.svg",
+    "hex": "F8991C",
+    "svgSHA256": "da672f9be930294a7bac8992bb61d78248e30bbdc006efb03abbeb871922b787",
+    "pngSHA256": "61aeb6d7dcab8d0fa044d6039842e58a6a585c5bb04d03af6d1943bb5f06a2b7"
+  },
+  {
+    "asset": "dropbox",
+    "names": [
+      "Dropbox"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/dropbox.svg",
+    "upstreamSource": "https://www.dropbox.com/branding",
+    "hex": "0061FF",
+    "svgSHA256": "1c9ea4ac8e318f3f6a598568df1a38ece03b7bc52a3a72d48c9e760340d7aeec",
+    "pngSHA256": "a44319ab27086afdf9f914fa950b1556aed8dd69d9b7190b8fee19d386c82b84"
+  },
+  {
+    "asset": "adobe",
+    "names": [
+      "Adobe"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/adobe.svg",
+    "upstreamSource": "https://www.adobe.com",
+    "hex": "FF0000",
+    "svgSHA256": "f52f92ca8caa174286ecd26be270f1667dc800f0a5c23af3defba59a24711688",
+    "pngSHA256": "fd35284e10d1d6885a41031c56ee062b78d476f33436a12dad91fd0c5f58b6a3"
+  },
+  {
+    "asset": "google",
+    "names": [
+      "Google",
+      "Google One"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/google.svg",
+    "upstreamSource": "https://partnermarketinghub.withgoogle.com",
+    "hex": "4285F4",
+    "svgSHA256": "d8cf9fb2d5e234e03254f1d6400d8cc8160c309b010d031a64f37084b5a21d01",
+    "pngSHA256": "e842a23dad28bf46ed1010589c8c95c368a63086088a2512680c3197509bebeb"
+  },
+  {
+    "asset": "zoom",
+    "names": [
+      "Zoom"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/zoom.svg",
+    "upstreamSource": "https://brand.zoom.us/media-library/",
+    "hex": "0B5CFF",
+    "svgSHA256": "da5b2f13d38ca61c88a227f58e3bebcbcbb55412d97678ecff49ae7c603f9a7b",
+    "pngSHA256": "2ea1d6b77c38f84a7f673f754c6f4022480661edaf527ac2cb53171b7c6c8110"
+  },
+  {
+    "asset": "openai",
+    "names": [
+      "OpenAI"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/openai.svg",
+    "upstreamSource": "https://openai.com/brand",
+    "hex": "412991",
+    "svgSHA256": "2b4a04ddc2395b20d168694d3850ce2050a702c4a0cdeb4d8b31b9a970481a8c",
+    "pngSHA256": "530bdd618a2a22afc7f02a74e2f09702b846da8bf463cb794af97d1da8c57887"
+  },
+  {
+    "asset": "paypal",
+    "names": [
+      "PayPal"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/paypal.svg",
+    "upstreamSource": "https://www.paypal.com",
+    "hex": "003087",
+    "svgSHA256": "085dc5ea611b62480a6d72a82a8da096142c63374319c73bf24ac3a1782b8c1a",
+    "pngSHA256": "be81bfbf223bc093cbbb8b55050b7d5b59f7034c5d103cec9e98b7c5e209c3df"
+  },
+  {
+    "asset": "venmo",
+    "names": [
+      "Venmo"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/venmo.svg",
+    "upstreamSource": "https://venmo.com/about/brand",
+    "hex": "008CFF",
+    "svgSHA256": "1ee45e1775c0bc79ffcfd851ce895ec73cd80cbcad1ee941f930f580ef5bedc3",
+    "pngSHA256": "385d67c397cbf73bb5cb8975c66547f4a315a0ea7cbf796af48415f7db975d17"
+  },
+  {
+    "asset": "coinbase",
+    "names": [
+      "Coinbase"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/coinbase.svg",
+    "upstreamSource": "https://www.coinbase.com/press",
+    "hex": "0052FF",
+    "svgSHA256": "94dd360e4a750ce3a902c8bd7c83d9db8078bf923e4a040b538d92e0967a9d4d",
+    "pngSHA256": "11bad7f59ac9743dc3e9c8964311ad2f28b6d197493f50e75f1b99900dc00a0a"
+  },
+  {
+    "asset": "shell",
+    "names": [
+      "Shell"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/shell.svg",
+    "upstreamSource": "https://en.wikipedia.org/wiki/File:Shell_logo.svg",
+    "hex": "FFD500",
+    "svgSHA256": "d3a4b69b3437e4e94ac7a974c2d3b9780a57cdbf82ff57e2f2558fb38d03d7cf",
+    "pngSHA256": "26e4f975064a2d675e3aa57186db2d13585bf9a46f61045846bbdfb95dfe06f9"
+  },
+  {
+    "asset": "airbnb",
+    "names": [
+      "Airbnb"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/airbnb.svg",
+    "upstreamSource": "https://www.airbnb.com",
+    "hex": "FF5A5F",
+    "svgSHA256": "04afb2a1db3f619be9030b38fd43440034a58db16adc8fed49de87b90b9e2778",
+    "pngSHA256": "994fc05f21db56ef6e98431b28005ec706d48a1c356618845e4d84622118fbdb"
+  },
+  {
+    "asset": "delta",
+    "names": [
+      "Delta",
+      "Delta Air Lines"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/delta.svg",
+    "upstreamSource": "https://news.delta.com/delta-air-lines-logos-brand-guidelines",
+    "hex": "003366",
+    "svgSHA256": "720a08ad33fce14e48a46e57cb9c01492dfc34e113d3b9e4a60710ee7b36f1d3",
+    "pngSHA256": "84c31838ff5d75bdcb71cd6e21993f38562fc7e5512966b536eaa2fff487dc79"
+  },
+  {
+    "asset": "unitedairlines",
+    "names": [
+      "United Airlines"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/unitedairlines.svg",
+    "upstreamSource": "https://www.united.com",
+    "hex": "002244",
+    "svgSHA256": "f60563bbc7c47f1bd2d3df5d9f48af46f4a6db978ec9393d1e2c8e48398cec85",
+    "pngSHA256": "698dbdb49cbc87866c074069d3b4c378ae8b6a3d46c014a0811f41939a0ae9e1"
+  },
+  {
+    "asset": "southwestairlines",
+    "names": [
+      "Southwest Airlines"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/southwestairlines.svg",
+    "upstreamSource": "https://www.southwest.com",
+    "hex": "304CB2",
+    "svgSHA256": "db00764c5d1986bc0b5dd725f4905a5e1f42cd490df567134822dbadbb073612",
+    "pngSHA256": "8df509740706c0723fc654f0e750ec11b2f4bccef2bdbf2053aa1612c9190887"
+  },
+  {
+    "asset": "marriott",
+    "names": [
+      "Marriott",
+      "Marriott Hotels"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/marriott.svg",
+    "upstreamSource": "https://marriott-hotels.marriott.com",
+    "hex": "A70023",
+    "svgSHA256": "f6842a4f48d36249fd0b7f6fd85b2810ed60a0091c843d81c7aff2a5d088d1be",
+    "pngSHA256": "0614a1f37a1d4529cc237ff594bba64adee6fb0239aeca721ca7d173c73b391f"
+  },
+  {
+    "asset": "hilton",
+    "names": [
+      "Hilton",
+      "Hilton Hotels"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/hilton.svg",
+    "upstreamSource": "https://www.hilton.com",
+    "hex": "231F20",
+    "svgSHA256": "679f7563466b8658a89a4682a47d73dfd71dc4426495ab957cb71091060290e4",
+    "pngSHA256": "4da9072a87b1c068dc1adaf84450e588bfd69121a5d638978b2c64d1195eedbe"
+  },
+  {
+    "asset": "ikea",
+    "names": [
+      "IKEA"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/ikea.svg",
+    "upstreamSource": "https://www.ikea.com",
+    "hex": "0058A3",
+    "svgSHA256": "556365e562c933b6296c3480902ca6e1921ba4265030c49c27869fca5044f7d8",
+    "pngSHA256": "e7444331fee245accc1d74745fc146024d42f8b3693589684991201d034134df"
+  },
+  {
+    "asset": "etsy",
+    "names": [
+      "Etsy"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/etsy.svg",
+    "upstreamSource": "https://www.etsy.com/uk/press",
+    "hex": "F16521",
+    "svgSHA256": "4780de1a0c4949e614557a1fe1d3deb5f57fc0f1f901d19cafcf77091b7d5202",
+    "pngSHA256": "3f22fa066b1657ca4708f19923fe767e47a006edd8c75dc39a030dbadd0c1c0c"
+  },
+  {
+    "asset": "ebay",
+    "names": [
+      "eBay"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/ebay.svg",
+    "upstreamSource": "https://go.developer.ebay.com/logos",
+    "hex": "E53238",
+    "svgSHA256": "846e8d8ac6cea49766e7c62e095e739d115ed355f9b63bf46067f14c9343c745",
+    "pngSHA256": "8fb4aac1fb9bb3d24ee609b31bd357baecf050df8e5ab4c7fb259e4be029d095"
+  },
+  {
+    "asset": "nike",
+    "names": [
+      "Nike"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/nike.svg",
+    "upstreamSource": "https://www.nike.com",
+    "hex": "111111",
+    "svgSHA256": "1792451e1b6393bd1d7153830f8aa55a0a49eddd1c3b65ed6fa13c68d7d5a547",
+    "pngSHA256": "4c41bf600fd3278ca0e6f6f8cff7583edc90f0c185be39fd170d66d632dba735"
+  },
+  {
+    "asset": "adidas",
+    "names": [
+      "Adidas"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/adidas.svg",
+    "upstreamSource": "https://www.adidas.com",
+    "hex": "000000",
+    "svgSHA256": "914191458c0f416cfb1e5ad5750c55e87bd9a6cdc38259cfba70932b30a9237b",
+    "pngSHA256": "352c91bb2e23c330cd2e70a24e6f044fb3e191d44eece3fd5e5fe2061fae208a"
+  },
+  {
+    "asset": "tmobile",
+    "names": [
+      "T-Mobile"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/tmobile.svg",
+    "upstreamSource": "https://tmap.t-mobile.com/portals/pro74u7a/EXTBrandPortal",
+    "hex": "E20074",
+    "svgSHA256": "ee86080f96dc62fbca5e031df942e24ae43b3f52b004003247dbcc936cce5b99",
+    "pngSHA256": "c6b915500d6437f3fc328331d65d38e12c15172c23da3fe13d769e0d2d5d7540"
+  },
+  {
+    "asset": "atandt",
+    "names": [
+      "AT&T"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/atandt.svg",
+    "upstreamSource": "https://www.att.com",
+    "hex": "009FDB",
+    "svgSHA256": "50c6ff01370f61d22de20f8c168b85413cfe52def9a53ed4bee32ebc9abe2413",
+    "pngSHA256": "a442f6531bb012f922285893a20eaa2c7c3217be46e111203262c3725b1a126d"
+  },
+  {
+    "asset": "verizon",
+    "names": [
+      "Verizon"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/verizon.svg",
+    "upstreamSource": "https://www.verizondigitalmedia.com/about/logo-usage/",
+    "hex": "CD040B",
+    "svgSHA256": "75ba3377920bb28e0ea8616ba4b22b3ca6ad75f8a6787e82ed0c866876a95444",
+    "pngSHA256": "f07260010d43df2f72a3069240a0eda0c65570dd0efa4b16a4f7cb2475d89b36"
+  },
+  {
+    "asset": "nintendo",
+    "names": [
+      "Nintendo"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/nintendo.svg",
+    "upstreamSource": "https://www.nintendo.com",
+    "hex": "E60012",
+    "svgSHA256": "4879be6f85a85297ef472d0835fb24e02a7142f7e0a5e764662f2fb0dadd0056",
+    "pngSHA256": "ca6374d17aee419a7114a6addfc3d9d26f83d04d04684a39fb90e2f5dc271a51"
+  },
+  {
+    "asset": "playstation",
+    "names": [
+      "PlayStation"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/playstation.svg",
+    "upstreamSource": "https://www.playstation.com/en-us/",
+    "hex": "0070D1",
+    "svgSHA256": "b68b4d7b63443759b9c4d77a5501c5758eeae06a6d594d278d5eb6cb4d3dbbe4",
+    "pngSHA256": "4158b2fe2c9a887e1d7b90b7b6e3acc95f2e876eb873b0d930df4db8f3050bfe"
+  },
+  {
+    "asset": "steam",
+    "names": [
+      "Steam"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/steam.svg",
+    "upstreamSource": "https://partner.steamgames.com/doc/marketing/branding",
+    "hex": "000000",
+    "svgSHA256": "5eef8f31106b81956ed908490bcf8c73abe476aa58bb9041acdf70b0d42ebcae",
+    "pngSHA256": "6561cdaa3b6e2b4de65fb7266855b6de7766215ec680453fbeaf2d95219d6593"
+  },
+  {
+    "asset": "patreon",
+    "names": [
+      "Patreon"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/patreon.svg",
+    "upstreamSource": "https://www.patreon.com/brand",
+    "hex": "000000",
+    "svgSHA256": "19b2589a0ab396e942aac60d7a8bd84b3d8c207bae1fa668c7b2f539e31decaa",
+    "pngSHA256": "894aebbc956b6a694b60818b1bdd8345c4a26c5fc9a8c482f160ff8845e870f5"
+  },
+  {
+    "asset": "github",
+    "names": [
+      "GitHub"
+    ],
+    "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/13.21.0/icons/github.svg",
+    "upstreamSource": "https://github.com/logos",
+    "hex": "181717",
+    "svgSHA256": "3bf8cceead820aec50d4ee825a3fd02c5a1cd6665cc9cf4cbf3d9c8861a204bb",
+    "pngSHA256": "0edbdc8516aaa73ba35c8720deda7b39f72a54e03e0627656ed1ba5fc2c79882"
+  }
+]

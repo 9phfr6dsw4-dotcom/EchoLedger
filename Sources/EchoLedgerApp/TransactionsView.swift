@@ -322,19 +322,22 @@ struct MerchantCell: View {
     let row: TransactionRow
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 1) {
-            HStack(spacing: 6) {
-                Text(row.merchant)
-                    .fontWeight(.medium)
+        HStack(spacing: 8) {
+            MerchantIconView(name: row.merchant, categoryName: row.categoryName, kind: row.kind)
+            VStack(alignment: .leading, spacing: 1) {
+                HStack(spacing: 6) {
+                    Text(row.merchant)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                    if row.isPending { Badge(text: "Pending", color: .orange) }
+                    if row.kind == .expense && row.amount > 0 { Badge(text: "Refund", color: Theme.income) }
+                    if row.isVoided { Badge(text: "Removed", color: .secondary) }
+                }
+                Text(row.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                     .lineLimit(1)
-                if row.isPending { Badge(text: "Pending", color: .orange) }
-                if row.kind == .expense && row.amount > 0 { Badge(text: "Refund", color: Theme.income) }
-                if row.isVoided { Badge(text: "Removed", color: .secondary) }
             }
-            Text(row.detail)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
         }
     }
 }
@@ -439,8 +442,11 @@ struct SingleTransactionDetail: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(ReportEngine.merchantIdentity(transaction, ledger: runtime.ledger).name)
-                    .font(.title2.weight(.semibold))
+                HStack(spacing: 10) {
+                    MerchantIconView(descriptor: MerchantIconCatalog.descriptor(for: transaction, ledger: runtime.ledger), size: 40)
+                    Text(ReportEngine.merchantIdentity(transaction, ledger: runtime.ledger).name)
+                        .font(.title2.weight(.semibold))
+                }
                 MoneyText(cents: transaction.amount)
                     .font(.title3)
                 Text(subtitle)

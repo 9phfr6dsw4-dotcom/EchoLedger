@@ -5,6 +5,42 @@ import XCTest
 
 @MainActor
 final class PDFReportTests: XCTestCase {
+    func testEveryStyleEmbedsMerchantArtworkAndPreservesTheIconSnapshot() throws {
+        let household = TestHousehold.make()
+        let report = household.report()
+        let recurring = Insights.recurring(household.ledger, filter: report.filter, asOf: report.filter.span.end)
+        let content = PDFReportContent(report: report, ledger: household.ledger, summary: [], recurring: recurring)
+        for category in report.categories {
+            for merchant in category.merchants {
+                let transaction = try XCTUnwrap(merchant.transactionIDs.first.flatMap { household.ledger.transactions[$0] })
+                XCTAssertEqual(content.merchantIcon(name: merchant.name, transactionIDs: merchant.transactionIDs),
+                               MerchantIconCatalog.descriptor(for: transaction, ledger: household.ledger))
+            }
+        }
+        for style in PDFReportStyle.allCases {
+            let data = try ReportPDF.data(content: content, style: style)
+            let provider = try XCTUnwrap(CGDataProvider(data: data as CFData))
+            let document = try XCTUnwrap(CGPDFDocument(provider))
+            var count = 0
+            for index in 1...document.numberOfPages {
+                let page = try XCTUnwrap(document.page(at: index))
+                var resources: CGPDFDictionaryRef?
+                if CGPDFDictionaryGetDictionary(page.dictionary, "Resources", &resources), let resources {
+                    count += embeddedImages(in: resources)
+                }
+            }
+            // Core Graphics can reuse an image XObject for repeated merchant marks.
+            XCTAssertGreaterThan(count, 0, "\(style.name) omitted merchant artwork")
+            let text = try XCTUnwrap(PDFDocument(data: data)?.string)
+            for category in report.categories {
+                for merchant in category.merchants {
+                    XCTAssertTrue(text.contains(merchant.name))
+                    XCTAssertTrue(text.contains(Money.format(merchant.amount)))
+                }
+            }
+        }
+    }
+
     func testEveryStylePreservesAmountsScopeAndAllDetailRows() throws {
         let household = TestHousehold.make()
         let report = household.report()
@@ -158,4 +194,27 @@ final class PDFReportTests: XCTestCase {
             for month in report.months { XCTAssertTrue(text.contains(DateText.monthLabel(month.monthKey))) }
         }
     }
+}
+
+/// Count embedded raster artwork through image and form XObjects, independently of text output.
+private func embeddedImages(in resources: CGPDFDictionaryRef) -> Int {
+    var objects: CGPDFDictionaryRef?
+    guard CGPDFDictionaryGetDictionary(resources, "XObject", &objects), let objects else { return 0 }
+    var count = 0
+    CGPDFDictionaryApplyFunction(objects, { _, object, info in
+        guard let info else { return }
+        var stream: CGPDFStreamRef?
+        guard CGPDFObjectGetValue(object, .stream, &stream), let stream else { return }
+        let dictionary = CGPDFStreamGetDictionary(stream)
+        var subtype: UnsafePointer<CChar>?
+        if CGPDFDictionaryGetName(dictionary, "Subtype", &subtype), let subtype, String(cString: subtype) == "Image" {
+            info.assumingMemoryBound(to: Int.self).pointee += 1
+        } else {
+            var nested: CGPDFDictionaryRef?
+            if CGPDFDictionaryGetDictionary(dictionary, "Resources", &nested), let nested {
+                info.assumingMemoryBound(to: Int.self).pointee += embeddedImages(in: nested)
+            }
+        }
+    }, &count)
+    return count
 }
