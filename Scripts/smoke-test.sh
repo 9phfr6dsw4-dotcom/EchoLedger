@@ -47,7 +47,7 @@ if [[ -e "$BUILD_DIR" ]]; then
 fi
 
 printf 'Build directory is unavailable; launching extracted app from %s\n' "$SMOKE_APP"
-open -n -g "$SMOKE_APP"
+open -n -g "$SMOKE_APP" --args --demo
 
 for _ in {1..15}; do
     if pgrep -x EchoLedger >/dev/null 2>&1; then

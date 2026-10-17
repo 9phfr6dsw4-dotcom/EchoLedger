@@ -25,7 +25,7 @@ public enum CSVExport {
             .sorted { ($0.date, $0.id.uuidString) < ($1.date, $1.id.uuidString) }
         for transaction in items {
             let account = ledger.account(transaction.accountID)
-            let owner = ledger.person(account?.personID)?.name ?? (account == nil ? "" : "Shared")
+            let owner = ledger.assignmentName(ledger.assignment(for: transaction))
             lines.append(row([
                 transaction.date.iso,
                 transaction.postedDate?.iso ?? "",
@@ -52,6 +52,7 @@ public enum CSVExport {
         lines.append(row(["From", report.filter.span.start.iso, "To", report.filter.span.end.iso]))
         lines.append(row(["Accounts", report.accountNames.joined(separator: "; ")]))
         lines.append(row(["Currency", report.filter.currency]))
+        lines.append(row(["People", report.scopeLabel]))
         lines.append("")
         lines.append(row(["Summary", "Amount"]))
         lines.append(row(["Income", Money.decimalString(report.income)]))

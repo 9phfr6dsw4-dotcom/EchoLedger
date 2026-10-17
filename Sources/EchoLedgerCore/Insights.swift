@@ -66,10 +66,9 @@ public enum Insights {
     /// A merchant qualifies with at least 3 charges whose gaps fit one cadence (most of them),
     /// and amounts that stay close (within 25% or $3 of the typical amount).
     public static func recurring(_ ledger: Ledger, filter: ReportFilter, asOf: LocalDate) -> [RecurringCharge] {
-        let accountIDs = Set(ledger.accounts.filter { filter.includes($0) }.map(\.id))
         let spending = ledger.transactions.values.filter {
             $0.isActive && $0.status == .posted && $0.kind == .expense && $0.amount < 0
-                && accountIDs.contains($0.accountID) && $0.date <= asOf
+                && filter.includes($0, ledger: ledger) && $0.date <= asOf
         }
         let groups = Dictionary(grouping: spending) { ReportEngine.merchantIdentity($0, ledger: ledger).id }
         var result: [RecurringCharge] = []
@@ -129,9 +128,8 @@ public enum Insights {
     /// (from the 180 days before, with at least 3 earlier charges) and $25 more than usual, or a
     /// first charge of $200 or more at a merchant you've never paid before.
     public static func unusual(_ ledger: Ledger, filter: ReportFilter) -> [UnusualCharge] {
-        let accountIDs = Set(ledger.accounts.filter { filter.includes($0) }.map(\.id))
         let spending = ledger.transactions.values.filter {
-            $0.isActive && $0.status == .posted && $0.kind == .expense && $0.amount < 0 && accountIDs.contains($0.accountID)
+            $0.isActive && $0.status == .posted && $0.kind == .expense && $0.amount < 0 && filter.includes($0, ledger: ledger)
         }
         let groups = Dictionary(grouping: spending) { ReportEngine.merchantIdentity($0, ledger: ledger).id }
         var result: [UnusualCharge] = []

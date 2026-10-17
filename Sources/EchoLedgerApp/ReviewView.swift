@@ -12,9 +12,17 @@ struct ReviewView: View {
         let suggestions = RuleSuggester.suggestions(runtime.ledger)
         Page(title: "Review", subtitle: "Decide what EchoLedger couldn't. Identical bank text is grouped, so one decision covers every matching transaction.") {
             if groups.isEmpty && filed.isEmpty && stale.isEmpty && suggestions.isEmpty {
-                ContentUnavailableView("All caught up", systemImage: "checkmark.seal",
-                                       description: Text("Every transaction has a merchant and category. New imports that need you will show up here."))
-                    .frame(maxWidth: .infinity, minHeight: 260)
+                VStack(spacing: 18) {
+                    Image(systemName: "checkmark.seal.fill").font(.system(size: 48)).foregroundStyle(Theme.accent)
+                    Text("All caught up").font(Theme.heading(28))
+                    Text("Your transactions are ready to explore. New imports that need you will appear here.")
+                        .foregroundStyle(.secondary)
+                    HStack(spacing: 12) {
+                        Button("View Reports") { runtime.section = .reports }.buttonStyle(.borderedProminent)
+                        Button("Import Files") { runtime.section = .importFiles }
+                    }.controlSize(.large)
+                }.frame(maxWidth: .infinity, minHeight: 300)
+                    .background(Theme.surface, in: RoundedRectangle(cornerRadius: 12))
             }
             if !groups.isEmpty {
                 intelligenceBar(groups)

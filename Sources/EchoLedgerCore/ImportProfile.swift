@@ -50,6 +50,7 @@ public struct ImportProfile: Codable, Sendable, Hashable, Identifiable {
     public var pendingValues: [String]
     public var checkNumberColumn: String?
     public var cardNumberColumn: String?
+    public var cardholderColumn: String?
     /// nil = detected from the file.
     public var dateLayout: DateLayout?
     public var isBuiltIn: Bool
@@ -60,7 +61,7 @@ public struct ImportProfile: Codable, Sendable, Hashable, Identifiable {
                 merchantColumn: String? = nil, categoryColumn: String? = nil, amountColumn: String? = nil,
                 debitColumn: String? = nil, creditColumn: String? = nil, signConvention: SignConvention = .positiveIsMoneyIn,
                 statusColumn: String? = nil, pendingValues: [String] = [], checkNumberColumn: String? = nil,
-                cardNumberColumn: String? = nil, dateLayout: DateLayout? = nil, isBuiltIn: Bool) {
+                cardNumberColumn: String? = nil, cardholderColumn: String? = nil, dateLayout: DateLayout? = nil, isBuiltIn: Bool) {
         self.id = id
         self.name = name
         self.accountType = accountType
@@ -82,6 +83,7 @@ public struct ImportProfile: Codable, Sendable, Hashable, Identifiable {
         self.pendingValues = pendingValues
         self.checkNumberColumn = checkNumberColumn
         self.cardNumberColumn = cardNumberColumn
+        self.cardholderColumn = cardholderColumn
         self.dateLayout = dateLayout
         self.isBuiltIn = isBuiltIn
     }
@@ -139,7 +141,7 @@ public struct ImportProfile: Codable, Sendable, Hashable, Identifiable {
         ImportProfile(id: "amex-card", name: "American Express", accountType: .creditCard,
                       requiredHeaders: ["Date", "Description", "Card Member", "Amount"],
                       dateColumn: "Date", descriptionColumn: "Description", amountColumn: "Amount",
-                      signConvention: .positiveIsMoneyOut, isBuiltIn: true),
+                      signConvention: .positiveIsMoneyOut, cardholderColumn: "Card Member", isBuiltIn: true),
         ImportProfile(id: "bank-of-america", name: "Bank of America checking", accountType: .checking,
                       requiredHeaders: ["Date", "Description", "Amount", "Running Bal."],
                       dateColumn: "Date", descriptionColumn: "Description", amountColumn: "Amount",

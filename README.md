@@ -21,7 +21,10 @@
 - **See everything before it's saved.** Each file shows its account, new rows, rows already saved, pending charges being replaced, possible duplicates held back for you, and any rows it couldn't read, with the reason. Every line of every file is accounted for. A backup is made before each import, and any import can be undone.
 - **Merchants and categories you can trust.** Your own rules come first, then merchants you've taught EchoLedger, then built-in rules for bank wording (card payments, interest, paychecks, ATM) and a list of 275 well-known merchants. Payment services are seen through: “PAYPAL *COINBASE” is Coinbase. Every transaction shows why it was filed the way it was, and the original bank text.
 - **Review that takes seconds.** Transactions with identical bank text are grouped, so one decision covers all of them. Choose “Remember” and similar transactions are handled from then on.
-- **Household-aware.** Add the people in your household; reports can show everyone or one person, and money moving between you counts as a transfer, not spending.
+- **Household spending.** Assign accounts and imported cards to people, shared household spending, or an unassigned group. Select everyone, one person, or multiple people in Reports and Transactions. Correct individual transactions or a batch without changing the account. Cardholder details are used only when the bank export provides them. Transfers and card payments remain separate from spending.
+- **Warm Ledger design.** A cream-and-forest workspace, clear financial typography, a new echo icon, organized settings, and light, dark, or system appearance.
+- **Personal allowances.** Optionally set a monthly spending allowance for each person. Their report shows the allowance for complete calendar months and how their spending contributes to the household total.
+- **Demo workspace.** Open a separate workspace with fictional data from File → Open Demo Workspace or Settings → General. It uses a temporary database and never opens your personal ledger.
 - **Reports.** Income vs spending, categories with merchant drill-down, comparisons with the previous period, 12-month trends, income sources, budgets, recurring charges and unusual charges. Export to PDF or CSV with the same numbers as the screen. Uncategorized and pending amounts are always shown, never hidden.
 - **Apple Intelligence, on this Mac only.** After each import it files the transactions EchoLedger has never seen, following how you filed similar ones, and marks them “Filed by Apple Intelligence” so you can check them (or choose suggestions only, in Settings). It also tidies merchant names that look like bank text, explains unfamiliar charges, writes a short summary of each report, and answers questions like “How much did we spend on dining last quarter?” It only ever uses Apple's on-device model. Every answer is checked before it's used, everything it does is undoable, and when you correct one of its filings it stops filing that bank text.
 - **Private by design.** No bank logins, accounts, subscriptions or servers. Your data stays in one file on your Mac.
@@ -91,3 +94,9 @@ The project is a Swift package with no third-party dependencies:
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Household assignments
+
+In Settings → Household & Accounts, add people and assign each account. Individual cards appear beneath an account when an import supplies cardholder or card-number details; unknown layouts can map those optional columns. New imports use the saved default. Choose Apply to Past Transactions to update earlier imports while preserving individual corrections; Undo reverses that action. Legacy shared accounts stay shared.
+
+Reports and Transactions let you choose the whole household, selected people, shared spending, or unassigned transactions. Person-only reports exclude shared spending unless selected. Joint expenses count once in the whole-household total. Exports use the same selection and figures.

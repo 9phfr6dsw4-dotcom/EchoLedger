@@ -15,6 +15,7 @@ public struct ParsedRow: Sendable, Hashable, Identifiable {
     public var rawText: String
     public var fingerprint: String
     public var occurrence: Int
+    public var cardIdentifier: String? = nil
 
     public var id: Int { line }
 }
@@ -203,6 +204,7 @@ public enum ImportAnalyzer {
         let statusIndex = column(profile.statusColumn)
         let checkIndex = column(profile.checkNumberColumn)
         let cardIndex = column(profile.cardNumberColumn)
+        let cardholderIndex = column(profile.cardholderColumn)
 
         guard let dateIndex, let descriptionIndex,
               amountIndex != nil || (debitIndex != nil && creditIndex != nil) else {
@@ -302,14 +304,22 @@ public enum ImportAnalyzer {
                 let digits = card.filter { $0 >= "0" && $0 <= "9" }
                 if digits.count >= 4 { cardDigits.append(String(digits.suffix(4))) }
             }
+            let cardIdentifier: String?
+            if let holder = value(cardholderIndex) {
+                cardIdentifier = "Cardholder: " + holder
+            } else if let card = value(cardIndex) {
+                let digits = card.filter { $0 >= "0" && $0 <= "9" }
+                cardIdentifier = digits.count >= 4 ? "Card ending " + String(digits.suffix(4)) : nil
+            } else { cardIdentifier = nil }
             let fingerprint = ImportAnalyzer.fingerprint(date: date, amount: amount, description: description)
-            let occurrence = (occurrences[fingerprint] ?? 0) + 1
-            occurrences[fingerprint] = occurrence
+            let occurrenceKey = fingerprint + "|card:" + (cardIdentifier?.lowercased() ?? "")
+            let occurrence = (occurrences[occurrenceKey] ?? 0) + 1
+            occurrences[occurrenceKey] = occurrence
             analysis.rows.append(ParsedRow(line: record.line, date: date, postedDate: postedDate, amount: amount,
                                            description: description, bankMerchant: bankMerchant,
                                            bankCategory: value(categoryIndex), status: status,
                                            checkNumber: value(checkIndex), rawText: record.rawText,
-                                           fingerprint: fingerprint, occurrence: occurrence))
+                                           fingerprint: fingerprint, occurrence: occurrence, cardIdentifier: cardIdentifier))
         }
         if layoutForDates == nil, !dataRecords.isEmpty {
             analysis.problem = "The dates in this file aren't in a format EchoLedger can read."

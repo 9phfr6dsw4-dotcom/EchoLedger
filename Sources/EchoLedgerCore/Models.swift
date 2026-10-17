@@ -119,6 +119,11 @@ public struct LedgerTransaction: Codable, Sendable, Identifiable, Hashable {
     /// Removed by you (for example a pending charge that never posted). Never counted.
     public var voided: Bool
     public var note: String
+    /// Explicit transaction correction; nil uses the imported account/card default.
+    public var spendingAssignment: SpendingAssignment?
+    public var inheritedAssignment: SpendingAssignment?
+    /// A bank-provided cardholder label or masked card suffix, never a full card number.
+    public var cardIdentifier: String?
 
     public init(
         id: UUID = UUID(), accountID: UUID, batchID: UUID?, sourceLine: Int, date: LocalDate,
@@ -169,11 +174,13 @@ public struct Person: Codable, Sendable, Identifiable, Hashable {
     public var name: String
     /// How this person's name appears in bank text, for example on Zelle transfers.
     public var bankNames: [String]
+    public var monthlyAllowance: Cents?
 
-    public init(id: UUID = UUID(), name: String, bankNames: [String] = []) {
+    public init(id: UUID = UUID(), name: String, bankNames: [String] = [], monthlyAllowance: Cents? = nil) {
         self.id = id
         self.name = name
         self.bankNames = bankNames
+        self.monthlyAllowance = monthlyAllowance
     }
 }
 
@@ -224,10 +231,13 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
     public var upToDateThrough: LocalDate?
     /// You said this account's history starts here, so a report starting earlier isn't flagged.
     public var historyStartsOn: LocalDate?
+    public var isUnassigned: Bool
+    public var cardAssignments: [String: SpendingAssignment]
 
     public init(id: UUID = UUID(), name: String, personID: UUID?, type: AccountType, currency: String = "USD",
                 last4: String? = nil, profileID: String? = nil, flipSigns: Bool = false, isArchived: Bool = false,
-                rarelyUsed: Bool = false, upToDateThrough: LocalDate? = nil, historyStartsOn: LocalDate? = nil) {
+                rarelyUsed: Bool = false, upToDateThrough: LocalDate? = nil, historyStartsOn: LocalDate? = nil,
+                isUnassigned: Bool = false, cardAssignments: [String: SpendingAssignment] = [:]) {
         self.id = id
         self.name = name
         self.personID = personID
@@ -240,6 +250,8 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
         self.rarelyUsed = rarelyUsed
         self.upToDateThrough = upToDateThrough
         self.historyStartsOn = historyStartsOn
+        self.isUnassigned = isUnassigned
+        self.cardAssignments = cardAssignments
     }
 
     /// Reads accounts saved by any earlier version (fields added later get their defaults).
@@ -257,6 +269,8 @@ public struct Account: Codable, Sendable, Identifiable, Hashable {
         rarelyUsed = try container.decodeIfPresent(Bool.self, forKey: .rarelyUsed) ?? false
         upToDateThrough = try container.decodeIfPresent(LocalDate.self, forKey: .upToDateThrough)
         historyStartsOn = try container.decodeIfPresent(LocalDate.self, forKey: .historyStartsOn)
+        isUnassigned = try container.decodeIfPresent(Bool.self, forKey: .isUnassigned) ?? false
+        cardAssignments = try container.decodeIfPresent([String: SpendingAssignment].self, forKey: .cardAssignments) ?? [:]
     }
 }
 

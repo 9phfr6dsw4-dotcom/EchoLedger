@@ -49,14 +49,14 @@ final class LedgerAndReportTests: XCTestCase {
 
     func testPersonFilterIncludesSharedAccounts() {
         let household = TestHousehold.make()
-        let alex = household.report(people: [household.alex.id])
+        let alex = ReportEngine.build(household.ledger, filter: ReportFilter(span: TestHousehold.september, personIDs: [household.alex.id], includeShared: true), today: TestHousehold.today)
         XCTAssertEqual(alex.income, 180_000)
         XCTAssertEqual(alex.spending, 25_623)
         XCTAssertEqual(alex.unknownCount, 0)
         XCTAssertEqual(alex.pendingCount, 2)
         XCTAssertEqual(alex.transferCount, 6)
         XCTAssertTrue(alex.notes.contains { $0.id == "shared" })
-        let sam = household.report(people: [household.sam.id])
+        let sam = ReportEngine.build(household.ledger, filter: ReportFilter(span: TestHousehold.september, personIDs: [household.sam.id], includeShared: true), today: TestHousehold.today)
         XCTAssertEqual(sam.income, 240_125)
         XCTAssertEqual(sam.spending, 40_081)
         XCTAssertEqual(sam.transferCount, 5)

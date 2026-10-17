@@ -17,6 +17,8 @@ struct ColumnMappingSheet: View {
     @State private var creditColumn = ""
     @State private var postedColumn = ""
     @State private var statusColumn = ""
+    @State private var cardholderColumn = ""
+    @State private var cardNumberColumn = ""
     @State private var sign: SignConvention = .positiveIsMoneyIn
     @State private var accountType: AccountType = .checking
 
@@ -47,6 +49,8 @@ struct ColumnMappingSheet: View {
                 }
                 columnPicker("Posting date (optional)", selection: $postedColumn, optional: true)
                 columnPicker("Status, pending/posted (optional)", selection: $statusColumn, optional: true)
+                columnPicker("Cardholder (optional)", selection: $cardholderColumn, optional: true)
+                columnPicker("Card number (optional)", selection: $cardNumberColumn, optional: true)
             }
             .formStyle(.grouped)
             preview
@@ -87,7 +91,9 @@ struct ColumnMappingSheet: View {
                       amountColumn: usesTwoColumns ? nil : amountColumn,
                       debitColumn: usesTwoColumns ? debitColumn : nil, creditColumn: usesTwoColumns ? creditColumn : nil,
                       signConvention: sign, statusColumn: statusColumn.isEmpty ? nil : statusColumn,
-                      pendingValues: statusColumn.isEmpty ? [] : ["Pending", "Pend", "P"], isBuiltIn: false)
+                      pendingValues: statusColumn.isEmpty ? [] : ["Pending", "Pend", "P"],
+                      cardNumberColumn: cardNumberColumn.isEmpty ? nil : cardNumberColumn,
+                      cardholderColumn: cardholderColumn.isEmpty ? nil : cardholderColumn, isBuiltIn: false)
     }
 
     @ViewBuilder
@@ -146,6 +152,8 @@ struct ColumnMappingSheet: View {
         creditColumn = profile.creditColumn ?? ""
         postedColumn = profile.postedDateColumn ?? ""
         statusColumn = profile.statusColumn ?? ""
+        cardholderColumn = profile.cardholderColumn ?? ""
+        cardNumberColumn = profile.cardNumberColumn ?? ""
         sign = profile.signConvention
         return true
     }

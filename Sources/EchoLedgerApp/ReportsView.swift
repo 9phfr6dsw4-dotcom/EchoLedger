@@ -51,56 +51,50 @@ struct ReportsView: View {
     @State private var period: PeriodChoice = .lastMonth
     @State private var customStart = LocalDate(year: 2026, month: 1, day: 1) ?? LocalDate(dayNumber: 0)
     @State private var customEnd = LocalDate(year: 2026, month: 12, day: 31) ?? LocalDate(dayNumber: 0)
-    @State private var personID: UUID?
+    @State private var people = PeopleSelection()
     @State private var tab: ReportTab = .overview
     @State private var drillDown: DrillDown?
 
     private var filter: ReportFilter {
         let span = period.span(today: runtime.today, earliest: runtime.ledger.transactions.values.map(\.date).min(),
                                customStart: customStart, customEnd: customEnd)
-        let people: Set<UUID> = personID.map { Set([$0]) } ?? []
-        return ReportFilter(span: span, personIDs: people, currency: runtime.ledger.settings.reportCurrency)
+        return people.filter(span: span, currency: runtime.ledger.settings.reportCurrency)
     }
 
     var body: some View {
         let bundle = ReportBundle(ledger: runtime.ledger, filter: filter, today: runtime.today)
-        VStack(spacing: 0) {
-            controls(bundle)
-            Divider()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    PageHeader(title: bundle.report.filter.span.label, subtitle: subtitle(bundle.report))
-                    content(bundle)
-                    DataNotesView(notes: bundle.report.notes)
-                    PrivacyFooter()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                HStack(alignment: .top) {
+                    PageHeader(title: "Reports", subtitle: subtitle(bundle.report))
+                    Spacer(minLength: 12)
+                    if runtime.isDemo { Badge(text: "Demo data", color: Theme.accent) }
                 }
-                .padding(28)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+                controls(bundle)
+                content(bundle)
+                DataNotesView(notes: bundle.report.notes)
             }
-            .background(Color(nsColor: .windowBackgroundColor))
+            .padding(32)
+            .frame(maxWidth: 1500, alignment: .topLeading)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
+        .background(Theme.canvas)
         .sheet(item: $drillDown) { item in
             DrillDownSheet(drillDown: item)
         }
     }
 
     private func subtitle(_ report: Report) -> String {
-        let who = personID.flatMap { runtime.ledger.person($0)?.name } ?? "Everyone"
+        let who = report.scopeLabel
         let accounts = report.accountNames.isEmpty ? "no accounts yet" : "\(report.accountNames.count) accounts"
         return "\(who) · \(accounts) · \(report.filter.currency) · \(DateText.medium(report.filter.span.start)) to \(DateText.medium(report.filter.span.end))"
     }
 
     private func controls(_ bundle: ReportBundle) -> some View {
-        HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 10) {
             PeriodPicker(choice: $period, customStart: $customStart, customEnd: $customEnd)
-            PersonPicker(personID: $personID)
-            Picker("Report", selection: $tab) {
-                ForEach(ReportTab.allCases) { tab in
-                    Text(tab.label).tag(tab)
-                }
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
+            PeopleScopePicker(selection: $people)
             Spacer()
             Menu {
                 Button("Report as PDF…") { exportPDF(bundle) }
@@ -118,16 +112,20 @@ struct ReportsView: View {
                 Label("Export", systemImage: "square.and.arrow.up")
             }
             .frame(width: 110)
+            }
+            Picker("Report", selection: $tab) {
+                ForEach(ReportTab.allCases) { tab in Text(tab.label).tag(tab) }
+            }.pickerStyle(.segmented).labelsHidden()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .controlSize(.large)
+        .padding(.bottom, 4)
     }
 
     private func exportPDF(_ bundle: ReportBundle) {
         guard let url = SavePanel.choose(suggestedName: "EchoLedger \(bundle.report.filter.span.label).pdf", type: .pdf) else { return }
         let key = runtime.intelligence.narrativeKey(filter: bundle.filter, revision: runtime.revision)
         let bullets = runtime.intelligence.narratives[key] ?? []
-        let who = personID.flatMap { runtime.ledger.person($0)?.name } ?? "Everyone"
+        let who = bundle.report.scopeLabel
         do {
             try ReportPDF.write(bundle: bundle, ledger: runtime.ledger, bullets: bullets, who: who, to: url)
             runtime.statusMessage = "Saved \(url.lastPathComponent)."
@@ -144,7 +142,14 @@ struct ReportsView: View {
         case .merchants: MerchantsTab(report: bundle.report, drillDown: $drillDown)
         case .trends: TrendsTab(filter: bundle.filter)
         case .income: IncomeTab(report: bundle.report, drillDown: $drillDown)
-        case .budgets: BudgetsTab(report: bundle.report)
+        case .budgets:
+            if bundle.filter.wholeHousehold { BudgetsTab(report: bundle.report) }
+            else {
+                GroupBox("Household category budgets") {
+                    Text("Choose Whole household to compare family category budgets with the family's spending. Personal allowances appear in the Overview for each person.")
+                        .foregroundStyle(.secondary)
+                }
+            }
         case .recurring: RecurringTab(bundle: bundle, drillDown: $drillDown)
         }
     }
@@ -161,26 +166,74 @@ struct OverviewTab: View {
         let report = bundle.report
         VStack(alignment: .leading, spacing: 24) {
             tiles(report)
-            SummaryCard(bundle: bundle, drillDown: $drillDown)
-            if report.categories.isEmpty {
-                ContentUnavailableView("No spending in this period", systemImage: "chart.pie",
-                                       description: Text("Import files for these dates, or choose another period."))
-                    .frame(maxWidth: .infinity, minHeight: 200)
-            } else {
-                GroupBox("Spending by category") {
-                    HStack(alignment: .top, spacing: 24) {
-                        CategoryDonut(categories: report.categories)
-                            .frame(width: 240, height: 240)
-                        CategoryLegend(report: report, drillDown: $drillDown)
-                    }
-                    .padding(.vertical, 8)
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .top, spacing: 18) {
+                    spendingChart.frame(minWidth: 330, maxWidth: .infinity)
+                    categoryChart(report).frame(minWidth: 300, maxWidth: .infinity)
                 }
+                VStack(spacing: 18) { spendingChart; categoryChart(report) }
             }
-            if report.months.count > 1 {
-                GroupBox("Month by month") {
-                    MonthBars(months: report.months)
-                        .frame(height: 220)
-                        .padding(.vertical, 8)
+            if !report.filter.wholeHousehold { householdContext(report) }
+            SummaryCard(bundle: bundle, drillDown: $drillDown)
+        }
+    }
+
+    private var spendingChart: some View {
+        let end = bundle.filter.span.end
+        let start = end.firstOfMonth.adding(months: -5)
+        let report = ReportEngine.build(runtime.ledger, filter: bundle.filter.withSpan(DateSpan(start: start, end: end)), today: runtime.today)
+        return GroupBox("Spending over time") {
+            SpendingBars(months: report.months).frame(height: 225)
+            Caption("Monthly spending · \(bundle.report.scopeLabel)")
+        }
+    }
+
+    private func categoryChart(_ report: Report) -> some View {
+        GroupBox("Where it went") {
+            if report.categories.isEmpty {
+                ContentUnavailableView("No spending yet", systemImage: "chart.bar", description: Text("Choose another period or import a bank file."))
+                    .frame(height: 225)
+            } else {
+                VStack(spacing: 14) {
+                    ForEach(report.categories.prefix(7)) { line in
+                        Button {
+                            drillDown = DrillDown(title: line.name, ids: line.transactionIDs)
+                        } label: {
+                            HStack(spacing: 12) {
+                                Text(line.name).frame(width: 105, alignment: .leading).lineLimit(1)
+                                GeometryReader { geometry in
+                                    let maxAmount = max(1, report.categories.map(\.amount).max() ?? 1)
+                                    Capsule().fill(Theme.accent.opacity(0.07))
+                                    Capsule().fill(line.id == report.categories.first?.id ? Theme.accent : Theme.accentLight)
+                                        .frame(width: geometry.size.width * CGFloat(max(0, line.amount)) / CGFloat(maxAmount))
+                                }.frame(height: 14)
+                                Text(Money.format(line.amount)).monospacedDigit().frame(width: 84, alignment: .trailing)
+                            }.foregroundStyle(.primary).contentShape(Rectangle())
+                        }.buttonStyle(.plain)
+                    }
+                }.frame(minHeight: 225, alignment: .top).padding(.top, 5)
+            }
+        }
+    }
+
+    private func householdContext(_ report: Report) -> some View {
+        let allFilter = ReportFilter(span: report.filter.span, currency: report.filter.currency)
+        let household = ReportEngine.build(runtime.ledger, filter: allFilter, today: runtime.today)
+        let share = Money.shareTenths(report.spending, of: household.spending)
+        let budget = BudgetReport.lines(runtime.ledger, report: household).reduce(Cents(0)) { $0 + $1.budgeted }
+        return GroupBox("Household context") {
+            HStack(alignment: .top, spacing: 28) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(share.map { Money.percentText(tenths: $0) + " of household spending" } ?? "No household spending in this period")
+                        .font(.headline)
+                    Caption("\(report.scopeLabel): \(Money.format(report.spending)) · Whole household: \(Money.format(household.spending))")
+                }
+                Spacer()
+                if budget > 0 && BudgetReport.coversWholeMonths(report.filter.span) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Family category budgets: \(Money.format(budget))")
+                        Caption("Whole household spending includes all people, shared, and unassigned transactions.")
+                    }.frame(maxWidth: 350, alignment: .leading)
                 }
             }
         }
@@ -191,20 +244,25 @@ struct OverviewTab: View {
         let change = Money.changeTenthsOfPercent(from: comparison.previous.spending, to: report.spending)
         let spendingDetail = change.map { "\(Money.percentText(tenths: $0, showPlus: true)) vs previous period" } ?? "No earlier period to compare"
         let rate = report.savingsRateTenths.map { "\(Money.percentText(tenths: $0)) of income" } ?? "No income recorded"
-        let review = report.unknownCount == 0 ? "Everything is categorized" : "\(Money.format(-report.unknownOut)) out, \(Money.format(report.unknownIn)) in"
+        let selectedPerson = report.filter.personIDs.count == 1 && !report.filter.wholeHousehold && !report.filter.includeShared && !report.filter.includeUnassigned
+            ? runtime.ledger.person(report.filter.personIDs.first) : nil
+        let allowance = selectedPerson?.monthlyAllowance
+        let wholeMonths = BudgetReport.coversWholeMonths(report.filter.span)
+        let periodAllowance = allowance.flatMap { amount -> Cents? in
+            let result = amount.multipliedReportingOverflow(by: Cents(report.filter.span.monthKeys.count))
+            return result.overflow ? nil : result.partialValue
+        }
+
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 190), spacing: 12)], spacing: 12) {
             MetricTile(title: "Income", value: Money.format(report.income), detail: "\(report.incomeSources.count) sources",
                        symbol: "arrow.down.circle", tint: Theme.income)
             MetricTile(title: "Spending", value: Money.format(report.spending), detail: spendingDetail,
                        symbol: "arrow.up.circle", tint: Theme.spending)
-            MetricTile(title: "Saved", value: Money.format(report.savings), detail: rate, symbol: "banknote", tint: Theme.accent)
-            Button {
-                runtime.section = .review
-            } label: {
-                MetricTile(title: "Needs review", value: "\(report.unknownCount)", detail: review, symbol: "checklist",
-                           tint: report.unknownCount == 0 ? Theme.income : Color.orange)
+            MetricTile(title: "Net cash flow", value: Money.format(report.savings), detail: rate, symbol: "banknote", tint: Theme.accent)
+            if wholeMonths, let periodAllowance {
+                MetricTile(title: "Spending allowance", value: Money.format(periodAllowance), detail: "For the selected period", symbol: "wallet.bifold")
+                MetricTile(title: "Allowance left", value: Money.format(periodAllowance - report.spending), detail: selectedPerson?.name, symbol: "checkmark.circle")
             }
-            .buttonStyle(.plain)
         }
     }
 }
@@ -877,5 +935,29 @@ struct DrillDownSheet: View {
         }
         .padding(24)
         .frame(width: 640, height: 520)
+    }
+}
+
+
+struct SpendingBars: View {
+    let months: [MonthLine]
+    var body: some View {
+        Chart(months) { month in
+            BarMark(x: .value("Month", DateText.monthLabel(month.monthKey)), y: .value("Spending", Theme.dollars(month.spending)))
+                .foregroundStyle(month.id == months.last?.id ? Theme.accent : Theme.accentLight)
+                .cornerRadius(4)
+                .annotation(position: .top) {
+                    Text(Money.formatWhole(month.spending)).font(.caption2).foregroundStyle(.secondary)
+                }
+        }
+        .chartYAxis {
+            AxisMarks { value in
+                AxisGridLine().foregroundStyle(.primary.opacity(0.08))
+                AxisValueLabel {
+                    if let dollars = value.as(Double.self) { Text(Money.formatWhole(Cents(dollars * 100))) }
+                }
+            }
+        }
+        .chartPlotStyle { $0.padding(.top, 14) }
     }
 }
