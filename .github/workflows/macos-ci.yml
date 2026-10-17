@@ -41,6 +41,13 @@ jobs:
         run: bash Scripts/package-app.sh
       - name: Launch packaged app from a clean location without .build
         run: bash Scripts/smoke-test.sh
+      - name: Upload packaged-app checks using fictional demo data
+        uses: actions/upload-artifact@v4
+        with:
+          name: EchoLedger-installed-app-check-${{ github.sha }}
+          path: dist/packaged-app-check/
+          if-no-files-found: error
+          retention-days: 14
       - uses: actions/upload-artifact@v4
         with:
           name: EchoLedger-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}

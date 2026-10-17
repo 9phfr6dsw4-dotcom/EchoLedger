@@ -3,6 +3,34 @@ import XCTest
 @testable import EchoLedgerCore
 
 final class MerchantIconTests: XCTestCase {
+    func testInstalledAppResolvesResourcesInsideContentsResources() throws {
+        let folder = temporaryFolder()
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let app = folder.appendingPathComponent("Example.app")
+        let bundleURL = app.appendingPathComponent("Contents/Resources/EchoLedger_EchoLedgerCore.bundle")
+        let icons = bundleURL.appendingPathComponent("MerchantIcons")
+        try FileManager.default.createDirectory(at: icons, withIntermediateDirectories: true)
+        try Data("[{\"asset\":\"example\",\"names\":[\"Example Brand\"]}]".utf8)
+            .write(to: icons.appendingPathComponent("catalog.json"))
+        let bundle = try XCTUnwrap(MerchantIconCatalog.resourceBundle(in: app))
+        XCTAssertEqual(bundle.bundleURL.standardizedFileURL, bundleURL.standardizedFileURL)
+        XCTAssertEqual(MerchantIconCatalog.loadBrands(from: bundle).first?.names, ["Example Brand"])
+    }
+
+    func testMissingOrUnreadableResourceBundleReturnsEmptyCatalogWithoutTrapping() throws {
+        let folder = temporaryFolder()
+        defer { try? FileManager.default.removeItem(at: folder) }
+        XCTAssertNil(MerchantIconCatalog.resourceBundle(in: folder.appendingPathComponent("Absent.app")))
+        XCTAssertTrue(MerchantIconCatalog.loadBrands(from: nil).isEmpty)
+        let bundleURL = folder.appendingPathComponent("Example.app/Contents/Resources/EchoLedger_EchoLedgerCore.bundle")
+        let icons = bundleURL.appendingPathComponent("MerchantIcons")
+        try FileManager.default.createDirectory(at: icons, withIntermediateDirectories: true)
+        let bundle = try XCTUnwrap(Bundle(url: bundleURL))
+        XCTAssertTrue(MerchantIconCatalog.loadBrands(from: bundle).isEmpty)
+        try Data("invalid catalog".utf8).write(to: icons.appendingPathComponent("catalog.json"))
+        XCTAssertTrue(MerchantIconCatalog.loadBrands(from: bundle).isEmpty)
+    }
+
     func testOnlyExactResolvedNamesReceiveBrandArtwork() {
         for (name, logo) in [("Spotify", "spotify"), ("  SPOTIFY \n", "spotify"),
                              ("Apple Services", "apple"), ("Amazon Prime", "amazonprime"),

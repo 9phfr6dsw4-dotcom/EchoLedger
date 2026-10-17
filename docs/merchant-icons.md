@@ -44,7 +44,13 @@ decode its image, check catalog name uniqueness, and exercise matching boundarie
 
 Run `swift test` on macOS 26 with Swift 6.2, then `bash Scripts/package-app.sh`.
 The packaging script includes and checks the core resource bundle in both the
-app and extracted ZIP. CI also launches that extracted app after hiding `.build`.
+app and extracted ZIP. CI also opens the extracted app in a separate fictional
+Transactions workspace after hiding `.build`, confirms installed artwork loads,
+captures the rendered window, and exports all three PDF styles from that copy.
+
+The catalog resolves the installed resource bundle from `Contents/Resources`
+without calling SwiftPM's fatal `Bundle.module` accessor. Missing or unreadable
+resources produce an empty catalog, leaving category symbols and initials available.
 
 The PDF suite checks embedded image objects in every style, retained merchant
 names and amounts, and pagination with long names and notes. To check visually,
