@@ -31,20 +31,50 @@ final class MerchantIconTests: XCTestCase {
         XCTAssertTrue(MerchantIconCatalog.loadBrands(from: bundle).isEmpty)
     }
 
-    func testOnlyExactResolvedNamesReceiveBrandArtwork() {
+    func testExplicitResolvedNamesReceiveBrandArtwork() {
         for (name, logo) in [("Spotify", "spotify"), ("  SPOTIFY \n", "spotify"),
                              ("Apple Services", "apple"), ("Amazon Prime", "amazonprime"),
                              ("McDonald’s", "mcdonalds"), ("Uber Eats", "ubereats")] {
             XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, logo, name)
         }
         for name in ["Amazonas Cafe", "Apple Valley Market", "Spotify Support Services", "Not Netflix",
-                     "7-Eleven", "Forever 21", "PAYPAL *SPOTIFY", "", "Sample Market"] {
+                     "Forever 21", "PAYPAL *SPOTIFY", "", "Sample Market"] {
             XCTAssertNil(MerchantIconCatalog.descriptor(name: name).logo, name)
         }
         XCTAssertEqual(MerchantIconCatalog.descriptor(name: "7-Eleven").initials, "7E")
         XCTAssertEqual(MerchantIconCatalog.descriptor(name: "Forever 21").initials, "F2")
         XCTAssertEqual(MerchantIconCatalog.descriptor(name: "").initials, "?")
         XCTAssertNil(MerchantIconCatalog.logoURL(for: "../catalog"))
+    }
+
+    func testConsumerBrandCoverageAndExplicitAliases() {
+        let examples = [("In-N-Out", "in-n-out-burger"), ("In N Out Burger", "in-n-out-burger"),
+                        ("Habit Burger", "habit-burger-grill"), ("The Habit", "habit-burger-grill"),
+                        ("Black Bear Diner", "black-bear-diner"), ("Panera Bread", "panera-bread"),
+                        ("Farmer Boys", "farmer-boys"), ("Wiener Schnitzel", "wienerschnitzel"),
+                        ("Olive Garden", "olive-garden"), ("Wendy’s", "wendys"),
+                        ("Carls Jr", "carls-jr"), ("Costco", "costco"), ("Costco Gas", "costco"),
+                        ("Trader Joes", "trader-joes"), ("Save Mart", "save-mart"),
+                        ("7-Eleven", "7-eleven"), ("Whole Foods", "whole-foods-market"),
+                        ("Marshalls", "marshalls"), ("Ulta Beauty", "ulta-beauty"),
+                        ("Xfinity", "xfinity"), ("Comcast Xfinity", "xfinity"),
+                        ("Mister Car Wash", "mister-car-wash"), ("Mister Carwash", "mister-car-wash"),
+                        ("Meijer", "meijer"), ("Hy-Vee", "hy-vee"), ("Wegmans", "wegmans"),
+                        ("ShopRite", "shoprite"), ("Wawa", "wawa"), ("Culver’s", "culvers")]
+        for (name, asset) in examples {
+            XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, "consumer-" + asset, name)
+        }
+    }
+
+    func testNumberedStoresWithoutGuessingFromOtherWords() {
+        for name in ["Costco #0042", "COSTCO STORE 42", "Costco Store #42", "Costco 0042"] {
+            XCTAssertEqual(MerchantIconCatalog.descriptor(name: name).logo, "consumer-costco", name)
+        }
+        for name in ["Costco Support", "Costco #42 Repair", "Costco Retail Partners", "Habit Cafe",
+                     "Habit Exampleville", "Skewers", "Shellfish Kitchen", "Not Panera Bread", "Wendysmith"] {
+            XCTAssertNil(MerchantIconCatalog.descriptor(name: name, categoryName: "Dining").logo, name)
+        }
+        XCTAssertNil(MerchantIconCatalog.descriptor(name: "Costco #0042", kind: .transfer).logo)
     }
 
     func testDemoCategoryAndTransferFallbacks() {
@@ -87,6 +117,7 @@ final class MerchantIconTests: XCTestCase {
     @MainActor
     func testAllBrandAndFallbackArtworkRendersAndIsCached() throws {
         let names = ["Spotify", "Starbucks", "Amazon", "Apple Services", "Max", "YouTube TV",
+                     "Costco", "Panera Bread", "Trader Joe's", "In-N-Out",
                      "Example Cafe", "Sample Market", "Local Artisan", ""]
         for name in names {
             let descriptor = MerchantIconCatalog.descriptor(name: name)
