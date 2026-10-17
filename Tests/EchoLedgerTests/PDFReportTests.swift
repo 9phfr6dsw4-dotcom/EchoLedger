@@ -38,6 +38,17 @@ final class PDFReportTests: XCTestCase {
                     XCTAssertTrue(text.contains(Money.format(merchant.amount)))
                 }
             }
+            if let directory = ProcessInfo.processInfo.environment["ECHOLEDGER_PDF_PREVIEW_DIR"] {
+                let folder = URL(fileURLWithPath: directory, isDirectory: true)
+                try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+                try data.write(to: folder.appendingPathComponent("EchoLedger-\(style.rawValue).pdf"))
+                let pdf = try XCTUnwrap(PDFDocument(data: data))
+                let page = try XCTUnwrap(pdf.page(at: 1))
+                let image = page.thumbnail(of: CGSize(width: 1224, height: 1584), for: .mediaBox)
+                let bitmap = try XCTUnwrap(image.tiffRepresentation.flatMap { NSBitmapImageRep(data: $0) })
+                try XCTUnwrap(bitmap.representation(using: .png, properties: [:]))
+                    .write(to: folder.appendingPathComponent("EchoLedger-\(style.rawValue)-merchants.png"))
+            }
         }
     }
 

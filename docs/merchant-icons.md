@@ -5,7 +5,9 @@ Transactions, the selected transaction's details, merchant and income reports,
 expanded category rows, recurring charges, and report drill-downs. All three PDF
 styles embed the same artwork in merchant, income-source, and recurring rows.
 
-The catalog initially contains 48 brand marks. A resolved merchant name must match
+The offline catalog contains over 3,000 brand marks, indexed automatically from a
+pinned artwork collection rather than a hand-maintained list of individual vendors.
+A resolved merchant name must match
 one of the explicitly listed names. EchoLedger does not guess brands from parts
 of names, search the App Store, send bank descriptions to another service, or
 change transaction classification to obtain a logo. Fictional demo merchants use
@@ -22,12 +24,20 @@ a light tile that stays legible in both app appearances and on paper.
 `Sources/EchoLedgerCore/Resources/MerchantIcons/catalog.json` records exact merchant
 names, asset filenames, upstream SVG URLs, upstream brand sources, brand colors,
 and source/output SHA-256 hashes. These marks come from **Simple Icons 13.21.0**;
-its CC0 license is included alongside the catalog. Brand names and marks remain
+its CC0 license and disclaimer are included alongside the catalog. Marks with
+separate, non-CC0 license metadata and ambiguous duplicate brand names are excluded. Brand names and marks remain
 the property of their respective owners and identify transaction merchants.
 
 Each bundled PNG is a 192 × 192 rendering of the upstream SVG using its upstream
-brand color. To add a brand, add its PNG and a catalog entry with explicit names;
-do not introduce substring or fuzzy matching. Tests validate every resource,
+brand color. `Scripts/generate-merchant-icons.py` rebuilds the catalog from a
+checksum-pinned source archive (development dependency: CairoSVG 2.8.2). It imports
+upstream names and aliases automatically, with a few explicit aliases for the
+app's resolved names such as Apple Services. New catalog versions ship with app
+updates; the app itself never downloads artwork or uploads merchant names.
+
+This is automatic local matching, not universal logo discovery. A small business
+or brand absent from the collection still gets a category symbol or initials.
+Do not introduce substring or fuzzy matching. Tests validate every resource,
 decode its image, check catalog name uniqueness, and exercise matching boundaries.
 
 ## Validation

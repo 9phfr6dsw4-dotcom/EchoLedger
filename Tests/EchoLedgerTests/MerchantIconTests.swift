@@ -32,7 +32,7 @@ final class MerchantIconTests: XCTestCase {
     }
 
     func testCatalogResourcesAreCompleteAndNamesAreUnambiguous() throws {
-        XCTAssertGreaterThanOrEqual(MerchantIconCatalog.brands.count, 48)
+        XCTAssertGreaterThan(MerchantIconCatalog.brands.count, 3_000)
         var names: Set<String> = []
         var assets: Set<String> = []
         for brand in MerchantIconCatalog.brands {
@@ -58,7 +58,8 @@ final class MerchantIconTests: XCTestCase {
 
     @MainActor
     func testAllBrandAndFallbackArtworkRendersAndIsCached() throws {
-        let names = MerchantIconCatalog.brands.flatMap(\.names) + ["Example Cafe", "Sample Market", "Local Artisan", ""]
+        let names = ["Spotify", "Starbucks", "Amazon", "Apple Services", "Max", "YouTube TV",
+                     "Example Cafe", "Sample Market", "Local Artisan", ""]
         for name in names {
             let descriptor = MerchantIconCatalog.descriptor(name: name)
             let image = MerchantIconArtwork.image(for: descriptor)

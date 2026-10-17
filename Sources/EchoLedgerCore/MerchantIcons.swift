@@ -32,6 +32,8 @@ public enum MerchantIconCatalog {
         return result
     }()
 
+    private static let assets = Set(brands.map(\.asset))
+
     private static let defaultCategories: [String: String] = {
         var result: [String: String] = [:]
         for merchant in BuiltInKnowledge.merchants { result[key(merchant.name)] = merchant.category }
@@ -55,7 +57,7 @@ public enum MerchantIconCatalog {
 
     public static func logoURL(for asset: String) -> URL? {
         // Only names from our catalog can select a bundled file.
-        guard brands.contains(where: { $0.asset == asset }) else { return nil }
+        guard assets.contains(asset) else { return nil }
         return Bundle.module.url(forResource: asset, withExtension: "png", subdirectory: "MerchantIcons")
     }
 
