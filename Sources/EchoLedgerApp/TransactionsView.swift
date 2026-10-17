@@ -51,19 +51,41 @@ struct TransactionsView: View {
     @State private var selection: Set<UUID> = []
     @State private var sortOrder = [KeyPathComparator(\TransactionRow.date, order: .reverse)]
     @State private var showDetails = true
+    @State private var showFloatingDetails = false
+
+    /// Below this width the table needs all the room, so the details panel floats over it
+    /// (and starts closed) instead of squeezing the Amount column off the screen.
+    private static let dockedDetailsMinWidth: CGFloat = 920
 
     // The details panel is part of this screen's own layout rather than a window inspector or
     // toolbar item, so the window's toolbar and safe area stay the same on every screen.
     // (Adding and removing an inspector, toolbar button and toolbar search field while
-    // switching screens made AppKit's layout loop until it crashed.)
+    // switching screens made AppKit's layout loop until it crashed.) The floating version is an
+    // overlay, so it never changes the size of anything.
     var body: some View {
         let rows = filteredRows()
-        HStack(spacing: 0) {
-            transactionList(rows)
-            if showDetails {
-                Divider()
-                TransactionInspector(ids: Array(selection))
-                    .frame(width: 330)
+        GeometryReader { proxy in
+            let docked = proxy.size.width >= Self.dockedDetailsMinWidth
+            HStack(spacing: 0) {
+                transactionList(rows, docked: docked)
+                if docked && showDetails {
+                    Divider()
+                    TransactionInspector(ids: Array(selection))
+                        .frame(width: 330)
+                }
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height)
+            .overlay(alignment: .trailing) {
+                if !docked && showFloatingDetails {
+                    HStack(spacing: 0) {
+                        Divider()
+                        TransactionInspector(ids: Array(selection))
+                            .frame(width: 320)
+                    }
+                    .frame(maxHeight: .infinity)
+                    .background(Theme.canvas)
+                    .shadow(color: .black.opacity(0.18), radius: 10, x: -2)
+                }
             }
         }
         .onAppear {
@@ -77,9 +99,9 @@ struct TransactionsView: View {
         }
     }
 
-    private func transactionList(_ rows: [TransactionRow]) -> some View {
+    private func transactionList(_ rows: [TransactionRow], docked: Bool) -> some View {
         VStack(spacing: 0) {
-            filterBar
+            filterBar(docked: docked)
             if let focus = runtime.transactionsFocus {
                 focusBanner(focus)
             }
@@ -121,12 +143,13 @@ struct TransactionsView: View {
             } primaryAction: { ids in
                 selection = ids
                 showDetails = true
+                showFloatingDetails = true
             }
             footer(rows)
         }
     }
 
-    private var filterBar: some View {
+    private func filterBar(docked: Bool) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 10) {
                 HStack(spacing: 6) {
@@ -151,9 +174,10 @@ struct TransactionsView: View {
                 .frame(minWidth: 160, maxWidth: 360)
                 Spacer(minLength: 0)
                 Button {
-                    showDetails.toggle()
+                    if docked { showDetails.toggle() } else { showFloatingDetails.toggle() }
                 } label: {
-                    Label(showDetails ? "Hide Details" : "Show Details", systemImage: "sidebar.trailing")
+                    let open = docked ? showDetails : showFloatingDetails
+                    Label(open ? "Hide Details" : "Show Details", systemImage: "sidebar.trailing")
                 }
                 .help("Show or hide transaction details")
             }
@@ -430,6 +454,8 @@ struct SingleTransactionDetail: View {
                         get: { runtime.ledger.assignment(for: transaction) },
                         set: { value in runtime.commit { $0.assignSpending(value, ids: [transaction.id]) } }))
                     if let card = transaction.cardIdentifier { Caption(card) }
+                    let cardUsers = runtime.ledger.cardUserNames(for: transaction)
+                    if !cardUsers.isEmpty { Caption("Card used by \(cardUsers.joined(separator: ", "))") }
                     if transaction.spendingAssignment != nil {
                         Button("Use Imported Assignment") { runtime.commit { $0.assignSpending(nil, ids: [transaction.id]) } }
                     }

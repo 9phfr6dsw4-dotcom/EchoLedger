@@ -92,7 +92,24 @@ struct ReportsView: View {
 
     private func controls(_ bundle: ReportBundle) -> some View {
         VStack(alignment: .leading, spacing: 18) {
-            HStack(spacing: 10) {
+            // When the window is too narrow for everything, the row scrolls sideways
+            // instead of pushing the whole page wider than the window.
+            ViewThatFits(in: .horizontal) {
+                controlRow(bundle)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    controlRow(bundle).padding(.bottom, 2)
+                }
+            }
+            Picker("Report", selection: $tab) {
+                ForEach(ReportTab.allCases) { tab in Text(tab.label).tag(tab) }
+            }.pickerStyle(.segmented).labelsHidden()
+        }
+        .controlSize(.large)
+        .padding(.bottom, 4)
+    }
+
+    private func controlRow(_ bundle: ReportBundle) -> some View {
+        HStack(spacing: 10) {
             PeriodPicker(choice: $period, customStart: $customStart, customEnd: $customEnd)
             PeopleScopePicker(selection: $people)
             Spacer()
@@ -112,13 +129,7 @@ struct ReportsView: View {
                 Label("Export", systemImage: "square.and.arrow.up")
             }
             .frame(width: 110)
-            }
-            Picker("Report", selection: $tab) {
-                ForEach(ReportTab.allCases) { tab in Text(tab.label).tag(tab) }
-            }.pickerStyle(.segmented).labelsHidden()
         }
-        .controlSize(.large)
-        .padding(.bottom, 4)
     }
 
     private func exportPDF(_ bundle: ReportBundle) {
@@ -244,7 +255,8 @@ struct OverviewTab: View {
         let change = Money.changeTenthsOfPercent(from: comparison.previous.spending, to: report.spending)
         let spendingDetail = change.map { "\(Money.percentText(tenths: $0, showPlus: true)) vs previous period" } ?? "No earlier period to compare"
         let rate = report.savingsRateTenths.map { "\(Money.percentText(tenths: $0)) of income" } ?? "No income recorded"
-        let selectedPerson = report.filter.personIDs.count == 1 && !report.filter.wholeHousehold && !report.filter.includeShared && !report.filter.includeUnassigned
+        let selectedPerson = report.filter.personIDs.count == 1 && !report.filter.wholeHousehold && !report.filter.includeShared
+            && !report.filter.includeUnassigned && report.filter.peopleMode == .assigned
             ? runtime.ledger.person(report.filter.personIDs.first) : nil
         let allowance = selectedPerson?.monthlyAllowance
         let wholeMonths = BudgetReport.coversWholeMonths(report.filter.span)
@@ -554,13 +566,15 @@ struct MerchantsTab: View {
                         drillDown = DrillDown(title: merchant.name, ids: merchant.transactionIDs)
                     } label: {
                         HStack {
-                            Text(merchant.name)
+                            Text(merchant.name).lineLimit(1)
                             Text("\(merchant.count) transaction\(merchant.count == 1 ? "" : "s")")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(1)
                             Spacer()
                             ShareBar(fraction: report.spending > 0 ? Double(max(merchant.amount, 0)) / Double(report.spending) : 0)
-                                .frame(width: 140, height: 8)
+                                .frame(minWidth: 30, maxWidth: 140)
+                                .frame(height: 8)
                             Text(Money.format(merchant.amount))
                                 .monospacedDigit()
                                 .frame(width: 110, alignment: .trailing)
@@ -934,7 +948,7 @@ struct DrillDownSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 640, height: 520)
+        .frame(minWidth: 460, idealWidth: 640, minHeight: 340, idealHeight: 520)
     }
 }
 

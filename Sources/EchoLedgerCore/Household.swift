@@ -10,11 +10,13 @@ public enum SpendingAssignment: Codable, Hashable, Sendable {
 extension Account {
     public var defaultAssignment: SpendingAssignment {
         get {
-            if let personID { return .person(personID) }
-            return isUnassigned ? .unassigned : .shared
+            if userIDs.count == 1, let only = userIDs.first { return .person(only) }
+            // No users: a plain household account, or one not decided yet. Several users: shared.
+            if userIDs.isEmpty && isUnassigned { return .unassigned }
+            return .shared
         }
         set {
-            if case .person(let id) = newValue { personID = id } else { personID = nil }
+            if case .person(let id) = newValue { userIDs = [id] } else { userIDs = [] }
             isUnassigned = newValue == .unassigned
         }
     }
@@ -36,6 +38,43 @@ extension Ledger {
             if let match = account.cardAssignments.first(where: { $0.key.caseInsensitiveCompare(cardIdentifier) == .orderedSame }) { return match.value }
         }
         return account.defaultAssignment
+    }
+
+    /// Who an account or card is used by, in words: names, "Household" or "Unassigned".
+    public func usersLabel(_ account: Account) -> String {
+        let names = account.userIDs.compactMap { person($0)?.name }
+        if !names.isEmpty { return names.joined(separator: ", ") }
+        return account.isUnassigned ? "Unassigned" : "Household"
+    }
+
+    /// A single card's own setting (from its cardholder or card-number label), if you made one.
+    private func cardOverride(_ account: Account, _ identifier: String?) -> SpendingAssignment? {
+        guard let identifier else { return nil }
+        if let exact = account.cardAssignments[identifier] { return exact }
+        return account.cardAssignments.first { $0.key.caseInsensitiveCompare(identifier) == .orderedSame }?.value
+    }
+
+    /// The people who use the card a transaction was made on. This follows the card, not any
+    /// correction made to the single transaction.
+    public func cardUsers(for transaction: LedgerTransaction) -> [UUID] {
+        guard let account = account(transaction.accountID) else { return [] }
+        var ids = account.userIDs
+        if let custom = cardOverride(account, transaction.cardIdentifier) {
+            if case .person(let id) = custom { ids = [id] } else { ids = [] }
+        }
+        return ids.filter { person($0) != nil }
+    }
+
+    public func cardUserNames(for transaction: LedgerTransaction) -> [String] {
+        cardUsers(for: transaction).compactMap { person($0)?.name }
+    }
+
+    /// For a card nobody in particular uses: true when it is still undecided (unassigned),
+    /// false when it is a plain household card.
+    public func cardIsUndecided(for transaction: LedgerTransaction) -> Bool {
+        guard let account = account(transaction.accountID) else { return true }
+        if let custom = cardOverride(account, transaction.cardIdentifier) { return custom == .unassigned }
+        return account.isUnassigned
     }
 
     public func assignment(for transaction: LedgerTransaction) -> SpendingAssignment {

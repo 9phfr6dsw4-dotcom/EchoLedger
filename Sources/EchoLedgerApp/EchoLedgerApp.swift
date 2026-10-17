@@ -58,6 +58,7 @@ struct RootView: View {
                     Text("EchoLedger").font(Theme.heading(22))
                 }
                 .padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 30)
+                ScrollView {
                 VStack(spacing: 5) {
                     ForEach(AppSection.allCases) { section in
                         Button { runtime.section = section } label: {
@@ -81,7 +82,8 @@ struct RootView: View {
                         .accessibilityAddTraits(runtime.section == section ? .isSelected : [])
                     }
                 }.padding(.horizontal, 12)
-                Spacer()
+                }
+                .scrollIndicators(.hidden)
                 if runtime.isDemo { Badge(text: "Demo workspace", color: Theme.accent).padding(.horizontal, 20) }
                 VStack(alignment: .leading, spacing: 8) {
                     Label("On this Mac", systemImage: "lock.shield").font(.callout)

@@ -327,8 +327,9 @@ struct AccountsSection: View {
                 }
                 HStack {
                     Text("Account or card").frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Assign spending to").frame(width: 230, alignment: .leading)
+                    Text("Used by").frame(width: 230, alignment: .leading)
                 }.font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                Caption("Every account and card is part of the household. Choose who uses each one; pick several people for a shared card, or no one for a plain household card.")
                 ForEach(runtime.ledger.accounts) { account in
                     AccountRow(account: account)
                     Divider()
@@ -355,8 +356,10 @@ struct AccountRow: View {
                     .frame(maxWidth: 260)
                     .onSubmit(saveName)
                 Spacer(minLength: 0)
-                AssignmentPicker(assignment: Binding(get: { account.defaultAssignment }, set: { value in update { $0.defaultAssignment = value } }))
-                    .labelsHidden().frame(width: 210)
+                CardUsersMenu(account: account) { updated in
+                    runtime.commit { $0.upsertAccount(updated) }
+                }
+                .labelsHidden().frame(width: 210)
                 Picker("Type", selection: Binding(get: { account.type }, set: { value in update { $0.type = value } })) {
                     ForEach(AccountType.allCases) { Text($0.label).tag($0) }
                 }

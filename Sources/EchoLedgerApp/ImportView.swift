@@ -246,7 +246,7 @@ struct ImportFileCard: View {
     }
 
     private func accountLabel(_ account: Account) -> String {
-        let owner = runtime.ledger.assignmentName(account.defaultAssignment)
+        let owner = runtime.ledger.usersLabel(account)
         return "\(account.name) — \(owner)"
     }
 
