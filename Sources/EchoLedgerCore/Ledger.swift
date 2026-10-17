@@ -208,7 +208,14 @@ public struct Ledger: Sendable {
                     rawDescription: row.description, bankMerchant: row.bankMerchant, bankCategory: row.bankCategory,
                     checkNumber: row.checkNumber, status: row.status, fingerprint: row.fingerprint,
                     occurrence: row.occurrence)
+                transaction.cardIdentifier = row.cardIdentifier
+                transaction.inheritedAssignment = defaultAssignment(accountID: account.id, cardIdentifier: row.cardIdentifier)
                 if case .replacesPending(let pendingID) = planned.disposition, var pending = transactions[pendingID] {
+                    transaction.spendingAssignment = pending.spendingAssignment
+                    if pending.cardIdentifier != nil || transaction.cardIdentifier == nil {
+                        transaction.inheritedAssignment = pending.inheritedAssignment ?? transaction.inheritedAssignment
+                    }
+                    transaction.cardIdentifier = transaction.cardIdentifier ?? pending.cardIdentifier
                     pending.supersededBy = transaction.id
                     transactions[pendingID] = pending
                     delta.change(.transaction, pendingID)
@@ -882,9 +889,20 @@ public struct Ledger: Sendable {
         var delta = LedgerDelta()
         people.removeAll { $0.id == id }
         delta.delete(.person, id)
-        for index in accounts.indices where accounts[index].personID == id {
-            accounts[index].personID = nil
-            delta.change(.account, accounts[index].id)
+        for index in accounts.indices {
+            var account = accounts[index]
+            if account.personID == id { account.defaultAssignment = .unassigned }
+            for key in Array(account.cardAssignments.keys) where account.cardAssignments[key] == .person(id) {
+                account.cardAssignments[key] = .unassigned
+            }
+            if account != accounts[index] { accounts[index] = account; delta.change(.account, account.id) }
+        }
+        for key in Array(transactions.keys) {
+            guard var transaction = transactions[key] else { continue }
+            var changed = false
+            if transaction.spendingAssignment == .person(id) { transaction.spendingAssignment = .unassigned; changed = true }
+            if transaction.inheritedAssignment == .person(id) { transaction.inheritedAssignment = .unassigned; changed = true }
+            if changed { transactions[key] = transaction; delta.change(.transaction, key) }
         }
         delta.merge(rematch())
         return delta
@@ -892,7 +910,20 @@ public struct Ledger: Sendable {
 
     public mutating func upsertAccount(_ account: Account) -> LedgerDelta {
         var delta = LedgerDelta()
-        if let index = accounts.firstIndex(where: { $0.id == account.id }) { accounts[index] = account } else { accounts.append(account) }
+        if let index = accounts.firstIndex(where: { $0.id == account.id }) {
+            let old = accounts[index]
+            if old.defaultAssignment != account.defaultAssignment || old.cardAssignments != account.cardAssignments {
+                // Freeze legacy defaults before changing them. Past reports change only via the explicit action.
+                for id in Array(transactions.keys) {
+                    guard var transaction = transactions[id], transaction.accountID == account.id,
+                          transaction.inheritedAssignment == nil else { continue }
+                    transaction.inheritedAssignment = defaultAssignment(accountID: account.id, cardIdentifier: transaction.cardIdentifier)
+                    transactions[id] = transaction
+                    delta.change(.transaction, id)
+                }
+            }
+            accounts[index] = account
+        } else { accounts.append(account) }
         delta.change(.account, account.id)
         return delta
     }

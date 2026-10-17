@@ -58,20 +58,42 @@ final class LedgerRuntime {
     /// Set by other screens to open Transactions with a filter.
     var transactionsFocus: TransactionsFocus?
 
+    let isDemo: Bool
     let dataFolder: URL
     private(set) var store: LedgerStore?
     let backups: BackupManager
     let importer = ImportModel()
-    let intelligence = IntelligenceController()
+    let intelligence: IntelligenceController
+    let defaults: UserDefaults
 
     var databaseURL: URL { dataFolder.appendingPathComponent("EchoLedger.sqlite") }
 
-    init() {
+    init(demo: Bool = ProcessInfo.processInfo.arguments.contains("--demo")) {
+        isDemo = demo
+        defaults = demo ? UserDefaults(suiteName: "EchoLedger.Demo")! : .standard
+        intelligence = IntelligenceController(defaults: defaults)
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Library/Application Support")
-        dataFolder = support.appendingPathComponent("EchoLedger", isDirectory: true)
+        dataFolder = demo ? FileManager.default.temporaryDirectory.appendingPathComponent("EchoLedger-Demo-" + UUID().uuidString, isDirectory: true)
+            : support.appendingPathComponent("EchoLedger", isDirectory: true)
         backups = BackupManager(folder: dataFolder.appendingPathComponent("Backups", isDirectory: true))
         openStore()
+        if demo {
+            do {
+                let sample = DemoLedger.make(today: today)
+                try store?.saveAll(sample)
+                ledger = sample
+                section = .reports
+                revision += 1
+            } catch { errorMessage = "Could not open the demo workspace: \(error.localizedDescription)" }
+        }
+    }
+
+    static func openDemoWindow() {
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.createsNewApplicationInstance = true
+        configuration.arguments = ["--demo"]
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration)
     }
 
     private func openStore() {

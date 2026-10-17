@@ -12,16 +12,40 @@ struct SettingsView: View {
     @AppStorage("EchoLedger.archiveFolder") private var archiveFolder = ""
     @State private var backupToRestore: BackupManager.Info?
     @State private var categoryToDelete: LedgerCategory?
+    @State private var settingsTab = "Household & Accounts"
+    @AppStorage("EchoLedger.appearance") private var appearance = "light"
 
     var body: some View {
-        Page(title: "Settings", subtitle: "Your household, accounts and categories, plus where your data lives.") {
-            PeopleSection()
-            AccountsSection()
-            CategoriesSection(categoryToDelete: $categoryToDelete)
-            timeZoneSection
-            intelligenceSection
-            reportNotesSection
-            dataSection
+        Page(title: settingsTab == "Household & Accounts" ? settingsTab : "Settings",
+             subtitle: "Give every account and card a place in your household.") {
+            Picker("Settings section", selection: $settingsTab) {
+                ForEach(["General", "Household & Accounts", "Categories", "Intelligence", "Data & Backups"], id: \.self) { Text($0) }
+            }.pickerStyle(.segmented).labelsHidden()
+            switch settingsTab {
+            case "Household & Accounts":
+                PeopleSection()
+                AccountsSection()
+            case "Categories": CategoriesSection(categoryToDelete: $categoryToDelete)
+            case "Intelligence": intelligenceSection
+            case "Data & Backups":
+                reportNotesSection
+                dataSection
+            default:
+                GroupBox("Appearance") {
+                    Picker("Appearance", selection: $appearance) {
+                        Text("Warm light").tag("light")
+                        Text("Forest dark").tag("dark")
+                        Text("Follow system").tag("system")
+                    }.frame(maxWidth: 360)
+                }
+                timeZoneSection
+                GroupBox("Demo workspace") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Caption("Explore and share EchoLedger with fictional people and accounts. Your own data stays separate.")
+                        Button("Open Demo Workspace") { LedgerRuntime.openDemoWindow() }
+                    }
+                }
+            }
         }
         .confirmationDialog("Restore this backup?", isPresented: restoreBinding, presenting: backupToRestore) { backup in
             Button("Restore", role: .destructive) { runtime.restore(backup) }
@@ -182,12 +206,11 @@ struct PeopleSection: View {
     @State private var newName = ""
 
     var body: some View {
-        GroupBox("Household") {
+        GroupBox("People") {
             VStack(alignment: .leading, spacing: 10) {
                 Caption("Add each person, and how their name appears in bank text (for example on Zelle transfers). Money moving between people in your household counts as a transfer, not spending or income.")
-                ForEach(runtime.ledger.people) { person in
-                    PersonRow(person: person)
-                    Divider()
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), alignment: .leading)], spacing: 12) {
+                    ForEach(runtime.ledger.people) { person in PersonRow(person: person) }
                 }
                 HStack {
                     TextField("Name", text: $newName)
@@ -211,13 +234,49 @@ struct PeopleSection: View {
 }
 
 struct PersonRow: View {
+    let person: Person
+    @State private var editing = false
+    var body: some View {
+        Button { editing = true } label: {
+            HStack(spacing: 12) {
+                Text(String(person.name.prefix(1)).uppercased())
+                    .font(Theme.heading(24)).foregroundStyle(Theme.accent)
+                    .frame(width: 44, height: 44)
+                    .background(Theme.accentLight.opacity(0.3), in: Circle())
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(person.name).font(.headline)
+                    if let allowance = person.monthlyAllowance {
+                        Caption("\(Money.format(allowance)) monthly allowance")
+                    } else { Caption("Household member") }
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "pencil").foregroundStyle(.secondary)
+            }
+            .padding(14)
+            .background(Theme.surface, in: RoundedRectangle(cornerRadius: 8))
+            .overlay { RoundedRectangle(cornerRadius: 8).strokeBorder(.primary.opacity(0.1)) }
+            .contentShape(Rectangle())
+        }.buttonStyle(.plain)
+        .sheet(isPresented: $editing) {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Edit household member").font(Theme.heading(28))
+                PersonEditor(person: person)
+                HStack { Spacer(); Button("Done") { editing = false } }
+            }.padding(28).frame(width: 620)
+        }
+    }
+}
+
+struct PersonEditor: View {
     @Environment(LedgerRuntime.self) private var runtime
     let person: Person
     @State private var name = ""
     @State private var bankNames = ""
+    @State private var allowance = ""
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
             TextField("Name", text: $name)
                 .frame(width: 160)
                 .onSubmit(save)
@@ -229,14 +288,28 @@ struct PersonRow: View {
                 runtime.commit { $0.deletePerson(id) }
             }
         }
+            HStack {
+                Text("Monthly spending allowance").font(.caption).foregroundStyle(.secondary)
+                TextField("Optional amount", text: $allowance).frame(width: 130).onSubmit(save)
+                Caption(runtime.ledger.settings.reportCurrency)
+            }
+        }
         .onAppear {
             name = person.name
             bankNames = person.bankNames.joined(separator: ", ")
+            allowance = person.monthlyAllowance.map { Money.decimalString($0) } ?? ""
         }
     }
 
     private func save() {
+        let text = allowance.trimmingCharacters(in: .whitespaces)
+        let amount = text.isEmpty ? nil : Money.parseCents(text)
+        if !text.isEmpty && (amount == nil || (amount ?? 0) < 0) {
+            runtime.errorMessage = "Enter a positive monthly allowance, or leave it empty."
+            return
+        }
         var updated = person
+        updated.monthlyAllowance = amount
         updated.name = name.trimmingCharacters(in: .whitespaces).isEmpty ? person.name : name.trimmingCharacters(in: .whitespaces)
         updated.bankNames = bankNames.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
         runtime.commit { $0.upsertPerson(updated) }
@@ -247,11 +320,15 @@ struct AccountsSection: View {
     @Environment(LedgerRuntime.self) private var runtime
 
     var body: some View {
-        GroupBox("Accounts") {
+        GroupBox("Accounts & cards") {
             VStack(alignment: .leading, spacing: 10) {
                 if runtime.ledger.accounts.isEmpty {
                     Caption("Accounts are created when you import their first file.")
                 }
+                HStack {
+                    Text("Account or card").frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Assign spending to").frame(width: 230, alignment: .leading)
+                }.font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                 ForEach(runtime.ledger.accounts) { account in
                     AccountRow(account: account)
                     Divider()
@@ -277,48 +354,67 @@ struct AccountRow: View {
                 TextField("Name", text: $name)
                     .frame(maxWidth: 260)
                     .onSubmit(saveName)
-                Picker("Owner", selection: Binding(get: { account.personID }, set: { value in update { $0.personID = value } })) {
-                    Text("Shared").tag(UUID?.none)
-                    ForEach(runtime.ledger.people) { person in
-                        Text(person.name).tag(UUID?.some(person.id))
-                    }
-                }
-                .frame(width: 170)
+                Spacer(minLength: 0)
+                AssignmentPicker(assignment: Binding(get: { account.defaultAssignment }, set: { value in update { $0.defaultAssignment = value } }))
+                    .labelsHidden().frame(width: 210)
                 Picker("Type", selection: Binding(get: { account.type }, set: { value in update { $0.type = value } })) {
                     ForEach(AccountType.allCases) { Text($0.label).tag($0) }
                 }
                 .labelsHidden()
                 .frame(width: 130)
             }
-            HStack(spacing: 10) {
-                TextField("Last 4", text: $last4)
-                    .frame(width: 70)
-                    .onSubmit(saveName)
-                Text(layoutName)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Toggle("Amounts reversed", isOn: Binding(get: { account.flipSigns }, set: { value in update { $0.flipSigns = value } }))
-                    .controlSize(.small)
-                Toggle("Archived", isOn: Binding(get: { account.isArchived }, set: { value in update { $0.isArchived = value } }))
-                    .controlSize(.small)
-                Toggle("Rarely used", isOn: Binding(get: { account.rarelyUsed }, set: { value in update { $0.rarelyUsed = value } }))
-                    .controlSize(.small)
-                    .help("Reports don't warn when this account has gaps or no recent transactions.")
-                Spacer()
-                Button("Delete") {
-                    let id = account.id
-                    let deleted = runtime.commitOptional { $0.deleteAccount(id) }
-                    if !deleted {
-                        runtime.errorMessage = "\(account.name) has transactions, so it can't be deleted. Undo its imports first, or archive it."
+            DisclosureGroup("Account details") {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        TextField("Last 4", text: $last4).frame(width: 80).onSubmit(saveName)
+                        Button("Save Name & Last 4", action: saveName)
+                        Spacer()
+                        Button("Delete Account", role: .destructive) {
+                            if !runtime.commitOptional({ $0.deleteAccount(account.id) }) {
+                                runtime.errorMessage = "This account has transactions. Undo its imports first, or archive it."
+                            }
+                        }
                     }
-                }
+                    Caption(layoutName)
+                    HStack {
+                        Toggle("Amounts reversed", isOn: Binding(get: { account.flipSigns }, set: { value in update { $0.flipSigns = value } }))
+                        Toggle("Archived", isOn: Binding(get: { account.isArchived }, set: { value in update { $0.isArchived = value } }))
+                        Toggle("Rarely used", isOn: Binding(get: { account.rarelyUsed }, set: { value in update { $0.rarelyUsed = value } }))
+                    }.controlSize(.small)
+                }.padding(.top, 8)
+            }.font(.caption).padding(.leading, 28)
+            HStack {
+                Caption("New imports use this default. Past assignments and individual corrections are preserved.")
+                Spacer()
+                Button("Apply to Past Transactions") {
+                    runtime.commit { $0.applySpendingDefault(accountID: account.id) }
+                    runtime.statusMessage = "Updated past assignments. Individual corrections were preserved; Undo reverses this change."
+                }.font(.caption)
+            }.padding(.leading, 28)
+            ForEach(cardIdentifiers, id: \.self) { identifier in
+                HStack(spacing: 12) {
+                    Image(systemName: "arrow.turn.down.right").foregroundStyle(.secondary)
+                    Label(identifier, systemImage: "creditcard").font(.callout)
+                    Spacer()
+                    AssignmentPicker(assignment: Binding(
+                        get: { account.cardAssignments[identifier] ?? account.defaultAssignment },
+                        set: { value in update { $0.cardAssignments[identifier] = value } }))
+                        .labelsHidden().frame(width: 210)
+                    Button("Apply to Past") {
+                        runtime.commit { $0.applySpendingDefault(accountID: account.id, cardIdentifier: identifier) }
+                    }.font(.caption)
+                }.padding(.leading, 28)
             }
-            .padding(.leading, 28)
         }
         .onAppear {
             name = account.name
             last4 = account.last4 ?? ""
         }
+    }
+
+    private var cardIdentifiers: [String] {
+        let imported = runtime.ledger.transactions.values.filter { $0.accountID == account.id }.compactMap(\.cardIdentifier)
+        return Set(imported + Array(account.cardAssignments.keys)).sorted()
     }
 
     private var layoutName: String {

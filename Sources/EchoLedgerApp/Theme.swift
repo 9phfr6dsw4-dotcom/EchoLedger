@@ -2,23 +2,29 @@ import AppKit
 import EchoLedgerCore
 import SwiftUI
 
-/// Shared look: the same page structure as EchoFlow and Lumen.
+/// Warm Ledger: cream surfaces, forest accents, and editorial financial typography.
 enum Theme {
-    static let accent = Color(red: 0.17, green: 0.49, blue: 0.94)
-    static let accentLight = Color(red: 0.55, green: 0.88, blue: 1.0)
-    static let income = Color(red: 0.16, green: 0.62, blue: 0.40)
-    static let spending = Color(red: 0.86, green: 0.36, blue: 0.27)
+    static func adaptive(_ light: (Double, Double, Double), _ dark: (Double, Double, Double)) -> Color {
+        Color(nsColor: NSColor(name: nil) { appearance in
+            let rgb = appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
+            return NSColor(srgbRed: rgb.0, green: rgb.1, blue: rgb.2, alpha: 1)
+        })
+    }
+    static let canvas = adaptive((0.98, 0.97, 0.94), (0.08, 0.12, 0.11))
+    static let sidebar = adaptive((0.93, 0.91, 0.87), (0.06, 0.10, 0.09))
+    static let surface = adaptive((0.995, 0.99, 0.97), (0.11, 0.16, 0.14))
+    static let accent = adaptive((0.13, 0.33, 0.24), (0.66, 0.87, 0.73))
+    static let accentLight = Color(red: 0.66, green: 0.75, blue: 0.64)
+    static let income = accent
+    static let spending = adaptive((0.53, 0.30, 0.22), (0.91, 0.65, 0.49))
     static let neutral = Color.secondary
-
-    /// Distinct, readable colors for categories in light and dark mode.
     static let palette: [Color] = [
-        Color(red: 0.17, green: 0.49, blue: 0.94), Color(red: 0.95, green: 0.55, blue: 0.16),
-        Color(red: 0.20, green: 0.66, blue: 0.47), Color(red: 0.86, green: 0.30, blue: 0.40),
-        Color(red: 0.55, green: 0.40, blue: 0.85), Color(red: 0.10, green: 0.70, blue: 0.80),
-        Color(red: 0.85, green: 0.70, blue: 0.10), Color(red: 0.60, green: 0.45, blue: 0.30),
-        Color(red: 0.95, green: 0.45, blue: 0.70), Color(red: 0.40, green: 0.60, blue: 0.20),
-        Color(red: 0.35, green: 0.45, blue: 0.65), Color(red: 0.75, green: 0.35, blue: 0.15)
+        accent, Color(red: 0.48, green: 0.61, blue: 0.48),
+        Color(red: 0.43, green: 0.55, blue: 0.51), Color(red: 0.68, green: 0.56, blue: 0.36),
+        Color(red: 0.46, green: 0.57, blue: 0.66), Color(red: 0.66, green: 0.46, blue: 0.39),
+        Color(red: 0.57, green: 0.52, blue: 0.65), Color(red: 0.57, green: 0.62, blue: 0.35)
     ]
+    static func heading(_ size: CGFloat) -> Font { .system(size: size, weight: .regular, design: .serif) }
 
     static func color(forCategoryIndex index: Int) -> Color {
         guard index >= 0 else { return Color.gray }
@@ -42,9 +48,9 @@ struct PageHeader: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
-                .font(.largeTitle.weight(.semibold))
+                .font(Theme.heading(38))
             Text(subtitle)
-                .font(.title3)
+                .font(.system(size: 15))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -62,12 +68,12 @@ struct Page<Content: View>: View {
             VStack(alignment: .leading, spacing: 24) {
                 PageHeader(title: title, subtitle: subtitle)
                 content()
-                PrivacyFooter()
             }
-            .padding(28)
+            .padding(32)
+            .frame(maxWidth: 1400, alignment: .topLeading)
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .background(Color(nsColor: .windowBackgroundColor))
+        .background(Theme.canvas)
     }
 }
 
@@ -126,15 +132,15 @@ struct MetricTile: View {
     var tint: Color = Theme.accent
 
     var body: some View {
-        GroupBox {
+        Group {
             VStack(alignment: .leading, spacing: 6) {
                 Label(title, systemImage: symbol)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Text(value)
-                    .font(.title2.weight(.semibold))
+                    .font(Theme.heading(36))
                     .monospacedDigit()
-                    .foregroundStyle(tint)
+                    .foregroundStyle(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                 if let detail {
@@ -145,7 +151,8 @@ struct MetricTile: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 4)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
         }
     }
 }
@@ -271,5 +278,58 @@ extension TransactionKind {
         case .transfer: return Color.secondary
         case .unknown: return Color.orange
         }
+    }
+}
+
+
+struct LedgerPanelStyle: GroupBoxStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            configuration.label.font(Theme.heading(21))
+            configuration.content
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.surface, in: RoundedRectangle(cornerRadius: 10))
+        .overlay { RoundedRectangle(cornerRadius: 10).strokeBorder(.primary.opacity(0.09)) }
+    }
+}
+
+struct BrandMark: View {
+    var size: CGFloat = 40
+    var body: some View {
+        Canvas { context, bounds in
+            context.fill(Path(CGRect(origin: .zero, size: bounds)), with: .linearGradient(
+                Gradient(colors: [Color(red: 0.08, green: 0.27, blue: 0.22), Color(red: 0.05, green: 0.19, blue: 0.16)]),
+                startPoint: .zero, endPoint: CGPoint(x: 0, y: bounds.height)))
+            let scale = bounds.width / 1024
+            context.scaleBy(x: scale, y: scale)
+            for index in 0..<3 {
+                var path = Path()
+                if index == 0 {
+                    path.move(to: CGPoint(x: 770, y: 226)); path.addLine(to: CGPoint(x: 389, y: 226))
+                    path.addQuadCurve(to: CGPoint(x: 226, y: 389), control: CGPoint(x: 226, y: 226))
+                    path.addLine(to: CGPoint(x: 226, y: 635))
+                    path.addQuadCurve(to: CGPoint(x: 389, y: 798), control: CGPoint(x: 226, y: 798))
+                    path.addLine(to: CGPoint(x: 770, y: 798))
+                } else if index == 1 {
+                    path.move(to: CGPoint(x: 770, y: 337)); path.addLine(to: CGPoint(x: 493, y: 337))
+                    path.addQuadCurve(to: CGPoint(x: 337, y: 493), control: CGPoint(x: 337, y: 337))
+                    path.addLine(to: CGPoint(x: 337, y: 531))
+                    path.addQuadCurve(to: CGPoint(x: 493, y: 687), control: CGPoint(x: 337, y: 687))
+                    path.addLine(to: CGPoint(x: 770, y: 687))
+                } else {
+                    path.move(to: CGPoint(x: 770, y: 448)); path.addLine(to: CGPoint(x: 531, y: 448))
+                    path.addQuadCurve(to: CGPoint(x: 448, y: 512), control: CGPoint(x: 448, y: 448))
+                    path.addQuadCurve(to: CGPoint(x: 531, y: 576), control: CGPoint(x: 448, y: 576))
+                    path.addLine(to: CGPoint(x: 770, y: 576))
+                }
+                let color = index == 2 ? Color(red: 0.72, green: 0.87, blue: 0.77) : Color(red: 0.95, green: 0.93, blue: 0.87)
+                context.stroke(path, with: .color(color), style: StrokeStyle(lineWidth: 64, lineCap: .round, lineJoin: .round))
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: size * 0.23))
+        .accessibilityHidden(true)
     }
 }

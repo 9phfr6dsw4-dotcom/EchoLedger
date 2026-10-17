@@ -17,6 +17,7 @@ struct ImportFile: Identifiable {
         var type: AccountType
         var last4: String
         var profileID: String?
+        var isShared = false
     }
 
     /// Apple Intelligence's work on a file EchoLedger didn't recognize.
@@ -271,7 +272,7 @@ final class ImportModel {
                     let last4 = draft.last4.filter { $0 >= "0" && $0 <= "9" }
                     let account = Account(id: draft.id, name: draft.name.trimmingCharacters(in: .whitespaces),
                                           personID: draft.personID, type: draft.type, last4: last4.count == 4 ? last4 : nil,
-                                          profileID: file.analysis.profile?.id, flipSigns: file.flipSigns)
+                                          profileID: file.analysis.profile?.id, flipSigns: file.flipSigns, isUnassigned: draft.personID == nil && !draft.isShared)
                     delta.merge(ledger.upsertAccount(account))
                 } else if var account = ledger.account(accountID), account.flipSigns != file.flipSigns {
                     account.flipSigns = file.flipSigns

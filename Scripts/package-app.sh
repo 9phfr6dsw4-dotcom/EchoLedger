@@ -27,6 +27,17 @@ swift Scripts/create-app-icon.swift "$ICONSET_DIR"
 iconutil -c icns "$ICONSET_DIR" -o "$APP_BUNDLE/Contents/Resources/AppIcon.icns"
 test -s "$APP_BUNDLE/Contents/Resources/AppIcon.icns"
 
+# Compile the full-bleed modern icon; never silently ship a legacy-only Dock icon.
+xcrun actool Resources/AppIcon.icon --compile "$APP_BUNDLE/Contents/Resources" \
+    --app-icon AppIcon --output-partial-info-plist dist/icon-info.plist \
+    --platform macosx --target-device mac --minimum-deployment-target 26.0
+if [[ ! -s "$APP_BUNDLE/Contents/Resources/Assets.car" ]]; then
+    echo 'error: Modern icon compiler did not produce Assets.car' >&2
+    exit 1
+fi
+/usr/libexec/PlistBuddy -c 'Print :CFBundleIconName' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'AppIcon'
+
+
 codesign --force --deep --sign - "$APP_BUNDLE"
 codesign --verify --deep --strict "$APP_BUNDLE"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'EchoLedger'
@@ -34,8 +45,8 @@ codesign --verify --deep --strict "$APP_BUNDLE"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'EchoLedger'
 /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx 'com.echoledger.app'
 plutil -lint "$APP_BUNDLE/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.1.1'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '2'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '0.2.0'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP_BUNDLE/Contents/Info.plist" | grep -Fx '3'
 
 mkdir -p "$VERIFY_DIR"
 ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "$ZIP_PATH"
@@ -44,8 +55,8 @@ EXTRACTED_APP="$VERIFY_DIR/${APP_NAME}.app"
 test -x "$EXTRACTED_APP/Contents/MacOS/EchoLedger"
 /usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx 'EchoLedger'
 plutil -lint "$EXTRACTED_APP/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.1.1'
-/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '2'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '0.2.0'
+/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$EXTRACTED_APP/Contents/Info.plist" | grep -Fx '3'
 codesign --verify --deep --strict "$EXTRACTED_APP"
 (
     cd "$(dirname "$ZIP_PATH")"

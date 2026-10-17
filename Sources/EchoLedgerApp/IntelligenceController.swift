@@ -60,15 +60,19 @@ final class IntelligenceController {
     private(set) var isAnswering = false
     private var lookTask: Task<Void, Never>?
 
-    private static func flag(_ key: String) -> Bool {
-        UserDefaults.standard.object(forKey: key) as? Bool ?? true
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) { self.defaults = defaults }
+
+    private func flag(_ key: String) -> Bool {
+        defaults.object(forKey: key) as? Bool ?? true
     }
 
-    var isEnabled: Bool { Self.flag(Self.enabledKey) }
-    var autoSuggest: Bool { Self.flag(Self.autoSuggestKey) }
-    var autoFile: Bool { Self.flag(Self.autoFileKey) }
-    var tidyNames: Bool { Self.flag(Self.tidyNamesKey) }
-    var setUpLayouts: Bool { Self.flag(Self.setUpLayoutsKey) }
+    var isEnabled: Bool { flag(Self.enabledKey) }
+    var autoSuggest: Bool { flag(Self.autoSuggestKey) }
+    var autoFile: Bool { flag(Self.autoFileKey) }
+    var tidyNames: Bool { flag(Self.tidyNamesKey) }
+    var setUpLayouts: Bool { flag(Self.setUpLayoutsKey) }
 
     /// nil when AI features can run; otherwise why not.
     var unavailableReason: String? {
@@ -293,7 +297,7 @@ final class IntelligenceController {
     // MARK: Report summaries
 
     func narrativeKey(filter: ReportFilter, revision: Int) -> String {
-        "\(revision)|\(filter.span.start.iso)|\(filter.span.end.iso)|\(filter.personIDs.map(\.uuidString).sorted().joined(separator: ","))|\(filter.accountIDs.map(\.uuidString).sorted().joined(separator: ","))"
+        "\(filter.wholeHousehold)|\(filter.includeShared)|\(filter.includeUnassigned)|\(filter.currency)|\(revision)|\(filter.span.start.iso)|\(filter.span.end.iso)|\(filter.personIDs.map(\.uuidString).sorted().joined(separator: ","))|\(filter.accountIDs.map(\.uuidString).sorted().joined(separator: ","))"
     }
 
     /// Writes a short summary from EchoLedger's computed facts. Bullets that cite no fact, or use a

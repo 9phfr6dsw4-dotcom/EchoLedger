@@ -32,11 +32,29 @@ public enum FinanceQueries {
     /// Turns a person's name ("Alex", "everyone", "") into a filter; nil when unknown.
     public static func peopleFilter(_ name: String?, ledger: Ledger) -> Set<UUID>? {
         let clean = (name ?? "").trimmingCharacters(in: .whitespaces).lowercased()
-        if clean.isEmpty || ["everyone", "all", "household", "both", "us"].contains(clean) { return [] }
+        if clean.isEmpty || ["everyone", "all", "household", "whole household", "both", "us", "shared", "shared household", "unassigned"].contains(clean) { return [] }
         if let person = ledger.people.first(where: { $0.name.lowercased() == clean || $0.name.lowercased().hasPrefix(clean + " ") }) {
             return [person.id]
         }
+        let names = clean.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        if names.count > 1 {
+            var ids: Set<UUID> = []
+            for name in names {
+                guard let match = ledger.people.first(where: { $0.name.lowercased() == name }) else { return nil }
+                ids.insert(match.id)
+            }
+            return ids
+        }
         return nil
+    }
+
+    private static func queryFilter(_ span: DateSpan, people: Set<UUID>, person: String?, ledger: Ledger) -> ReportFilter {
+        let name = (person ?? "").trimmingCharacters(in: .whitespaces).lowercased()
+        let shared = ["shared", "shared household"].contains(name)
+        let unassigned = name == "unassigned"
+        return ReportFilter(span: span, personIDs: people, currency: ledger.settings.reportCurrency,
+                            wholeHousehold: people.isEmpty && !shared && !unassigned,
+                            includeShared: shared, includeUnassigned: unassigned)
     }
 
     static func unknownPerson(_ name: String?, ledger: Ledger) -> String {
@@ -57,8 +75,8 @@ public enum FinanceQueries {
     public static func summary(_ ledger: Ledger, start: String, end: String, person: String?, today: LocalDate) -> String {
         guard let span = period(start: start, end: end) else { return badDates }
         guard let people = peopleFilter(person, ledger: ledger) else { return unknownPerson(person, ledger: ledger) }
-        let report = ReportEngine.build(ledger, filter: ReportFilter(span: span, personIDs: people), today: today)
-        var lines = [header(span, people: people, ledger: ledger)]
+        let report = ReportEngine.build(ledger, filter: queryFilter(span, people: people, person: person, ledger: ledger), today: today)
+        var lines = ["Period: \(DateText.medium(span.start)) to \(DateText.medium(span.end)) (\(queryFilter(span, people: people, person: person, ledger: ledger).scopeLabel(in: ledger)))"]
         lines.append("Income: \(Money.format(report.income))")
         lines.append("Spending: \(Money.format(report.spending)) (after \(Money.format(report.refunds)) in refunds)")
         if let rate = report.savingsRateTenths {
@@ -82,8 +100,8 @@ public enum FinanceQueries {
         guard let category else {
             return "Error: no category named \(clean). Categories: " + ledger.categories.map(\.name).joined(separator: ", ")
         }
-        let report = ReportEngine.build(ledger, filter: ReportFilter(span: span, personIDs: people), today: today)
-        var lines = [header(span, people: people, ledger: ledger)]
+        let report = ReportEngine.build(ledger, filter: queryFilter(span, people: people, person: person, ledger: ledger), today: today)
+        var lines = ["Period: \(DateText.medium(span.start)) to \(DateText.medium(span.end)) (\(queryFilter(span, people: people, person: person, ledger: ledger).scopeLabel(in: ledger)))"]
         if category.group == .income {
             let total = report.includedIDs.compactMap { ledger.transactions[$0] }
                 .filter { $0.kind == .income && $0.categoryID == category.id }
@@ -106,7 +124,7 @@ public enum FinanceQueries {
         guard let people = peopleFilter(person, ledger: ledger) else { return unknownPerson(person, ledger: ledger) }
         let clean = name.trimmingCharacters(in: .whitespaces).lowercased()
         guard clean.count >= 2 else { return "Error: give at least two letters of the merchant's name." }
-        let report = ReportEngine.build(ledger, filter: ReportFilter(span: span, personIDs: people), today: today)
+        let report = ReportEngine.build(ledger, filter: queryFilter(span, people: people, person: person, ledger: ledger), today: today)
         var total: Cents = 0
         var count = 0
         var names: Set<String> = []
@@ -117,7 +135,7 @@ public enum FinanceQueries {
                 names.insert(line.name)
             }
         }
-        var lines = [header(span, people: people, ledger: ledger)]
+        var lines = ["Period: \(DateText.medium(span.start)) to \(DateText.medium(span.end)) (\(queryFilter(span, people: people, person: person, ledger: ledger).scopeLabel(in: ledger)))"]
         if count == 0 {
             lines.append("No spending found at a merchant matching “\(name)”.")
         } else {
@@ -132,8 +150,8 @@ public enum FinanceQueries {
             return badDates
         }
         guard let people = peopleFilter(person, ledger: ledger) else { return unknownPerson(person, ledger: ledger) }
-        let a = ReportEngine.build(ledger, filter: ReportFilter(span: first, personIDs: people), today: today)
-        let b = ReportEngine.build(ledger, filter: ReportFilter(span: second, personIDs: people), today: today)
+        let a = ReportEngine.build(ledger, filter: queryFilter(first, people: people, person: person, ledger: ledger), today: today)
+        let b = ReportEngine.build(ledger, filter: queryFilter(second, people: people, person: person, ledger: ledger), today: today)
         var lines = [
             "First: \(DateText.medium(first.start)) to \(DateText.medium(first.end)). Second: \(DateText.medium(second.start)) to \(DateText.medium(second.end)).",
             "Spending: \(Money.format(a.spending)) then \(Money.format(b.spending)) (change \(Money.format(b.spending - a.spending, showPlus: true)))",
@@ -161,13 +179,12 @@ public enum FinanceQueries {
                                     minimumDollars: Int?, person: String?, today: LocalDate, limit: Int = 15) -> String {
         guard let span = period(start: start, end: end) else { return badDates }
         guard let people = peopleFilter(person, ledger: ledger) else { return unknownPerson(person, ledger: ledger) }
-        let filter = ReportFilter(span: span, personIDs: people)
-        let accounts = Set(ledger.accounts.filter { filter.includes($0) }.map(\.id))
+        let filter = queryFilter(span, people: people, person: person, ledger: ledger)
         let needle = (text ?? "").trimmingCharacters(in: .whitespaces).lowercased()
         let categoryNeedle = (category ?? "").trimmingCharacters(in: .whitespaces).lowercased()
         let minimum = Cents(max(0, minimumDollars ?? 0)) * 100
         let matches = ledger.transactions.values.filter { transaction in
-            guard transaction.isActive, transaction.status == .posted, accounts.contains(transaction.accountID),
+            guard transaction.isActive, transaction.status == .posted, filter.includes(transaction, ledger: ledger),
                   span.contains(transaction.date), transaction.amount.magnitude >= minimum.magnitude else { return false }
             let merchant = ReportEngine.merchantIdentity(transaction, ledger: ledger).name.lowercased()
             if !needle.isEmpty, !merchant.contains(needle), !transaction.rawDescription.lowercased().contains(needle) { return false }
@@ -180,7 +197,7 @@ public enum FinanceQueries {
         .sorted { (transaction1, transaction2) in
             (transaction1.amount.magnitude, transaction2.date) > (transaction2.amount.magnitude, transaction1.date)
         }
-        var lines = [header(span, people: people, ledger: ledger)]
+        var lines = ["Period: \(DateText.medium(span.start)) to \(DateText.medium(span.end)) (\(queryFilter(span, people: people, person: person, ledger: ledger).scopeLabel(in: ledger)))"]
         if matches.isEmpty {
             lines.append("No matching transactions.")
             return lines.joined(separator: "\n")
@@ -197,7 +214,7 @@ public enum FinanceQueries {
 
     public static func recurring(_ ledger: Ledger, person: String?, today: LocalDate) -> String {
         guard let people = peopleFilter(person, ledger: ledger) else { return unknownPerson(person, ledger: ledger) }
-        let filter = ReportFilter(span: DateSpan(start: today.adding(days: -400), end: today), personIDs: people)
+        let filter = queryFilter(DateSpan(start: today.adding(days: -400), end: today), people: people, person: person, ledger: ledger)
         let charges = Insights.recurring(ledger, filter: filter, asOf: today).filter(\.isActive)
         guard !charges.isEmpty else { return "No active recurring charges found." }
         var lines = ["Active recurring charges (\(charges.count)):"]

@@ -76,16 +76,26 @@ public enum ImportPlanner {
     ///   dates this file covers) is held back as a possible duplicate for you to decide.
     public static func plan(_ analysis: FileAnalysis, accountID: UUID, ledger: Ledger) -> ImportPlan {
         let existing = ledger.transactions.values.filter { $0.accountID == accountID && $0.isActive }
-        var byKey: [String: LedgerTransaction] = [:]
-        for transaction in existing {
-            byKey["\(transaction.fingerprint)#\(transaction.occurrence)"] = transaction
+        let byKey = Dictionary(grouping: existing, by: \.fingerprint)
+        func compatibleCards(_ left: String?, _ right: String?) -> Bool {
+            guard let left, let right else { return true }
+            return left.caseInsensitiveCompare(right) == .orderedSame
         }
         var claimed: Set<UUID> = []
         var dispositions: [Int: RowDisposition] = [:]
         var unmatched: [ParsedRow] = []
 
         for row in analysis.rows {
-            if let match = byKey["\(row.fingerprint)#\(row.occurrence)"] {
+            let matches = (byKey[row.fingerprint] ?? []).filter { candidate in
+                guard !claimed.contains(candidate.id), candidate.occurrence == row.occurrence,
+                      compatibleCards(candidate.cardIdentifier, row.cardIdentifier) else { return false }
+                if candidate.cardIdentifier == nil && row.cardIdentifier == nil { return true }
+                if let left = candidate.cardIdentifier, let right = row.cardIdentifier {
+                    return left.caseInsensitiveCompare(right) == .orderedSame
+                }
+                return candidate.batchID.flatMap { id in ledger.batches.first { $0.id == id } }?.fileHash == analysis.fileHash
+            }
+            if matches.count == 1, let match = matches.first {
                 claimed.insert(match.id)
                 if match.status == .pending, row.status == .posted {
                     dispositions[row.line] = .replacesPending(match.id)
@@ -105,7 +115,8 @@ public enum ImportPlanner {
             // Posted row replacing a pending charge.
             if row.status == .posted {
                 let pending = sortedExisting.filter { candidate in
-                    guard candidate.status == .pending, !claimed.contains(candidate.id) else { return false }
+                    guard candidate.status == .pending, !claimed.contains(candidate.id),
+                          compatibleCards(candidate.cardIdentifier, row.cardIdentifier) else { return false }
                     let days = candidate.date.days(until: row.date)
                     guard days >= -1, days <= 7 else { return false }
                     guard amountsCompatible(pending: candidate.amount, posted: row.amount) else { return false }
@@ -120,7 +131,7 @@ public enum ImportPlanner {
             // Something that resembles a saved transaction inside the dates this file covers.
             if let first, let last {
                 let lookalikes = sortedExisting.filter { candidate in
-                    guard !claimed.contains(candidate.id), candidate.amount == row.amount,
+                    guard !claimed.contains(candidate.id), compatibleCards(candidate.cardIdentifier, row.cardIdentifier), candidate.amount == row.amount,
                           candidate.date >= first, candidate.date <= last else { return false }
                     let days = abs(candidate.date.days(until: row.date))
                     guard days <= 3 else { return false }
@@ -129,7 +140,7 @@ public enum ImportPlanner {
                 }
                 if let match = lookalikes.first {
                     claimed.insert(match.id)
-                    if match.status == .posted, row.status == .pending {
+                    if match.status == .posted, row.status == .pending, match.cardIdentifier == row.cardIdentifier {
                         // An old pending line for something already posted: nothing new.
                         dispositions[row.line] = .duplicate(match.id)
                     } else {

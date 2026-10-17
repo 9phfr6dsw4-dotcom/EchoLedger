@@ -45,7 +45,7 @@ struct TransactionsView: View {
     @State private var period: PeriodChoice = .last3Months
     @State private var customStart = LocalDate(year: 2026, month: 1, day: 1) ?? LocalDate(dayNumber: 0)
     @State private var customEnd = LocalDate(year: 2026, month: 12, day: 31) ?? LocalDate(dayNumber: 0)
-    @State private var personID: UUID?
+    @State private var people = PeopleSelection()
     @State private var accountID: UUID?
     @State private var filter: TransactionFilter = .all
     @State private var selection: Set<UUID> = []
@@ -169,7 +169,7 @@ struct TransactionsView: View {
     private var filterPickers: some View {
         HStack(spacing: 10) {
             PeriodPicker(choice: $period, customStart: $customStart, customEnd: $customEnd)
-            PersonPicker(personID: $personID)
+            PeopleScopePicker(selection: $people)
             Picker("Account", selection: $accountID) {
                 Text("All accounts").tag(UUID?.none)
                 ForEach(runtime.ledger.accounts) { account in
@@ -250,7 +250,8 @@ struct TransactionsView: View {
             }
             let account = accounts[transaction.accountID]
             if let accountID, transaction.accountID != accountID { continue }
-            if let personID, let owner = account?.personID, owner != personID { continue }
+            let scope = people.filter(span: span, currency: transaction.currency)
+            if !scope.includes(transaction, ledger: ledger) { continue }
             switch filter {
             case .all: if transaction.voided { continue }
             case .needsReview: if !transaction.needsReview { continue }
@@ -317,6 +318,15 @@ struct TransactionActions: View {
     let ids: [UUID]
 
     var body: some View {
+        Menu("Assign Spending To") {
+            ForEach(runtime.ledger.people) { person in
+                Button(person.name) { runtime.commit { $0.assignSpending(.person(person.id), ids: ids) } }
+            }
+            Button("Shared household") { runtime.commit { $0.assignSpending(.shared, ids: ids) } }
+            Button("Unassigned") { runtime.commit { $0.assignSpending(.unassigned, ids: ids) } }
+            Divider()
+            Button("Use Imported Assignment") { runtime.commit { $0.assignSpending(nil, ids: ids) } }
+        }
         if !ids.isEmpty {
             Menu("Set Spending Category") {
                 ForEach(runtime.ledger.categories.filter { $0.group == .expense }) { category in
@@ -412,6 +422,18 @@ struct SingleTransactionDetail: View {
             }
             if let suggestion = transaction.suggestion {
                 suggestionBox(suggestion)
+            }
+            GroupBox("Household") {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(runtime.ledger.assignmentName(runtime.ledger.assignment(for: transaction))).font(.headline)
+                    AssignmentPicker(assignment: Binding(
+                        get: { runtime.ledger.assignment(for: transaction) },
+                        set: { value in runtime.commit { $0.assignSpending(value, ids: [transaction.id]) } }))
+                    if let card = transaction.cardIdentifier { Caption(card) }
+                    if transaction.spendingAssignment != nil {
+                        Button("Use Imported Assignment") { runtime.commit { $0.assignSpending(nil, ids: [transaction.id]) } }
+                    }
+                }
             }
             editBox
             whyBox

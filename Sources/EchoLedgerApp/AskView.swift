@@ -24,6 +24,7 @@ struct AskView: View {
                             }
                         }
                         if intelligence.answers.isEmpty {
+                            composer
                             suggestions
                         }
                         ForEach(intelligence.answers) { answer in
@@ -32,17 +33,25 @@ struct AskView: View {
                         if intelligence.isAnswering {
                             ProgressView("Looking it up…")
                         }
-                        PrivacyFooter()
-                            .id("bottom")
+                        Color.clear.frame(height: 1).id("bottom")
                     }
-                    .padding(28)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding(36)
+                    .frame(maxWidth: 900, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, alignment: .top)
                 }
                 .onChange(of: intelligence.answers.count) { _, _ in
                     withAnimation { proxy.scrollTo("bottom", anchor: .bottom) }
                 }
             }
-            Divider()
+            if !intelligence.answers.isEmpty {
+                Divider()
+                composer.frame(maxWidth: 900).padding(.horizontal, 20)
+            }
+        }
+        .background(Theme.canvas)
+    }
+
+    private var composer: some View {
             HStack(spacing: 10) {
                 TextField("Ask about your money…", text: $question)
                     .textFieldStyle(.roundedBorder)
@@ -56,8 +65,9 @@ struct AskView: View {
                 }
             }
             .padding(16)
-        }
-        .background(Color(nsColor: .windowBackgroundColor))
+            .background(Theme.surface, in: RoundedRectangle(cornerRadius: 12))
+            .overlay { RoundedRectangle(cornerRadius: 12).strokeBorder(Theme.accent.opacity(0.18)) }
+            .controlSize(.large)
     }
 
     private var examples: [String] {
@@ -75,7 +85,7 @@ struct AskView: View {
 
     private var suggestions: some View {
         GroupBox("Try asking") {
-            VStack(alignment: .leading, spacing: 8) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), alignment: .leading)], alignment: .leading, spacing: 14) {
                 ForEach(examples, id: \.self) { example in
                     Button {
                         question = example
@@ -83,7 +93,10 @@ struct AskView: View {
                     } label: {
                         Label(example, systemImage: "text.bubble")
                     }
-                    .buttonStyle(.link)
+                    .buttonStyle(.plain)
+                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Theme.accent.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
                     .disabled(!intelligence.isReady)
                 }
                 Caption("Answers only use your imported transactions. Anything still waiting in Review is pointed out rather than guessed.")

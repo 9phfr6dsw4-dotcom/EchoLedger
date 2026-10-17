@@ -4,24 +4,48 @@ import Foundation
 /// and the same calculations, so their numbers always agree.
 public struct ReportFilter: Hashable, Sendable {
     public var span: DateSpan
-    /// Empty = everyone. Accounts with no owner (shared accounts) are included for everyone.
+    /// Selected people; wholeHousehold controls whether an empty selection means everyone.
     public var personIDs: Set<UUID>
     /// Empty = all accounts.
     public var accountIDs: Set<UUID>
     public var currency: String
+    public var wholeHousehold: Bool
+    public var includeShared: Bool
+    public var includeUnassigned: Bool
 
-    public init(span: DateSpan, personIDs: Set<UUID> = [], accountIDs: Set<UUID> = [], currency: String = "USD") {
+    public init(span: DateSpan, personIDs: Set<UUID> = [], accountIDs: Set<UUID> = [], currency: String = "USD",
+                wholeHousehold: Bool? = nil, includeShared: Bool = false, includeUnassigned: Bool = false) {
         self.span = span
         self.personIDs = personIDs
         self.accountIDs = accountIDs
         self.currency = currency
+        self.wholeHousehold = wholeHousehold ?? personIDs.isEmpty
+        self.includeShared = includeShared
+        self.includeUnassigned = includeUnassigned
     }
 
     public func includes(_ account: Account) -> Bool {
         guard account.currency == currency else { return false }
         if !accountIDs.isEmpty, !accountIDs.contains(account.id) { return false }
-        if !personIDs.isEmpty, let owner = account.personID, !personIDs.contains(owner) { return false }
         return true
+    }
+
+    public func includes(_ transaction: LedgerTransaction, ledger: Ledger) -> Bool {
+        guard let account = ledger.account(transaction.accountID), includes(account) else { return false }
+        if wholeHousehold { return true }
+        switch ledger.assignment(for: transaction) {
+        case .person(let id): return personIDs.contains(id)
+        case .shared: return includeShared
+        case .unassigned: return includeUnassigned
+        }
+    }
+
+    public func scopeLabel(in ledger: Ledger) -> String {
+        if wholeHousehold { return "Whole household" }
+        var names = ledger.people.filter { personIDs.contains($0.id) }.map(\.name)
+        if includeShared { names.append("Shared household") }
+        if includeUnassigned { names.append("Unassigned") }
+        return names.isEmpty ? "No people selected" : names.joined(separator: " + ")
     }
 
     public func withSpan(_ span: DateSpan) -> ReportFilter {
@@ -102,6 +126,7 @@ public struct DataNote: Identifiable, Hashable, Sendable {
 
 public struct Report: Sendable {
     public var filter: ReportFilter
+    public var scopeLabel: String
     public var income: Cents
     /// Net spending: purchases minus refunds.
     public var spending: Cents
@@ -146,8 +171,9 @@ public enum ReportEngine {
     /// - Transfers and card payments are never income or spending.
     /// - Transactions still needing review are shown separately, never hidden or guessed.
     public static func build(_ ledger: Ledger, filter: ReportFilter, today: LocalDate) -> Report {
-        let accounts = ledger.accounts.filter { filter.includes($0) }
-        let accountIDs = Set(accounts.map(\.id))
+        let scoped = ledger.transactions.values.filter { $0.isActive && filter.includes($0, ledger: ledger) }
+        let accountIDs = Set(scoped.map(\.accountID))
+        let accounts = ledger.accounts.filter { filter.includes($0) && (filter.wholeHousehold || accountIDs.contains($0.id)) }
         let categoriesByID = Dictionary(ledger.categories.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
 
         var income: Cents = 0
@@ -170,8 +196,8 @@ public enum ReportEngine {
         var included: [UUID] = []
         var aiFiled: [UUID] = []
 
-        let inSpan = ledger.transactions.values
-            .filter { $0.isActive && accountIDs.contains($0.accountID) && filter.span.contains($0.date) }
+        let inSpan = scoped
+            .filter { filter.span.contains($0.date) }
             .sorted { ($0.date, $0.id.uuidString) < ($1.date, $1.id.uuidString) }
 
         for transaction in inSpan {
@@ -262,7 +288,7 @@ public enum ReportEngine {
                          at: notes.firstIndex { $0.id == "pending" } ?? min(1, notes.count))
         }
 
-        return Report(filter: filter, income: income, spending: spending, refunds: refunds, categories: categoryLines,
+        return Report(filter: filter, scopeLabel: filter.scopeLabel(in: ledger), income: income, spending: spending, refunds: refunds, categories: categoryLines,
                       incomeSources: merchantLines(incomeTotals), topMerchants: Array(merchantLines(allMerchants).prefix(15)),
                       months: months, transferCount: transferCount, transferVolume: transferVolume,
                       unknownCount: unknownCount, unknownIn: unknownIn, unknownOut: unknownOut, unknownIDs: unknownIDs,
@@ -326,8 +352,9 @@ public enum ReportEngine {
             notes.append(DataNote(id: "currency", severity: .info,
                                   text: "Accounts in other currencies aren't added in: \(otherCurrency.map(\.name).sorted().joined(separator: ", "))."))
         }
-        if !filter.personIDs.isEmpty, accounts.contains(where: { $0.personID == nil }) {
-            notes.append(DataNote(id: "shared", severity: .info, text: "Shared accounts (no owner) are included."))
+        if !filter.wholeHousehold {
+            let text = filter.includeShared ? "Shared household spending is included in this selection." : "Shared household spending is excluded from this selection."
+            notes.append(DataNote(id: "shared", severity: .info, text: text))
         }
         let partialKey = "partial|\(filter.span.end.iso)"
         if filter.span.end > today, !ledger.settings.dismissedNotes.contains(partialKey) {

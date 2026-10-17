@@ -246,7 +246,7 @@ struct ImportFileCard: View {
     }
 
     private func accountLabel(_ account: Account) -> String {
-        let owner = runtime.ledger.person(account.personID)?.name ?? "Shared"
+        let owner = runtime.ledger.assignmentName(account.defaultAssignment)
         return "\(account.name) — \(owner)"
     }
 
@@ -266,6 +266,19 @@ struct NewAccountForm: View {
 
     private var model: ImportModel { runtime.importer }
 
+    private var assignment: Binding<SpendingAssignment> {
+        Binding(get: {
+            guard let draft = model.files.first(where: { $0.id == fileID })?.draft else { return .unassigned }
+            if let id = draft.personID { return .person(id) }
+            return draft.isShared ? .shared : .unassigned
+        }, set: { value in
+            guard let index = model.index(of: fileID) else { return }
+            if case .person(let id) = value { model.files[index].draft.personID = id }
+            else { model.files[index].draft.personID = nil }
+            model.files[index].draft.isShared = value == .shared
+        })
+    }
+
     private func binding<Value>(_ keyPath: WritableKeyPath<ImportFile.NewAccountDraft, Value>, default value: Value) -> Binding<Value> {
         Binding(get: {
             model.files.first { $0.id == fileID }?.draft[keyPath: keyPath] ?? value
@@ -282,15 +295,10 @@ struct NewAccountForm: View {
                     .frame(maxWidth: 320)
             }
             GridRow {
-                Text("Owner")
-                Picker("Owner", selection: binding(\.personID, default: nil)) {
-                    Text("Shared").tag(UUID?.none)
-                    ForEach(runtime.ledger.people) { person in
-                        Text(person.name).tag(UUID?.some(person.id))
-                    }
-                }
-                .labelsHidden()
-                .frame(maxWidth: 220)
+                Text("Assign spending to")
+                AssignmentPicker(assignment: assignment)
+                    .labelsHidden()
+                    .frame(maxWidth: 220)
             }
             GridRow {
                 Text("Type")
